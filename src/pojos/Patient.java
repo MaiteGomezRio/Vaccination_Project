@@ -1,5 +1,6 @@
-package vaccination.pojos; 
+package pojos; 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects; 
 
@@ -17,9 +18,9 @@ public class Patient {
 	
 	public Patient () {
 		super(); 
-		vaccines = new ArrayList<Vaccine>; 
+		vaccines = new ArrayList<Vaccine>(); 
 	}
-	public Patient(Integer id, String name, String surname, Boolean attendance, Boolean immumne) {
+	public Patient(Integer id, String name, String surname, Boolean attendance, Boolean immune) {
 		this.id = id; 
 		this.name = name; 
 		this.surname = surname;
