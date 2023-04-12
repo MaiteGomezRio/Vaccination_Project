@@ -43,7 +43,7 @@ public class Doctor {
    public void removePatient(Patient patient) {
 	   if(patients.contains(patient)) {
 		   patients.remove(patient); 
-		    boolean otra;
+		    boolean otras;
 	   }
    }
    public Integer getId() {
