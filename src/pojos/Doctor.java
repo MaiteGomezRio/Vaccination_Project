@@ -9,6 +9,8 @@ public class Doctor {
    private String name;
    private String surname; 
    private List<Patient> patients; 
+   // to do crear método
+   
    
    public Doctor() {
 	   super(); 
@@ -41,6 +43,7 @@ public class Doctor {
    public void removePatient(Patient patient) {
 	   if(patients.contains(patient)) {
 		   patients.remove(patient); 
+		    boolean otra;
 	   }
    }
    public Integer getId() {
