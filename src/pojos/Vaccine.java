@@ -1,4 +1,4 @@
-package vaccination.pojos; 
+package pojos; 
 
 public class Vaccine {
 

@@ -1,4 +1,4 @@
-package vaccination.pojos;
+package pojos;
 
 import java.util.ArrayList;
 import java.util.Objects; 
@@ -14,7 +14,7 @@ public class Doctor {
 	   super(); 
 	   patients = new ArrayList<Patient>(); 
    }
-   public Doctor(Integer id, String name, String suname) {    //he creates another constructor without the id. 
+   public Doctor(Integer id, String name, String surname) {    //he creates another constructor without the id. 
 	   super(); 
 	   this.id = id;
 	   this.name = name; 
@@ -25,19 +25,21 @@ public class Doctor {
    public String toString() {
 	   return "Doctor [id:"+id+", name: "+name+", surname: "+surname+", patients: "+patients +"]"; 
    }
-   public List getPatients{
-	   return patients;
+   
+   public List<Patient> getPatients() {
+	return patients;
    }
+
    public void setPatients(List<Patient> patients) {
 	   this.patients = patients; 
    }
    public void addPatient(Patient patient) {
-	   if(!patients.containt(patient)) {
+	   if(!patients.contains(patient)) {
 		   patients.add(patient); 
 	   }
    }
    public void removePatient(Patient patient) {
-	   if(patients.contain(patient)) {
+	   if(patients.contains(patient)) {
 		   patients.remove(patient); 
 	   }
    }
@@ -67,9 +69,7 @@ public class Doctor {
    public boolean equals(Object obj) {
 	   if(this==obj) {   // Checks if both objects have the same memory reference (the same piece of paper)
 		   return true;
-	   }else if(this==null) {   // If not, checks if the other object is null
-		   return false; 
-	   }else if(getClass()!=obj.getClass()) {  // If not, check if both objects are of the same class
+	   } else if(getClass()!=obj.getClass()) {  // If not, check if both objects are of the same class
 		   return false; 
 	   }
 	   Doctor other = (Doctor) obj;  // If they are, cast the other object to this class
