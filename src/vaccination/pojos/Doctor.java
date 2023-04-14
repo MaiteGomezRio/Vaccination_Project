@@ -1,4 +1,4 @@
-package pojos;
+package vaccination.pojos;
 
 import java.util.ArrayList;
 import java.util.Objects; 
@@ -65,7 +65,7 @@ public class Doctor {
    public int hashCode() {
 	   return Objects.hash(id); 
    }
-   //TODO comer calabac
+   
    @Override
    public boolean equals(Object obj) {
 	   if(this==obj) {   // Checks if both objects have the same memory reference (the same piece of paper)

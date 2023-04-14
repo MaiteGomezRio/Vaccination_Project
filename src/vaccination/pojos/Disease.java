@@ -1,4 +1,4 @@
-package pojos;
+package vaccination.pojos;
 
 public class Disease {
 

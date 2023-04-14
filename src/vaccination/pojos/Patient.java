@@ -1,4 +1,4 @@
-package pojos; 
+package vaccination.pojos; 
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,6 @@ public class Patient {
 	private String name; 
 	private String surname; 
 	private boolean attendance; 
-	private boolean immune; 
 	private List<Vaccine> vaccines;
 	private Doctor doctor; 
 	
@@ -20,17 +19,16 @@ public class Patient {
 		super(); 
 		vaccines = new ArrayList<Vaccine>(); 
 	}
-	public Patient(Integer id, String name, String surname, Boolean attendance, Boolean immune) {
+	public Patient(Integer id, String name, String surname, Boolean attendance) {
 		this.id = id; 
 		this.name = name; 
 		this.surname = surname;
-		this.attendance = attendance; 
-		this.immune = immune; 
+		this.attendance = attendance; 		
 		vaccines = new ArrayList<Vaccine>();  //ALWAYS INITIALIZE THE LISTS  
 	}
 	@Override 
 	public String toString() {
-		return "Patient [id: "+id+", name: "+name+" ,surname: "+surname+" attendance: "+attendance+", immune: "+immune+ "]";
+		return "Patient [id: "+id+", name: "+name+" ,surname: "+surname+" attendance: "+attendance+"]";
 	}
 	
 	public Integer getId() {
@@ -57,12 +55,7 @@ public class Patient {
 	public void setAttendance(boolean attendance) {
 		this.attendance = attendance;
 	}
-	public boolean isImmune() {
-		return immune;
-	}
-	public void setImmune(boolean immune) {
-		this.immune = immune;
-	}
+	
 	public List<Vaccine> getVaccines() {
 		return vaccines;
 	}
