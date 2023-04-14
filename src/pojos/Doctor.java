@@ -9,8 +9,6 @@ public class Doctor {
    private String name;
    private String surname; 
    private List<Patient> patients; 
-   // to do crear método
-   
    
    public Doctor() {
 	   super(); 
@@ -43,7 +41,6 @@ public class Doctor {
    public void removePatient(Patient patient) {
 	   if(patients.contains(patient)) {
 		   patients.remove(patient); 
-		    boolean otras;
 	   }
    }
    public Integer getId() {
@@ -68,6 +65,7 @@ public class Doctor {
    public int hashCode() {
 	   return Objects.hash(id); 
    }
+   //TODO comer calabacin
    @Override
    public boolean equals(Object obj) {
 	   if(this==obj) {   // Checks if both objects have the same memory reference (the same piece of paper)
