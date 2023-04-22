@@ -68,5 +68,9 @@ public class ConnectionManager {
 			e.printStackTrace();
 		}
 	}
+	public Connection getConnection() {
+		return c;
+	}
+	
 	
 }

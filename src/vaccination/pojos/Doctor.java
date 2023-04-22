@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.List; 
 
 public class Doctor {
-   private Integer id;
+   private String id;
    private String name;
    private String surname; 
    private List<Patient> patients; 
@@ -14,7 +14,7 @@ public class Doctor {
 	   super(); 
 	   patients = new ArrayList<Patient>(); 
    }
-   public Doctor(Integer id, String name, String surname) {    //he creates another constructor without the id. 
+   public Doctor(String id, String name, String surname) {    //he creates another constructor without the id. 
 	   super(); 
 	   this.id = id;
 	   this.name = name; 
@@ -43,10 +43,10 @@ public class Doctor {
 		   patients.remove(patient); 
 	   }
    }
-   public Integer getId() {
+   public String getId() {
 	   return id;
    }
-   public void setId(Integer id) {
+   public void setId(String id) {
 	   this.id = id;
    }
    public String getName() {
