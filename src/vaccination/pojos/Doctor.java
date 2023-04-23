@@ -8,7 +8,7 @@ public class Doctor {
    private String id;
    private String name;
    private String surname; 
-   private List<Patient> patients; 
+   private List<Patient> patients;      
    
    public Doctor() {
 	   super(); 

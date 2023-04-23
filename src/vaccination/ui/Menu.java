@@ -3,8 +3,10 @@ package vaccination.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import vaccination.ifaces.DoctorManager;
+import vaccination.ifaces.VaccineManager;
 import vaccination.jdbc.ConnectionManager;
 import vaccination.jdbc.JDBCDoctorManager;
 import vaccination.pojos.Doctor;
@@ -13,6 +15,7 @@ import vaccination.pojos.Doctor;
 public class Menu {
 	 
 	private static DoctorManager doctorMan; 
+	private static VaccineManager vaccineMan; 
 
 	 private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in)); 
 	 
@@ -108,6 +111,20 @@ public class Menu {
 	 
 	 }
 
+	 public static void selectDoctor() throws IOException{
+		 System.out.println("Please, tell me the doctor's name: ");
+		 String name = r.readLine();
+		 List<Doctor> listDoctors = doctorMan.searchDoctorByName(name); 
+		 System.out.println(listDoctors); 
+		 System.out.println("Choose which one it is, type its ID: ");
+		 String id = r.readLine(); 
+		 ownerMenu(id); 
+	 }
+
+	private static void ownerMenu(String id) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
 
