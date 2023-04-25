@@ -4,7 +4,7 @@ public class Vaccine {
 
 	private String name; 
     private Integer dose; 
-    private Patient patient; 
+    private Patient patient;
     
     //nose si es esta clase hay que poner hashcode y equals porque un paciente se puede poner la misma vacuna dos veces 
     

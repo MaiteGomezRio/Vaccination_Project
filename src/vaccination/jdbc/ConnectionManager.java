@@ -71,6 +71,13 @@ public class ConnectionManager {
 	public Connection getConnection() {
 		return c;
 	}
-	
+	public void closeConnection() {
+		try {
+			c.close();
+		} catch (SQLException e) {
+			System.out.println("Database error.");
+			e.printStackTrace();
+		}
+	}
 	
 }

@@ -9,13 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vaccination.ifaces.DoctorManager;
-import vaccination.pojos.Doctor; 
+import vaccination.pojos.Doctor;
+import vaccination.pojos.Patient; 
 
 public class JDBCDoctorManager implements DoctorManager {
 	
 	private Connection c;
 
-	public void JDBCDoctorManager(Connection c) {
+	public JDBCDoctorManager(Connection c) {
 		this.c = c;
 
 	}
@@ -57,9 +58,24 @@ public class JDBCDoctorManager implements DoctorManager {
 		return list; 
 	}
 	@Override
-	public Doctor getDoctor(String d_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Doctor getDoctor(String p_id) {
+		try {
+		String sql = "SELECT * FROM Doctor WHERE id LIKE ?";
+		PreparedStatement p = c.prepareStatement(sql); 
+		p.setString(1, p_id); 
+		ResultSet rs = p.executeQuery(); 
+        rs.next();  //since there is only one unique result.
+        String id = rs.getString("p_id"); 
+        String name = rs.getString("name"); 
+        String surname = rs.getString("surname"); 
+        Doctor doctor = new Doctor(id, name, surname); 
+        return doctor; 
+        
+		}catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		return null; 
 	}
 }
 

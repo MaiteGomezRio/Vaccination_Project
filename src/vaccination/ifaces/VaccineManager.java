@@ -11,4 +11,5 @@ public interface VaccineManager {
 	public List<Vaccine> searchVaccineByPatient(String p_id);
 	public Vaccine getVaccine(int id);
 	public void assignVaccineToPatient (String v_name, String p_id);
+
 }

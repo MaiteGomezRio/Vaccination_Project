@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Patient {
     
-	private Integer id; 
+	private String id; 
 	private String name; 
 	private String surname; 
 	private boolean attendance; 
@@ -19,11 +19,12 @@ public class Patient {
 		super(); 
 		vaccines = new ArrayList<Vaccine>(); 
 	}
-	public Patient(Integer id, String name, String surname, Boolean attendance) {
+	public Patient(String id, String name, String surname, Boolean attendance) {
 		this.id = id; 
 		this.name = name; 
 		this.surname = surname;
-		this.attendance = attendance; 		
+		this.attendance = attendance; 
+		this.doctor = doctor;
 		vaccines = new ArrayList<Vaccine>();  //ALWAYS INITIALIZE THE LISTS  
 	}
 	@Override 
@@ -31,10 +32,10 @@ public class Patient {
 		return "Patient [id: "+id+", name: "+name+" ,surname: "+surname+" attendance: "+attendance+"]";
 	}
 	
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getName() {
