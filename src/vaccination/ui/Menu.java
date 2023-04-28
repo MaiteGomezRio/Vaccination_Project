@@ -172,7 +172,7 @@ public class Menu {
 					break;
 				}
 				case 3:{
-					checkVaccinesByPatient(id); 
+					checkVaccinesOfPatient(id); 
 					break;
 				}
 				case 0: {
@@ -191,7 +191,7 @@ public class Menu {
 	 
      public static void registerVaccine(String id) throws IOException {   //vaccines are added by the doctor, not the manager.
 
-    	 //in this method we are registering a vaccine and linkin it to its doctor.
+    	 //in this method we are registering a vaccine and linking it to its doctor.
     	 //This is what he does, but we are linking it to the patient, but the patient cant add vaccines so i dont understand. 
 		System.out.println("Please, introduce the following information: "); 
 		System.out.println("name: ");
@@ -232,14 +232,15 @@ public class Menu {
     			 switch(choice) {
     			 case 1:{
     				 assignVaccine(String p_id);			 
-    				 break;
-    			 }case 2:{
+    				 break;}
+    			 case 2:{
     				 removeVaccine(String name);
-    				 break;
-    			 }case 0: {
-    				 return; 
+    				 break;}
+    			 case 0:{
+    				 return;
     			 }
     			 }
+    			 
     		 }catch(NumberFormatException e) {
     				 System.out.println("You did not type a number.");
     				 e.printStackTrace();
