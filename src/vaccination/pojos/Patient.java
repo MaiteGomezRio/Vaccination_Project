@@ -1,16 +1,20 @@
 package vaccination.pojos; 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects; 
 
-public class Patient {
+public class Patient implements Serializable{
     
+	private static final long serialVersionUID = 3148378678755598680L;
 	private String id; 
 	private String name; 
 	private String surname; 
 	private List<Vaccine> vaccines;
 	private Doctor doctor; 
+	private Disease disease;
+    private Condition condition; 
 
 	
 	
@@ -18,17 +22,17 @@ public class Patient {
 		super(); 
 		vaccines = new ArrayList<Vaccine>(); 
 	}
-	public Patient(String id, String name, String surname, Boolean attendance) {
+	public Patient(String id, String name, String surname, Disease disease, Condition condition) {
 		this.id = id; 
 		this.name = name; 
 		this.surname = surname;
-		this.attendance = attendance; 
-		this.doctor = doctor;
 		vaccines = new ArrayList<Vaccine>();  //ALWAYS INITIALIZE THE LISTS  
+		this.disease = disease;
+		this.condition = condition; 
 	}
 	@Override 
 	public String toString() {
-		return "Patient [id: "+id+", name: "+name+" ,surname: "+surname+" attendance: "+attendance+"]";
+		return "Patient [id: "+id+", name: "+name+" ,surname: "+surname+"]";
 	}
 	
 	public String getId() {
@@ -49,13 +53,6 @@ public class Patient {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	public boolean isAttendance() {
-		return attendance;
-	}
-	public void setAttendance(boolean attendance) {
-		this.attendance = attendance;
-	}
-	
 	public List<Vaccine> getVaccines() {
 		return vaccines;
 	}
