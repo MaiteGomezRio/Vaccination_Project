@@ -25,7 +25,13 @@ public class Patient implements Serializable{
 	public Patient(String id) {
 		this.id = id; 	
 		vaccines = new ArrayList<Vaccine>();  //ALWAYS INITIALIZE THE LISTS  
-	
+	}
+	public Patient(String id, String name, String surname) {
+		this.id = id; 
+		this.name = name; 
+		this.surname = surname;
+		vaccines = new ArrayList<Vaccine>();  //ALWAYS INITIALIZE THE LISTS  
+
 	}
 	public Patient(String id, String name, String surname, Disease disease, Condition condition) {
 		this.id = id; 
@@ -34,6 +40,15 @@ public class Patient implements Serializable{
 		vaccines = new ArrayList<Vaccine>();  //ALWAYS INITIALIZE THE LISTS  
 		this.disease = disease;
 		this.condition = condition; 
+	}
+	public Patient(String id, String name, String surname, Doctor doctor, Disease disease, Condition condition) {
+		this.id = id; 
+		this.name = name; 
+		this.surname = surname;
+		vaccines = new ArrayList<Vaccine>();  //ALWAYS INITIALIZE THE LISTS  
+		this.disease = disease;
+		this.condition = condition; 
+		this.doctor = doctor; 
 	}
 	@Override 
 	public String toString() {
