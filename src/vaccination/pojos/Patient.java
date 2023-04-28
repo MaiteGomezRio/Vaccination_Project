@@ -9,11 +9,9 @@ public class Patient {
 	private String id; 
 	private String name; 
 	private String surname; 
-	private boolean attendance; 
 	private List<Vaccine> vaccines;
 	private Doctor doctor; 
 	
-	//nose como enlazar con disease y con condition 
 	
 	public Patient () {
 		super(); 

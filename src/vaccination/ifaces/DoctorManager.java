@@ -1,6 +1,5 @@
 package vaccination.ifaces;
 
-import java.sql.Connection;
 import java.util.List;
 
 import vaccination.pojos.Doctor;
