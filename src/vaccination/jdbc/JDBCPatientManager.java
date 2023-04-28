@@ -35,7 +35,7 @@ public class JDBCPatientManager implements PatientManager {
 		}
 		//TODO  when inserting a patient, shoud we insert it also on the table patientDoctor, and patientVaccine?
 	}
-	}
+
 	@Override
 	public List<Patient> searchPatientByName(String name) {
 		List<Patient> list = new ArrayList<Patient>(); 
@@ -59,7 +59,7 @@ public class JDBCPatientManager implements PatientManager {
 		}
 		return list; 
 	}
-}
+
 	@Override
 	public Patient getPatient(String p_id) {
 		try {

@@ -1,6 +1,8 @@
-package vaccination.pojos; 
+package vaccination.pojos;
 
-public class Vaccine {
+import java.io.Serializable;
+
+public class Vaccine implements Serializable{
 
 	private String name; 
     private Integer dose; 

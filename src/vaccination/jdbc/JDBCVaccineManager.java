@@ -69,7 +69,7 @@ public class JDBCVaccineManager implements VaccineManager {
 			}
 			return list; 
 		}
-	}
+	
 
 	@Override
 	public Vaccine getVaccine(String name) {    
