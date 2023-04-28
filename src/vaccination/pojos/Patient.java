@@ -12,6 +12,7 @@ public class Patient {
 	private boolean attendance; 
 	private List<Vaccine> vaccines;
 	private Doctor doctor; 
+
 	
 	//nose como enlazar con disease y con condition 
 	
@@ -68,6 +69,18 @@ public class Patient {
 	}
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
+	}
+	public Condition getCondition() {
+		return condition;
+	}
+	public void setCondition(Condition condition) {
+		this.condition = condition;
+	}
+	public Disease getDisease() {
+		return disease;
+	}
+	public void setDisease(Disease disease) {
+		this.disease = disease;
 	}
 	@Override
 	public int hashCode() {
