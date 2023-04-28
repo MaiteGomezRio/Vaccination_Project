@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vaccination.ifaces.VaccineManager;
+import vaccination.pojos.Patient;
 import vaccination.pojos.Vaccine;
 
 public class JDBCVaccineManager implements VaccineManager {
@@ -38,9 +39,9 @@ public class JDBCVaccineManager implements VaccineManager {
 	public void insertVaccine(Vaccine vaccine) {
 		try {
 			Statement s = c.createStatement();
-			String sql = "INSERT INTO Vaccine (id, name, dose, patient) VALUES ('"vaccine.getId()+"',"+vaccine.getName() + "',"
-					+vaccine.getDose()+",'"vaccine.getPatient()"')"; 
-			s.executeUpdate(sql; 
+			String sql = "INSERT INTO Vaccine (name, dose) VALUES ('"+vaccine.getName() + "','"
+					+vaccine.getDose()+"')"; 
+			s.executeUpdate(sql); 
 			s.close();
 		}catch(SQLException e ) {
 			System.out.println("database exception");
@@ -48,6 +49,7 @@ public class JDBCVaccineManager implements VaccineManager {
 		}
 		
 	}
+	
 	@Override
 	public List<Vaccine> searchVaccinesByPatient(String p_id) {
 		List<Vaccine> list = new ArrayList<Vaccine>(); 
@@ -56,11 +58,11 @@ public class JDBCVaccineManager implements VaccineManager {
 				PreparedStatement p = c.prepareStatement(sql); 
 				p.setString(1, "%"+p_id+"%");   // the percentages are so it looks for every name that contains that word. Ex: if you type dri it looks for rodrigo too. 
 				ResultSet rs = p.executeQuery(); 
-				while(rs.next()) {
-					Integer id = rs.getInt("id");
+				while(rs.next()) {					
 					String n = rs.getString("name"); 
 					Integer dose = rs.getInt("dose");
-					Vaccine v = new Vaccine(id, name, dose, patient);   //TODO here i dont know if i have to put the patient
+					Patient patient=new Patient(p_id);
+					Vaccine v = new Vaccine(n, dose, patient);  
 					list.add(v); 
 				}
 			}catch(SQLException e) {
@@ -74,7 +76,7 @@ public class JDBCVaccineManager implements VaccineManager {
 	@Override
 	public Vaccine getVaccine(String name) {    
 	    try {
-	    	String sql = "SELECT * FROM Vaccine WHERE name LIKE ?"
+	    	String sql = "SELECT * FROM Vaccine WHERE name LIKE ?";
 	        PreparedStatement p = c.prepareStatement(sql); 
 	        p.setString(1, name);
 	        ResultSet rs = p.executeQuery();
@@ -82,8 +84,9 @@ public class JDBCVaccineManager implements VaccineManager {
 	        Integer id = rs.getInt("id"); 
 	        String n = rs.getString("name"); 
 	        Integer dose = rs.getInt("dose"); 
+	        
 	        Vaccine v = new Vaccine(id, name, dose, patient); 
-	        return patient; 
+	        return v; 
 	        //TODO i dont know if i should get the patient
 	    }catch(SQLException e) {
 	    	System.out.println("database error");
@@ -105,5 +108,23 @@ public class JDBCVaccineManager implements VaccineManager {
    		 e.printStackTrace();
    	 }
     }
+
+	@Override
+	public List<Vaccine> searchVaccineByPatient(String p_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Vaccine getVaccine(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void assignVaccineToPatient(String v_name, String p_id) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

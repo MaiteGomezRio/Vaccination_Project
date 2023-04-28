@@ -16,7 +16,7 @@ public class Vaccine implements Serializable{
     public Vaccine(String name, Integer dose, Patient patient) {
     	this.name = name; 
     	this.dose = dose; 
-    	this.patient = patient; 
+    	this.patient = patient; // Is a N to N relationship 
     }
     public String getName() {
 		return name;

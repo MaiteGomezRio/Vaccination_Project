@@ -22,6 +22,11 @@ public class Patient implements Serializable{
 		super(); 
 		vaccines = new ArrayList<Vaccine>(); 
 	}
+	public Patient(String id) {
+		this.id = id; 	
+		vaccines = new ArrayList<Vaccine>();  //ALWAYS INITIALIZE THE LISTS  
+	
+	}
 	public Patient(String id, String name, String surname, Disease disease, Condition condition) {
 		this.id = id; 
 		this.name = name; 
