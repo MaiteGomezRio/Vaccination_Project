@@ -21,7 +21,6 @@ public class Patient {
 		this.id = id; 
 		this.name = name; 
 		this.surname = surname;
-		this.attendance = attendance; 
 		this.doctor = doctor;
 		vaccines = new ArrayList<Vaccine>();  //ALWAYS INITIALIZE THE LISTS  
 	}
