@@ -106,4 +106,22 @@ public class JDBCVaccineManager implements VaccineManager {
    	 }
     }
 
+	@Override
+	public List<Vaccine> searchVaccineByPatient(String p_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Vaccine getVaccine(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void assignVaccineToPatient(String v_name, String p_id) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

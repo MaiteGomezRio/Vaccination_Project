@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vaccination.ifaces.DoctorManager;
-import vaccination.pojos.Doctor;
-import vaccination.pojos.Patient; 
+import vaccination.pojos.Doctor; 
 
 public class JDBCDoctorManager implements DoctorManager {
 	
@@ -47,9 +46,8 @@ public class JDBCDoctorManager implements DoctorManager {
 				String id = rs.getString("id"); 
 				String n = rs.getString("name"); 
 				String surname = rs.getString("surname");
-				Doctor d = new Doctor(id, n, surname); 
-				//I DO NOT HAVE THE LIST OF PATIENTS 
-				list.add(d); 
+				Doctor doctor = new Doctor(id, n, surname); 
+				list.add(doctor); 
 			}
 		}catch(SQLException e) {
 			System.out.println("database error");

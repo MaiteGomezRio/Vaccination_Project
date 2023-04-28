@@ -21,6 +21,12 @@ public class Doctor implements Serializable {
 		super();
 		patients = new ArrayList<Patient>();
 	}
+	
+	public Doctor(String id) {
+		this.id=id;
+		this.name=this.getName();
+		this.surname=this.getSurname();
+	}
 
 	public Doctor(String id, String name, String surname) { 
 		super();
@@ -103,4 +109,6 @@ public class Doctor implements Serializable {
 	// are the same.
 
 	// TODO finish class
+	
+	
 }
