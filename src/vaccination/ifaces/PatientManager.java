@@ -9,7 +9,8 @@ public interface PatientManager {
 
 	public void insertPatient(Patient patient);
 	public List<Patient> searchPatientByName(String name);
-	public Patient getPatient(String p_id);
+	public Patient getPatientBeingAPatient(String p_id);
+	public Patient getPatientBeingADoctor(String p_id);
 	
 	//TODO should we add a method to remove a patient ? 
 	//TODO should we addd a method searchPatientsByDoctor that gives us the patients that a doctor has? 
