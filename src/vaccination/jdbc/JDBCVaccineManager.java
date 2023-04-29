@@ -10,6 +10,7 @@ import java.util.List;
 
 
 import vaccination.ifaces.VaccineManager;
+import vaccination.pojos.Doctor;
 import vaccination.pojos.Patient;
 import vaccination.pojos.Vaccine;
 
@@ -35,7 +36,7 @@ public class JDBCVaccineManager implements VaccineManager {
 			e.printStackTrace();
 		}
 	}
-
+    //TODO if we remove the vaccine do we also have to remove it from the patient (?) i think i could create a method called removeVaccineFromPatient and call it from this method. 
 	@Override
 	public void insertVaccine(Vaccine vaccine) {
 		try {
@@ -55,7 +56,7 @@ public class JDBCVaccineManager implements VaccineManager {
 	public List<Vaccine> searchVaccinesByPatient(String p_id) {
 		List<Vaccine> list = new ArrayList<Vaccine>(); 
 			try {
-				String sql = "SELECT name FROM Vaccine JOIN Patient ON Vaccine.patient.id = Patient.id WHERE patient.id LIKE ?"; 
+				String sql = "SELECT name FROM Patient_Vaccine WHERE p_id LIKE ?"; 
 				PreparedStatement p = c.prepareStatement(sql); 
 				p.setString(1, "%"+p_id+"%");   // the percentages are so it looks for every name that contains that word. Ex: if you type dri it looks for rodrigo too. 
 				ResultSet rs = p.executeQuery(); 
@@ -72,8 +73,6 @@ public class JDBCVaccineManager implements VaccineManager {
 			}
 			return list; 
 		}
-	
-
 	@Override
 	public Vaccine getVaccine(String name) {    
 	    try {
@@ -81,14 +80,14 @@ public class JDBCVaccineManager implements VaccineManager {
 	        PreparedStatement p = c.prepareStatement(sql); 
 	        p.setString(1, name);
 	        ResultSet rs = p.executeQuery();
-	        rs.next(); 
-	        Integer id = rs.getInt("id"); 
+	        rs.next();  
 	        String n = rs.getString("name"); 
 	        Integer dose = rs.getInt("dose"); 
-	        
-	        Vaccine v = new Vaccine(id, name, dose, patient); 
+	        String patient_id = rs.getString("p_id");
+	        Patient patient = new Patient(patient_id); 
+	        Vaccine v = new Vaccine(name, dose, patient); 
 	        return v; 
-	        //TODO i dont know if i should get the patient
+	        //TODO i dont know if i should create another method for when it is not assigned to a patient, it would be the same but without puting patient on the constructor. 
 	    }catch(SQLException e) {
 	    	System.out.println("database error");
 	    	e.printStackTrace();
@@ -96,11 +95,11 @@ public class JDBCVaccineManager implements VaccineManager {
 	}
 
     @Override
-    public void assignVaccineToPatient(int v_id, String p_id) {
+    public void assignVaccineToPatient(String v_name, String p_id) {
    	 try {
    	 String sql = "INSERT into Patient_Vaccine(v_name, p_id) WHERE VALUES (?,?)";  //TODO i think we need to create another table that relations patient with vaccine
    	 PreparedStatement p = c.prepareStatement(sql); 
-   	 p.setString(1, v_id);
+   	 p.setString(1, v_name);
    	 p.setString(2, p_id);
    	 p.executeUpdate();
    	 p.close();
@@ -114,18 +113,6 @@ public class JDBCVaccineManager implements VaccineManager {
 	public List<Vaccine> searchVaccineByPatient(String p_id) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public Vaccine getVaccine(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void assignVaccineToPatient(String v_name, String p_id) {
-		// TODO Auto-generated method stub
-		
 	}
 //TODO finish
 }
