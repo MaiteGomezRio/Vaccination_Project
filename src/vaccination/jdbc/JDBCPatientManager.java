@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import vaccination.ifaces.PatientManager;
@@ -39,8 +40,9 @@ public class JDBCPatientManager implements PatientManager {
 		//TODO  when inserting a patient, shoud we insert it also on the table patientDoctor, and patientVaccine?
 	}
 	@Override
-	public Patient searchPatientByName(String name) {
+	public List<Patient> searchPatientByName(String name) {
 		Patient patient = null;
+		List<Patient> list_patients=new LinkedList<>();
 		try {
 			String sql = "SELECT * FROM Patient WHERE name LIKE ?"; 
 			PreparedStatement p = c.prepareStatement(sql); 
@@ -53,6 +55,7 @@ public class JDBCPatientManager implements PatientManager {
 					String id = rs.getString("id"); 
 					String surname = rs.getString("surname");
 					patient = new Patient(id, name, surname); 
+					list_patients.add(patient);
 				}
 				
 			}
@@ -60,8 +63,17 @@ public class JDBCPatientManager implements PatientManager {
 			System.out.println("database error");
 			e.printStackTrace();
 		}
-		return patient; 
+		return list_patients; 
 	}
+	
+	@Override
+	public void removePatient(Patient patient) {
+		
+	}
+	
+	
+	
+	
 	@Override
 	//This method is used by the patient, when he wants to see his information. 
 	public Patient getPatientBeingAPatient(String p_id) {
@@ -142,7 +154,7 @@ public class JDBCPatientManager implements PatientManager {
 			p.setString(1, d_type); 
 			ResultSet rs = p.executeQuery(); 
 	        String type = rs.getString("type"); 
-	        Disease disease=new Disease(d_type);
+	        Disease disease=new Disease(type);
 	        return disease; 
 	        
 			}catch(SQLException e) {
