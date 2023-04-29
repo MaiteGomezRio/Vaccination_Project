@@ -30,14 +30,14 @@ public class Patient implements Serializable{
 		this.id = id; 
 		this.name = name; 
 		this.surname = surname;
-		vaccines = new ArrayList<Vaccine>();  //ALWAYS INITIALIZE THE LISTS  
+		vaccines = new ArrayList<Vaccine>();  
 
 	}
 	public Patient(String id, String name, String surname, Disease disease, Condition condition) {
 		this.id = id; 
 		this.name = name; 
 		this.surname = surname;
-		vaccines = new ArrayList<Vaccine>();  //ALWAYS INITIALIZE THE LISTS  
+		vaccines = new ArrayList<Vaccine>(); 
 		this.disease = disease;
 		this.condition = condition; 
 	}
@@ -45,11 +45,12 @@ public class Patient implements Serializable{
 		this.id = id; 
 		this.name = name; 
 		this.surname = surname;
-		vaccines = new ArrayList<Vaccine>();  //ALWAYS INITIALIZE THE LISTS  
+		vaccines = new ArrayList<Vaccine>();   
 		this.disease = disease;
 		this.condition = condition; 
 		this.doctor = doctor; 
 	}
+	
 	@Override 
 	public String toString() {
 		return "Patient [id: "+id+", name: "+name+" ,surname: "+surname+"]";
@@ -112,5 +113,6 @@ public class Patient implements Serializable{
 		Patient other = (Patient) obj;
 		return Objects.equals(id, other.id);
 	}
+	
 	
 }

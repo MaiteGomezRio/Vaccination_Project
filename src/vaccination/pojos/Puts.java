@@ -5,6 +5,10 @@ import java.time.LocalDate;
 
 public class Puts implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8007500555158752133L;
 	private boolean attendance;
 	private LocalDate date;
 

@@ -39,28 +39,28 @@ public class JDBCPatientManager implements PatientManager {
 		//TODO  when inserting a patient, shoud we insert it also on the table patientDoctor, and patientVaccine?
 	}
 	@Override
-	public List<Patient> searchPatientByName(String name) {
-		List<Patient> list = new ArrayList<Patient>(); 
+	public Patient searchPatientByName(String name) {
+		Patient patient = null;
 		try {
 			String sql = "SELECT * FROM Patient WHERE name LIKE ?"; 
 			PreparedStatement p = c.prepareStatement(sql); 
 			p.setString(1, "%"+name+"%");   // the percentages are so it looks for every name that contains that word. Ex: if you type dri it looks for rodrigo too. 
 			ResultSet rs = p.executeQuery(); 
+			
+			
 			while(rs.next()) {
-				String id = rs.getString("id"); 
-				String n = rs.getString("name"); 
-				String surname = rs.getString("surname");
-				//Doctor doctor = rs.getDoctor("doctor"); 
-				//Disease disease = rs.getDisease("disease"); 
-				//Condition condition = rs.getCondition("condition");
-				Patient patient = new Patient(id, n, surname); 
-				list.add(patient); 
+				if(name.equals(patient.getName())) {
+					String id = rs.getString("id"); 
+					String surname = rs.getString("surname");
+					patient = new Patient(id, name, surname); 
+				}
+				
 			}
 		}catch(SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
 		}
-		return list; 
+		return patient; 
 	}
 	@Override
 	//This method is used by the patient, when he wants to see his information. 
@@ -114,4 +114,42 @@ public class JDBCPatientManager implements PatientManager {
 		}
 		return null; 
 	}
+
+	@Override
+	public Condition getCondition(String c_name){
+		try {
+			String sql = "SELECT * FROM Condition WHERE name LIKE ?";
+			PreparedStatement p = c.prepareStatement(sql); 
+			p.setString(1, c_name); 
+			ResultSet rs = p.executeQuery(); 
+	        String name = rs.getString("name"); 
+	        Condition condition=new Condition(c_name);
+	        return condition; 
+	        
+			}catch(SQLException e) {
+				System.out.println("database error");
+				e.printStackTrace();
+			}
+			return null; 
+	}
+	
+
+	@Override 
+	public Disease getDisease(String d_type) {
+		try {
+			String sql = "SELECT * FROM Disease WHERE name LIKE ?";
+			PreparedStatement p = c.prepareStatement(sql); 
+			p.setString(1, d_type); 
+			ResultSet rs = p.executeQuery(); 
+	        String type = rs.getString("type"); 
+	        Disease disease=new Disease(d_type);
+	        return disease; 
+	        
+			}catch(SQLException e) {
+				System.out.println("database error");
+				e.printStackTrace();
+			}
+			return null; 
+	}
+	
 }

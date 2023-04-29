@@ -2,7 +2,7 @@ package vaccination.pojos;
 
 public class Condition {
 	
-	private String type;
+	protected String type;
 	
 	
 

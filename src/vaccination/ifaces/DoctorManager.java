@@ -3,9 +3,6 @@ package vaccination.ifaces;
 import java.util.List;
 
 import vaccination.pojos.Doctor;
-import vaccination.pojos.Patient;
-
-
 
 public interface DoctorManager {
 	public void insertDoctor(Doctor doctor);
