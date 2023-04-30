@@ -151,8 +151,10 @@ public class Menu {
 		String surname = r.readLine();
 		System.out.println("ID: ");
 		String id = r.readLine();
+		System.out.println("Have you had any disease? "); 
 		String d_name = r.readLine();
 		Disease disease = patientMan.getDisease(d_name);
+		System.out.println("Do you have/ Have you had any relevant condition, such as being pregnant, had a stroke, allergies....? "); 
 		String c_name = r.readLine();
 		Condition condition = patientMan.getCondition(c_name);
 		// the database associates randomly the doctor to the patients???
@@ -190,7 +192,10 @@ public class Menu {
 	
 		System.out.println("Introduce your name: ");
 		String patient_name=r.readLine();
-		List<Patient> patient=patientMan.searchPatientByName(patient_name);
+		List<Patient> list=patientMan.searchPatientByName(patient_name);
+		System.out.println(list); 
+		System.out.println("Choose which one it is, type its ID: "); 
+		Integer id = Integer.parseInt(r.readLine());
    	 	System.out.println("The vaccines of the patient are: ");
    	 	List<Vaccine> vaccines = vaccineMan.searchVaccinesByPatient(((Patient) patient).getId()); 
    	 	System.out.println(vaccines);
@@ -200,12 +205,10 @@ public class Menu {
    	 	if(r.readLine()!=null) {
    	 		
    	 		vaccineMenu(v_name); 
-   	 	else {
+   	 	}else {
    		 return;
    	 	}
     }
-	}
-	
 	public static void assignVaccine(String patientId) throws IOException {
 
 		System.out.println("Tell me the name of the vaccine ");
@@ -249,7 +252,7 @@ public class Menu {
 				}
 				case 2: {
 					selectVaccines();// TODO create a method that returns the list of vaccines in the databae
-					break;
+					break;           //TODO create method selectVaccines()
 				}
 				case 3: {
 					checkVaccinesOfPatient();

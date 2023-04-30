@@ -1,7 +1,10 @@
 package vaccination.pojos;
 
-public class Disease {
+import java.io.Serializable;
 
+public class Disease implements Serializable{
+
+	private static final long serialVersionUID = -6053416530349593639L;
 	private String name;
 
 	public Disease(String name) {

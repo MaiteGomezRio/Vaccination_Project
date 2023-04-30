@@ -48,11 +48,9 @@ public class JDBCPatientManager implements PatientManager {
 			PreparedStatement p = c.prepareStatement(sql); 
 			p.setString(1, "%"+name+"%");   // the percentages are so it looks for every name that contains that word. Ex: if you type dri it looks for rodrigo too. 
 			ResultSet rs = p.executeQuery(); 
-			
-			
 			while(rs.next()) {
 				if(name.equals(patient.getName())) {
-					String id = rs.getString("id"); 
+					int id = rs.getInt("id"); 
 					String surname = rs.getString("surname");
 					patient = new Patient(id, name, surname); 
 					list_patients.add(patient);
@@ -76,14 +74,13 @@ public class JDBCPatientManager implements PatientManager {
 	
 	@Override
 	//This method is used by the patient, when he wants to see his information. 
-	public Patient getPatientBeingAPatient(String p_id) {
+	public Patient getPatientBeingAPatient(int p_id) {
 		try {
 		String sql = "SELECT * FROM Patient WHERE id LIKE ?";
 		PreparedStatement p = c.prepareStatement(sql); 
-		p.setString(1, p_id); 
+		p.setInt(1, p_id); 
 		ResultSet rs = p.executeQuery(); 
         rs.next();  //since there is only one unique result.
-        String id = rs.getString("p_id"); 
         String name = rs.getString("name"); 
         String surname = rs.getString("surname"); 
         String doctor_id = rs.getString("doctor_id");
@@ -92,7 +89,7 @@ public class JDBCPatientManager implements PatientManager {
         Disease disease = new Disease(d_name); 
         String c_name = rs.getString("c_name"); 
         Condition condition = new Condition(c_name); 
-        Patient patient = new Patient(id, name, surname,doctor, disease, condition); 
+        Patient patient = new Patient(p_id, name, surname,doctor, disease, condition); 
         return patient; 
         
 		}catch(SQLException e) {
@@ -103,21 +100,20 @@ public class JDBCPatientManager implements PatientManager {
 	}
 	@Override
 	//This method is used by the doctor, when he wants to see the information of one patient. 
-	public Patient getPatientBeingADoctor(String p_id) {
+	public Patient getPatientBeingADoctor(int p_id) {
 		try {
 		String sql = "SELECT * FROM Patient WHERE id LIKE ?";
 		PreparedStatement p = c.prepareStatement(sql); 
-		p.setString(1, p_id); 
+		p.setInt(1, p_id); 
 		ResultSet rs = p.executeQuery(); 
         rs.next();  //since there is only one unique result.
-        String id = rs.getString("p_id"); 
         String name = rs.getString("name"); 
         String surname = rs.getString("surname"); 
         String d_name = rs.getString("d_name");
         Disease disease = new Disease(d_name); 
         String c_name = rs.getString("c_name"); 
         Condition condition = new Condition(c_name); 
-        Patient patient = new Patient(id, name, surname, disease, condition); 
+        Patient patient = new Patient(p_id, name, surname, disease, condition); 
         return patient; 
         
 		}catch(SQLException e) {
@@ -127,7 +123,7 @@ public class JDBCPatientManager implements PatientManager {
 		return null; 
 	}
 
-	@Override
+	@Override//i think this method will make sense later, when we link condition to patient and vaccine
 	public Condition getCondition(String c_name){
 		try {
 			String sql = "SELECT * FROM Condition WHERE name LIKE ?";
@@ -146,15 +142,15 @@ public class JDBCPatientManager implements PatientManager {
 	}
 	
 
-	@Override 
-	public Disease getDisease(String d_type) {
+	@Override   //i think this method will make sense later, when we link disease to patient and vaccine
+	public Disease getDisease(String name) {
 		try {
 			String sql = "SELECT * FROM Disease WHERE name LIKE ?";
 			PreparedStatement p = c.prepareStatement(sql); 
-			p.setString(1, d_type); 
+			p.setString(1, name); 
 			ResultSet rs = p.executeQuery(); 
-	        String type = rs.getString("type"); 
-	        Disease disease=new Disease(type);
+	        String name = rs.getString("name"); 
+	        Disease disease=new Disease(name);
 	        return disease; 
 	        
 			}catch(SQLException e) {

@@ -1,7 +1,10 @@
 package vaccination.pojos;
 
-public class Condition {
+import java.io.Serializable;
+
+public class Condition implements Serializable{
 	
+	private static final long serialVersionUID = 2436972428011759518L;
 	protected String type;
 	
 	

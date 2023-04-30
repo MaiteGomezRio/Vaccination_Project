@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Patient implements Serializable{
     
 	private static final long serialVersionUID = 3148378678755598680L;
-	private String id; 
+	private int id; 
 	private String name; 
 	private String surname; 
 	private List<Vaccine> vaccines;
@@ -22,18 +22,18 @@ public class Patient implements Serializable{
 		super(); 
 		vaccines = new ArrayList<Vaccine>(); 
 	}
-	public Patient(String id) {
+	public Patient(int id) {
 		this.id = id; 	
 		vaccines = new ArrayList<Vaccine>();  //ALWAYS INITIALIZE THE LISTS  
 	}
-	public Patient(String id, String name, String surname) {
+	public Patient(int id, String name, String surname) {
 		this.id = id; 
 		this.name = name; 
 		this.surname = surname;
 		vaccines = new ArrayList<Vaccine>();  
 
 	}
-	public Patient(String id, String name, String surname, Disease disease, Condition condition) {
+	public Patient(int id, String name, String surname, Disease disease, Condition condition) {
 		this.id = id; 
 		this.name = name; 
 		this.surname = surname;
@@ -41,7 +41,7 @@ public class Patient implements Serializable{
 		this.disease = disease;
 		this.condition = condition; 
 	}
-	public Patient(String id, String name, String surname, Doctor doctor, Disease disease, Condition condition) {
+	public Patient(int id, String name, String surname, Doctor doctor, Disease disease, Condition condition) {
 		this.id = id; 
 		this.name = name; 
 		this.surname = surname;
@@ -56,10 +56,10 @@ public class Patient implements Serializable{
 		return "Patient [id: "+id+", name: "+name+" ,surname: "+surname+"]";
 	}
 	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getName() {

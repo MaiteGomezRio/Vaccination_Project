@@ -75,5 +75,10 @@ public class JDBCDoctorManager implements DoctorManager {
 		}
 		return null; 
 	}
+	@Override
+	public void removeDoctor(Doctor doctor) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 

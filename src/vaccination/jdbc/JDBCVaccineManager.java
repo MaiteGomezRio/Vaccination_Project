@@ -54,7 +54,7 @@ public class JDBCVaccineManager implements VaccineManager {
 	}
 
 	@Override
-	public List<Vaccine> searchVaccinesByPatient(String p_id) {
+	public List<Vaccine> searchVaccinesByPatient(int p_id) {
 		List<Vaccine> list = new ArrayList<Vaccine>();
 		try {
 			String sql = "SELECT name FROM Patient_Vaccine WHERE p_id LIKE ?";
@@ -113,6 +113,26 @@ public class JDBCVaccineManager implements VaccineManager {
 			System.out.println("database error");
 			e.printStackTrace();
 		}
+	}
+	@Override
+	public List<Vaccine> getAllVaccines(){
+		List<Vaccine> list = new ArrayList<Vaccine>(); 
+		try {
+		   String sql = "SELECT * FROM Vaccine"; 
+		   PreparedStatement p = c.prepareStatement(sql); 
+		   ResultSet rs = p.executeQuery(); 
+			while (rs.next()) {
+				String name = rs.getString("name");
+				Integer dose = rs.getInt("dose");
+				Vaccine v = new Vaccine(name, dose);
+				list.add(v);
+			}
+		   
+		}catch(SQLException e) {
+			System.out.println("database error"); 
+			e.printStackTrace();
+		}
+		return list; 
 	}
 
 	

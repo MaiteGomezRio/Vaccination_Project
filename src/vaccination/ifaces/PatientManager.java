@@ -13,8 +13,8 @@ public interface PatientManager {
 	public void insertPatient(Patient patient);
 	public void removePatient(Patient patient);
 	public List<Patient> searchPatientByName(String name);
-	public Patient getPatientBeingAPatient(String p_id);
-	public Patient getPatientBeingADoctor(String p_id);
+	public Patient getPatientBeingAPatient(int p_id);
+	public Patient getPatientBeingADoctor(int p_id);
 	public Condition getCondition(String c_name);
 	
 	//TODO should we add a method to remove a patient ? 
