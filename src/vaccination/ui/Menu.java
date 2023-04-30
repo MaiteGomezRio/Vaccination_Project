@@ -138,7 +138,7 @@ public class Menu {
 		List<Doctor> listDoctors = doctorMan.searchDoctorByName(name);
 		System.out.println(listDoctors);
 		System.out.println("Choose which one it is, type its ID: ");
-		String id = r.readLine();
+		int id = Integer.parseInt(r.readLine());
 		doctorMenu(id);
 	}
 
@@ -150,7 +150,7 @@ public class Menu {
 		System.out.println("Surname: ");
 		String surname = r.readLine();
 		System.out.println("ID: ");
-		String id = r.readLine();
+	    int id = Integer.parseInt(r.readLine());
 		System.out.println("Have you had any disease? "); 
 		String d_name = r.readLine();
 		Disease disease = patientMan.getDisease(d_name);
@@ -163,57 +163,45 @@ public class Menu {
 	}
 
 	public static void registerVaccine() throws IOException {
-		// in this method we are registering a vaccine and linking it to its doctor.
-
 		System.out.println("Please, introduce the following information: ");
 		System.out.println("name: ");
 		String name = r.readLine();
 		System.out.println("doses: ");
 		Integer dose = Integer.parseInt(r.readLine());
 		Vaccine vaccine = new Vaccine(name, dose);
-		// we are only registering a vaccine, when we associate it then it it linked to
-		// a patient but
-		// until then we don't need the patient
 		vaccineMan.insertVaccine(vaccine);
 	}
-
 	// used when you want to put an specific vaccine to a patient
 	public static void selectVaccines() throws IOException {
-		System.out.println("Please, tell me the vaccine's name: ");
-		String name = r.readLine();
-		List<Vaccine> listVaccines = vaccineMan.searchVaccineByName(name);
+		List<Vaccine> listVaccines = vaccineMan.getAllVaccines();
 		System.out.println(listVaccines);
-		System.out.println("Choose which one it is, type its ID: ");
-		String id = r.readLine();
-		doctorMenu(id);
 	}
 
 	public static void checkVaccinesOfPatient()throws IOException {  //this return the list of vaccines of a patient
 	
-		System.out.println("Introduce your name: ");
+		System.out.println("Introduce the patient's name: ");
 		String patient_name=r.readLine();
 		List<Patient> list=patientMan.searchPatientByName(patient_name);
 		System.out.println(list); 
 		System.out.println("Choose which one it is, type its ID: "); 
 		Integer id = Integer.parseInt(r.readLine());
    	 	System.out.println("The vaccines of the patient are: ");
-   	 	List<Vaccine> vaccines = vaccineMan.searchVaccinesByPatient(((Patient) patient).getId()); 
+   	 	List<Vaccine> vaccines = vaccineMan.searchVaccinesByPatient(id); 
    	 	System.out.println(vaccines);
-   	 	System.out.println("If you want to modify something of a specific vaccine, type it's name: "); 
+   	 	/*System.out.println("If you want to modify something of a specific vaccine, type it's name: "); 
    	 	System.out.println("If not, press enter");
    	 	String v_name = r.readLine();
    	 	if(r.readLine()!=null) {
-   	 		
    	 		vaccineMenu(v_name); 
    	 	}else {
    		 return;
-   	 	}
+   	 	}*/
     }
-	public static void assignVaccine(String patientId) throws IOException {
+	public static void assignVaccine(int patientId) throws IOException {
 
 		System.out.println("Tell me the name of the vaccine ");
 		String name = r.readLine();
-		List<Vaccine> vaccines = vaccineMan.searchVaccinesByPatient(name);
+		List<Vaccine> vaccines = vaccineMan.searchVaccinesByPatient(patientId);
 		System.out.println(vaccines);
 		vaccineMan.assignVaccineToPatient(name, patientId);
 	}
@@ -232,7 +220,7 @@ public class Menu {
 		vaccineMan.removeVaccine(v_name);
 	}
 
-	private static void doctorMenu(String id) {
+	private static void doctorMenu(int id) {
 
 		while (true) {
 			try {
@@ -241,13 +229,14 @@ public class Menu {
 				System.out.println("1. Register a new vaccine.");
 				System.out.println("2. Check vaccines");
 				System.out.println("3. Check vaccines of a patient.");
+				System.out.println("4. Assign a vaccine to a patient."); 
 				System.out.println("0. Return");
 
 				int choice = Integer.parseInt(r.readLine());
 
 				switch (choice) {
 				case 1: {
-					registerVaccine(); // the id we pass is the patient's id who is going to put that vaccine
+					registerVaccine();
 					break;
 				}
 				case 2: {

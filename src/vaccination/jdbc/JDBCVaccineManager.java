@@ -102,14 +102,13 @@ public class JDBCVaccineManager implements VaccineManager {
 			return null;
 		}
 	}
-
 	@Override
-	public void assignVaccineToPatient(String v_name, String p_id) {
+	public void assignVaccineToPatient(String v_name, int p_id) {
 		try {
 			String sql = "INSERT into Patient_Vaccine(v_name, p_id) WHERE VALUES (?,?)"; // TODO i think we need to																				// vaccine
 			PreparedStatement p = c.prepareStatement(sql);
 			p.setString(1, v_name);
-			p.setString(2, p_id);
+			p.setInt(2, p_id);
 			p.executeUpdate();
 			p.close();
 		} catch (SQLException e) {
