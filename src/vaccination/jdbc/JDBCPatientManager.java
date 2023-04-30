@@ -27,7 +27,7 @@ public class JDBCPatientManager implements PatientManager {
 	@Override
 	public void insertPatient(Patient patient) {
 		try {
-			Statement s = c.createStatement(); 
+			Statement s = c.createStatement(); //TODO change it into a PreparedSTatement?
 			String sql = "INSERT INTO Patient (id, name, surname, doctor, disease, condition) VALUES ('" + patient.getId() + "', "
 					+ patient.getName() + ", '" + patient.getSurname() + ",'"+patient.getDoctor() + 
 					patient.getDisease() + ", '"+patient.getCondition()+"')"; 

@@ -8,6 +8,7 @@ public class Vaccine implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 8790553409797612746L;
+	private int id;
 	private String name; 
     private Integer dose; 
     private Patient patient;
@@ -17,17 +18,22 @@ public class Vaccine implements Serializable{
     public Vaccine() {
     	super(); 
     }
-    public Vaccine(String name, Integer dose, Patient patient) {
+    public Vaccine( String name, Integer dose, Patient patient) {    	
     	this.name = name; 
     	this.dose = dose; 
-    	this.patient = patient; // Is a N to N relationship 
+    	this.patient = patient; // Is an N to N relationship 
     }
+    
+    
     
     public Vaccine(String name, Integer dose) {
     	this.name = name; 
     	this.dose = dose; 
     }
     
+    public Integer getId() {
+		return id;
+	}
     
     public String getName() {
 		return name;

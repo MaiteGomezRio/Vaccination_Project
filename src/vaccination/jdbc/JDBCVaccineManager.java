@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,11 +40,13 @@ public class JDBCVaccineManager implements VaccineManager {
 	@Override
 	public void insertVaccine(Vaccine vaccine) {
 		try {
-			Statement s = c.createStatement();
-			String sql = "INSERT INTO Vaccine (name, dose) VALUES ('" + vaccine.getName() + "','" + vaccine.getDose()
-					+ "')";
-			s.executeUpdate(sql);
-			s.close();
+			
+			String sql = "INSERT INTO Vaccine (name, dose)" + "VALUES (?,?)";
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setString(1,vaccine.getName());
+			p.setInt(2, vaccine.getDose());
+			p.executeUpdate();
+			p.close();
 		} catch (SQLException e) {
 			System.out.println("database exception");
 			e.printStackTrace();
@@ -54,6 +55,8 @@ public class JDBCVaccineManager implements VaccineManager {
 	}
 
 	@Override
+	//TODO should we create method search patients by vaccines, search vaccines by disease?
+	// TODO should we better search by String patient name?
 	public List<Vaccine> searchVaccinesByPatient(int p_id) {
 		List<Vaccine> list = new ArrayList<Vaccine>();
 		try {
@@ -86,14 +89,14 @@ public class JDBCVaccineManager implements VaccineManager {
 			rs.next();
 			String name = rs.getString("name");
 			Integer dose = rs.getInt("dose");
-			String patient_id = rs.getString("p_id");
-			Patient patient = new Patient(patient_id);
-			Vaccine v = new Vaccine(name, dose, patient);
+			//String patient_id = rs.getString("p_id");
+			//Patient patient = new Patient(patient_id);
+			Vaccine v = new Vaccine(name, dose);
 			return v;
 			// TODO i don't know if i should create another method for when it is not
 			// assigned to a patient, it would be the same but without putting patient on the
 			// constructor.
-		} catch (SQLException e) {
+			} catch (SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
 			return null;

@@ -12,4 +12,6 @@ public interface VaccineManager {
 	public Vaccine getVaccine(String name);//TODO not used so far
 	public void assignVaccineToPatient (String v_name, String p_id);
 	public List<Vaccine> getAllVaccines();
+//TODO searchVaccinesByDisease, searchVaccinesbyConditions	
+
 }
