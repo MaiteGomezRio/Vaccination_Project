@@ -12,7 +12,8 @@ public class Doctor implements Serializable {
 	 */
 	private static final long serialVersionUID = -4716008704423906822L;
 
-	private String id;
+	private int id;
+	private String id_document;
 	private String name;
 	private String surname;
 	private List<Patient> patients;

@@ -9,6 +9,7 @@ public class Patient implements Serializable{
     
 	private static final long serialVersionUID = 3148378678755598680L;
 	private int id; 
+	private String id_document;
 	private String name; 
 	private String surname; 
 	private List<Vaccine> vaccines;
