@@ -23,23 +23,32 @@ public class Doctor implements Serializable {
 		patients = new ArrayList<Patient>();
 	}
 	
-	public Doctor(String id) {
+	public Doctor(int id) {
 		this.id=id;
+		this.id_document=this.getId_document();
 		this.name=this.getName();
 		this.surname=this.getSurname();
 	}
 
-	public Doctor(String id, String name, String surname) { 
+	public Doctor(int id, String id_document, String name, String surname) { 
 		super();
 		this.id = id;
+		this.id_document=id_document;
 		this.name = name;
 		this.surname = surname;
 		this.patients = new ArrayList<Patient>(); // ALWAYS INITIALIZE LISTS
 	}
+	public Doctor(String id_document, String name, String surname) {
+		super();
+		this.id_document=id_document;
+		this.name = name;
+		this.surname = surname;
+	}
+
 
 	@Override
 	public String toString() {
-		return "Doctor [id:" + id + ", name: " + name + ", surname: " + surname + ", patients: " + patients + "]";
+		return "Doctor [id_document:" + id_document + ", name: " + name + ", surname: " + surname + ", patients: " + patients + "]";
 	}
 
 	public List<Patient> getPatients() {
@@ -62,11 +71,15 @@ public class Doctor implements Serializable {
 		}
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
+	
+	public String getId_document() {
+		return id_document;
+	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

@@ -43,10 +43,11 @@ public class JDBCDoctorManager implements DoctorManager {
 			p.setString(1, "%"+name+"%");   // the percentages are so it looks for every name that contains that word. Ex: if you type dri it looks for rodrigo too. 
 			ResultSet rs = p.executeQuery(); 
 			while(rs.next()) {
-				String id = rs.getString("id"); 
+				int id = rs.getInt("id");
+				String id_document=rs.getString("id_document");
 				String n = rs.getString("name"); 
-				String surname = rs.getString("surname");
-				Doctor doctor = new Doctor(id, n, surname); 
+				String surname= rs.getString("surname");
+				Doctor doctor = new Doctor(id, id_document,n, surname); 
 				list.add(doctor); 
 			}
 		}catch(SQLException e) {
@@ -63,10 +64,11 @@ public class JDBCDoctorManager implements DoctorManager {
 		p.setString(1, p_id); 
 		ResultSet rs = p.executeQuery(); 
         rs.next();  //since there is only one unique result.
-        String id = rs.getString("p_id"); 
+        int id = rs.getInt("p_id"); 
+        String id_document=rs.getString("id_document");
         String name = rs.getString("name"); 
         String surname = rs.getString("surname"); 
-        Doctor doctor = new Doctor(id, name, surname); 
+        Doctor doctor = new Doctor(id, id_document,name, surname); 
         return doctor; 
         
 		}catch(SQLException e) {

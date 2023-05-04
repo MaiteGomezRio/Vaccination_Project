@@ -114,6 +114,9 @@ public class Menu {
 	public static void registerDoctor() throws IOException {
 		try {
 			System.out.println("Please, input the doctor's data:");
+			
+			System.out.println("Id:");
+			String id_document = r.readLine();
 			System.out.println("Name:");
 			String name = r.readLine();
 			System.out.println("Surname:");
@@ -123,7 +126,7 @@ public class Menu {
 			// System.out.println("Password:");
 			// String password = r.readLine();
 
-			Doctor doctor = new Doctor(id, name, surname);
+			Doctor doctor = new Doctor(id_document,name, surname);
 			doctorMan.insertDoctor(doctor);
 		} catch (IOException e) {
 			System.out.println("Exception");
@@ -273,7 +276,7 @@ public class Menu {
    			 
    			 switch(choice) {
    			 case 1:{
-   				 assignVaccine(String p_id);
+   				 assignVaccine(int p_id);
    				 break;
    			 }
    			 case 2:{
