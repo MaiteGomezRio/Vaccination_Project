@@ -81,6 +81,7 @@ public class JDBCPatientManager implements PatientManager {
 		p.setInt(1, p_id); 
 		ResultSet rs = p.executeQuery(); 
         rs.next();  //since there is only one unique result.
+        String id_document=rs.getString("id_document");
         String name = rs.getString("name"); 
         String surname = rs.getString("surname"); 
         int doctor_id = rs.getInt("doctor_id");
@@ -89,7 +90,8 @@ public class JDBCPatientManager implements PatientManager {
         Disease disease = new Disease(d_name); 
         String c_name = rs.getString("c_name"); 
         Condition condition = new Condition(c_name); 
-        Patient patient = new Patient(p_id, name, surname,doctor, disease, condition); 
+        Patient patient = new Patient(p_id,id_document,name, surname, disease, condition); 
+       
         return patient; 
         
 		}catch(SQLException e) {
@@ -107,13 +109,14 @@ public class JDBCPatientManager implements PatientManager {
 		p.setInt(1, p_id); 
 		ResultSet rs = p.executeQuery(); 
         rs.next();  //since there is only one unique result.
+        String id_document=rs.getString("id_document");
         String name = rs.getString("name"); 
         String surname = rs.getString("surname"); 
         String d_name = rs.getString("d_name");
         Disease disease = new Disease(d_name); 
         String c_name = rs.getString("c_name"); 
         Condition condition = new Condition(c_name); 
-        Patient patient = new Patient(p_id, name, surname, disease, condition); 
+        Patient patient = new Patient(p_id,id_document, name, surname, disease, condition); 
         return patient; 
         
 		}catch(SQLException e) {
@@ -149,8 +152,8 @@ public class JDBCPatientManager implements PatientManager {
 			PreparedStatement p = c.prepareStatement(sql); 
 			p.setString(1, name); 
 			ResultSet rs = p.executeQuery(); 
-	        String name = rs.getString("name"); 
-	        Disease disease=new Disease(name);
+	        String n = rs.getString("name"); 
+	        Disease disease=new Disease(n);
 	        return disease; 
 	        
 			}catch(SQLException e) {

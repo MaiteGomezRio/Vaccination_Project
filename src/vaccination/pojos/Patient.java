@@ -54,6 +54,15 @@ public class Patient implements Serializable{
 		this.doctor = doctor; 
 	}
 	
+	public Patient(String id_document, String name, String surname, Disease disease, Condition condition) {
+		
+		this.name = name; 
+		this.surname = surname; 
+		this.disease = disease;
+		this.condition = condition; 
+		 
+	}
+	
 	@Override 
 	public String toString() {
 		return "Patient [id document: "+id_document+", name: "+name+" ,surname: "+surname+"]";

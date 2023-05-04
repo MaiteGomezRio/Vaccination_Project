@@ -147,12 +147,14 @@ public class Menu {
 	public static void registerPatient() throws IOException {
 
 		System.out.println("Please, introduce the following information: ");
+		
+		System.out.println("Id: ");
+		String id_document=r.readLine();
 		System.out.println("Name: ");
 		String name = r.readLine();
 		System.out.println("Surname: ");
 		String surname = r.readLine();
-		System.out.println("ID: ");
-	    int id = Integer.parseInt(r.readLine());
+		
 		System.out.println("Have you had any disease? "); 
 		String d_name = r.readLine();
 		Disease disease = patientMan.getDisease(d_name);
@@ -160,7 +162,7 @@ public class Menu {
 		String c_name = r.readLine();
 		Condition condition = patientMan.getCondition(c_name);
 		// the database associates randomly the doctor to the patients???
-		Patient patient = new Patient(id, name, surname, disease, condition);
+		Patient patient = new Patient(id_document,name, surname, disease, condition);
 		patientMan.insertPatient(patient);
 	}
 
@@ -242,11 +244,11 @@ public class Menu {
 					break;
 				}
 				case 2: {
-					selectVaccines();// TODO create a method that returns the list of vaccines in the databae
+					//selectVaccines();// TODO create a method that returns the list of vaccines in the databae
 					break;           //TODO create method selectVaccines()
 				}
 				case 3: {
-					checkVaccinesOfPatient();
+					//checkVaccinesOfPatient();
 					break;
 				}
 				case 0: {
