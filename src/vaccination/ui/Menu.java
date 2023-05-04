@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Random;
 
 import vaccination.ifaces.DoctorManager;
 import vaccination.ifaces.PatientManager;
@@ -114,19 +115,25 @@ public class Menu {
 	public static void registerDoctor() throws IOException {
 		try {
 			System.out.println("Please, input the doctor's data:");
+			//TODO generate random id ???
+			int id=generateRandom();
 			
-			System.out.println("Id:");
+			System.out.println("Id_document:");
 			String id_document = r.readLine();
+			
 			System.out.println("Name:");
 			String name = r.readLine();
+			
 			System.out.println("Surname:");
 			String surname = r.readLine();
 			
 			// System.out.println("Password:");
 			// String password = r.readLine();
 
-			Doctor doctor = new Doctor(id_document,name, surname);
+			Doctor doctor = new Doctor(id,id_document,name, surname);
 			doctorMan.insertDoctor(doctor);
+			System.out.println("You have registered as a doctor!");
+			
 		} catch (IOException e) {
 			System.out.println("Exception");
 			e.printStackTrace();
@@ -155,15 +162,27 @@ public class Menu {
 		System.out.println("Surname: ");
 		String surname = r.readLine();
 		
-		System.out.println("Have you had any disease? "); 
+		System.out.println("Have you had any disease? (enter 'no' if negative) "); 
 		String d_name = r.readLine();
-		Disease disease = patientMan.getDisease(d_name);
-		System.out.println("Do you have/ Have you had any relevant condition, such as being pregnant, had a stroke, allergies....? "); 
+		Disease disease;
+		if(d_name.equalsIgnoreCase("no")) {
+			disease=null;
+		}else {
+			disease = patientMan.getDisease(d_name);
+		}
+		System.out.println("Do you have/ Have you had any relevant condition, such as being pregnant, had a stroke, allergies....? (enter 'no' if negative)"); 
 		String c_name = r.readLine();
-		Condition condition = patientMan.getCondition(c_name);
+		Condition condition;
+		if(c_name.equalsIgnoreCase("no")) {
+			condition=null;
+		}else {
+			condition = patientMan.getCondition(c_name);
+		}
+		
 		// the database associates randomly the doctor to the patients???
 		Patient patient = new Patient(id_document,name, surname, disease, condition);
 		patientMan.insertPatient(patient);
+		System.out.println("You have registered as a patient!");
 	}
 
 	public static void registerVaccine() throws IOException {
@@ -174,6 +193,7 @@ public class Menu {
 		Integer dose = Integer.parseInt(r.readLine());
 		Vaccine vaccine = new Vaccine(name, dose);
 		vaccineMan.insertVaccine(vaccine);
+		System.out.println("Vaccine "+ name+" registered");
 	}
 	// used when you want to put an specific vaccine to a patient
 	public static void selectVaccines() throws IOException {
@@ -296,5 +316,14 @@ public class Menu {
    		 }
    	 }
    	 }
+	
+	public static int generateRandom() {
+		Random random = new Random();
+        long randomNumber = random.nextLong() % 10000000000L;
+        if (randomNumber < 0) {
+            randomNumber += 10000000000L;
+        }
+        return (int)randomNumber;
+	}
 
 }
