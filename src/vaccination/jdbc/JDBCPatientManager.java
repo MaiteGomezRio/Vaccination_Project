@@ -28,7 +28,7 @@ public class JDBCPatientManager implements PatientManager {
 	public void insertPatient(Patient patient) {
 		try {
 			Statement s = c.createStatement(); //TODO change it into a PreparedSTatement?
-			String sql = "INSERT INTO Patient (id, name, surname, doctor, disease, condition) VALUES ('" + patient.getId() + "', "
+			String sql = "INSERT INTO Patient (id_document, name, surname, doctor, disease, condition) VALUES ('" + patient.getId_document() + "', "
 					+ patient.getName() + ", '" + patient.getSurname() + ",'"+patient.getDoctor() + 
 					patient.getDisease() + ", '"+patient.getCondition()+"')"; 
 			s.executeUpdate(sql); 

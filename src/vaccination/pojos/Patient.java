@@ -34,7 +34,7 @@ public class Patient implements Serializable{
 		vaccines = new ArrayList<Vaccine>();  
 
 	}
-	public Patient(int id, String name, String surname, Disease disease, Condition condition) {
+	public Patient(int id,String id_document, String name, String surname, Disease disease, Condition condition) {
 		this.id = id; 
 		this.name = name; 
 		this.surname = surname;
@@ -42,7 +42,9 @@ public class Patient implements Serializable{
 		this.disease = disease;
 		this.condition = condition; 
 	}
-	public Patient(int id, String name, String surname, Doctor doctor, Disease disease, Condition condition) {
+	
+	
+	public Patient(int id, String id_document, String name, String surname, Doctor doctor, Disease disease, Condition condition) {
 		this.id = id; 
 		this.name = name; 
 		this.surname = surname;
@@ -54,18 +56,27 @@ public class Patient implements Serializable{
 	
 	@Override 
 	public String toString() {
-		return "Patient [id: "+id+", name: "+name+" ,surname: "+surname+"]";
+		return "Patient [id document: "+id_document+", name: "+name+" ,surname: "+surname+"]";
 	}
 	
 	public int getId() {
 		return id;
 	}
+	
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String getId_document() {
+		return id_document;
+	}
+	
+	public void setId_document(String id_document) {
+		this.id_document=id_document;
 	}
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -99,6 +110,7 @@ public class Patient implements Serializable{
 	public void setDisease(Disease disease) {
 		this.disease = disease;
 	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
