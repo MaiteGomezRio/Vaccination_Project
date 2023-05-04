@@ -121,8 +121,7 @@ public class Menu {
 			String name = r.readLine();
 			System.out.println("Surname:");
 			String surname = r.readLine();
-			System.out.println("ID:");
-			String id = r.readLine();
+			
 			// System.out.println("Password:");
 			// String password = r.readLine();
 
@@ -276,11 +275,11 @@ public class Menu {
    			 
    			 switch(choice) {
    			 case 1:{
-   				 assignVaccine(int p_id);
+   				 //assignVaccine(int p_id);
    				 break;
    			 }
    			 case 2:{
-   				 removeVaccine(String v_name);
+   				 //removeVaccine(String v_name);
    				 break;
    			 }case 0:{
    				 return;

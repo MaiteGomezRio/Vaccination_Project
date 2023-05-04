@@ -83,7 +83,7 @@ public class JDBCPatientManager implements PatientManager {
         rs.next();  //since there is only one unique result.
         String name = rs.getString("name"); 
         String surname = rs.getString("surname"); 
-        String doctor_id = rs.getString("doctor_id");
+        int doctor_id = rs.getInt("doctor_id");
         Doctor doctor = new Doctor(doctor_id); 
         String d_name = rs.getString("d_name");
         Disease disease = new Disease(d_name); 
