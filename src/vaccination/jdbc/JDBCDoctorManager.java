@@ -24,8 +24,8 @@ public class JDBCDoctorManager implements DoctorManager {
 
 		try {
 			Statement s = c.createStatement();
-			String sql = "INSERT INTO Doctor (id, name, surname) VALUES ('" + doctor.getId() + "', "
-					+ doctor.getName() + ", '" + doctor.getSurname() + "')";
+			String sql = "INSERT INTO Doctor (id, name, surname) VALUES (" + doctor.getId() + ", '"
+					+ doctor.getName() + "', '" + doctor.getSurname() + "')";
 			s.executeUpdate(sql);
 			s.close();
 		} catch (SQLException e) {
