@@ -114,8 +114,8 @@ public class JDBCPatientManager implements PatientManager {
         String surname = rs.getString("surname"); 
         String d_name = rs.getString("d_name");
         Disease disease = new Disease(d_name); 
-        String c_name = rs.getString("c_name"); 
-        Condition condition = new Condition(c_name); 
+        String c_type = rs.getString("c_type"); 
+        Condition condition = new Condition(c_type); 
         Patient patient = new Patient(p_id,id_document, name, surname, disease, condition); 
         return patient; 
         
@@ -127,14 +127,14 @@ public class JDBCPatientManager implements PatientManager {
 	}
 
 	@Override//i think this method will make sense later, when we link condition to patient and vaccine
-	public Condition getCondition(String c_name){
+	public Condition getCondition(int c_id){
 		try {
-			String sql = "SELECT * FROM Condition WHERE name LIKE ?";
+			String sql = "SELECT * FROM Condition WHERE type LIKE ?";
 			PreparedStatement p = c.prepareStatement(sql); 
-			p.setString(1, c_name); 
+			p.setInt(1, c_id); 
 			ResultSet rs = p.executeQuery(); 
-	        String name = rs.getString("name"); 
-	        Condition condition=new Condition(c_name);
+	       String type = rs.getString("type"); 
+	        Condition condition=new Condition(c_id, type);
 	        return condition; 
 	        
 			}catch(SQLException e) {
@@ -143,6 +143,7 @@ public class JDBCPatientManager implements PatientManager {
 			}
 			return null; 
 	}
+	//TODO think how to ask and get the condition: id? type?
 	
 
 	@Override   //i think this method will make sense later, when we link disease to patient and vaccine
