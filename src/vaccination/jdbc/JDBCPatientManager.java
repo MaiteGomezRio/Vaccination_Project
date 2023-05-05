@@ -68,7 +68,7 @@ public class JDBCPatientManager implements PatientManager {
 	public void removePatient(Patient patient) {
 		
 	}
-	
+	//TODO remove patient method
 	
 	
 	
@@ -127,14 +127,14 @@ public class JDBCPatientManager implements PatientManager {
 	}
 
 	@Override//i think this method will make sense later, when we link condition to patient and vaccine
-	public Condition getCondition(int c_id){
+	public Condition getCondition(String type){
 		try {
 			String sql = "SELECT * FROM Condition WHERE type LIKE ?";
 			PreparedStatement p = c.prepareStatement(sql); 
-			p.setInt(1, c_id); 
+			p.setString(1, type); 
 			ResultSet rs = p.executeQuery(); 
-	       String type = rs.getString("type"); 
-	        Condition condition=new Condition(c_id, type);
+			int c_id = rs.getInt("id"); 
+	        Condition condition=new Condition(c_id,type);
 	        return condition; 
 	        
 			}catch(SQLException e) {
@@ -150,11 +150,14 @@ public class JDBCPatientManager implements PatientManager {
 	public Disease getDisease(String name) {
 		try {
 			String sql = "SELECT * FROM Disease WHERE name LIKE ?";
-			PreparedStatement p = c.prepareStatement(sql); 
-			p.setString(1, name); 
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setString(1, name);
 			ResultSet rs = p.executeQuery(); 
-	        String n = rs.getString("name"); 
-	        Disease disease=new Disease(n);
+			rs.next();
+			Integer d_id = rs.getInt("id");
+	        Disease disease=new Disease(d_id,name);
+	        rs.close();
+	        p.close();
 	        return disease; 
 	        
 			}catch(SQLException e) {
