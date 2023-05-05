@@ -143,7 +143,7 @@ public class JDBCPatientManager implements PatientManager {
 			}
 			return null; 
 	}
-	//TODO think how to ask and get the condition: id? type?
+	//TODO think how to ask and get the condition: id? type? SAME PROBLEM WITH DISEASE
 	
 
 	@Override   //i think this method will make sense later, when we link disease to patient and vaccine
