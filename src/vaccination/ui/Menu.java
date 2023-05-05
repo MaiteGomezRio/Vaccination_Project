@@ -179,6 +179,7 @@ public class Menu {
 		}else {
 			condition = patientMan.getCondition(c_name);
 		}
+		//TODO method getCondition 
 		
 		// the database associates randomly the doctor to the patients???
 		Patient patient = new Patient(id_document,name, surname, disease, condition);

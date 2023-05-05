@@ -13,7 +13,7 @@ public class ConnectionManager {
 	public ConnectionManager() {
 		try {
 			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:./db/vaccination.db.sqbpro");
+			c = DriverManager.getConnection("jdbc:sqlite:./db/vaccination.db");
 			c.createStatement().execute("PRAGMA foreign_keys=ON");
 			System.out.println("Database connection opened.");
 			createTables();
