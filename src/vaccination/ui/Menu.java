@@ -97,6 +97,7 @@ public class Menu {
 				}
 				case 0: {
 					conMan.closeConnection();
+					System.out.println("Thank you for using the database! Goodbye.");
 					return;
 				}
 				}
@@ -272,6 +273,7 @@ public class Menu {
 					break;
 				}
 				case 0: {
+	
 					return;
 				}
 				}
