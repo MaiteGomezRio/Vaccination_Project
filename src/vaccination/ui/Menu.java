@@ -130,7 +130,7 @@ public class Menu {
 			// System.out.println("Password:");
 			// String password = r.readLine();
 
-			Doctor doctor = new Doctor(id,id_document,name, surname);
+			Doctor doctor = new Doctor(id_document,name, surname);
 			doctorMan.insertDoctor(doctor);
 			System.out.println("You have registered as a doctor!");
 			
@@ -147,7 +147,7 @@ public class Menu {
 		List<Doctor> listDoctors = doctorMan.searchDoctorByName(name);
 		System.out.println(listDoctors);
 		System.out.println("Choose which one it is, type its ID: ");
-		int id = Integer.parseInt(r.readLine());
+		String id = r.readLine();
 		doctorMenu(id);
 	}
 
@@ -244,7 +244,7 @@ public class Menu {
 		vaccineMan.removeVaccine(v_name);
 	}
 
-	private static void doctorMenu(int id) {
+	private static void doctorMenu(String id) {
 
 		while (true) {
 			try {

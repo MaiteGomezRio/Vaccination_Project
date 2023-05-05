@@ -13,7 +13,7 @@ public class ConnectionManager {
 	public ConnectionManager() {
 		try {
 			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:./db/vaccination.db.sqbpro");
+			c = DriverManager.getConnection("jdbc:sqlite:./db/vaccination.db");
 			c.createStatement().execute("PRAGMA foreign_keys=ON");
 			System.out.println("Database connection opened.");
 			createTables();
@@ -26,22 +26,22 @@ public class ConnectionManager {
 	private void createTables() {
 		try {
 			Statement s = c.createStatement();
-			String table_Doctor = "CREATE TABLE Doctor (id INTEGER PRIMARY KEY,"+ " id_document TEXT NOT NULL," + " name TEXT NOT NULL,"
+			String table_Doctor = "CREATE TABLE Doctor (id INTEGER PRIMARY KEY UNIQUE AUTOINCREMENT,"+ " id_document TEXT NOT NULL," + " name TEXT NOT NULL,"
 					+ " surname TEXT NOT NULL)";
 			s.executeUpdate(table_Doctor);
 			
-			String table_Patient = "CREATE TABLE Patient (id INTEGER PRIMARY KEY,"+ " id_document TEXT NOT NULL," + " name TEXT NOT NULL,"
+			String table_Patient = "CREATE TABLE Patient (id INTEGER PRIMARY KEY UNIQUE AUTOINCREMENT,"+ " id_document TEXT NOT NULL," + " name TEXT NOT NULL,"
 					+ " surname TEXT NOT NULL)";
 			s.executeUpdate(table_Patient);
 			
-			String table_Vaccine = "CREATE TABLE Vaccine (id INTEGER PRIMARY KEY AUTOINCREMENT," + " name TEXT NOT NULL,"
+			String table_Vaccine = "CREATE TABLE Vaccine (id INTEGER PRIMARY KEY UNIQUE AUTOINCREMENT," + " name TEXT NOT NULL,"
 					+ " dose INTEGER)";
 			s.executeUpdate(table_Vaccine);
 			
-			String table_Disease = "CREATE TABLE Disease (id INTEGER PRIMARY KEY AUTOINCREMENT," + "name TEXT NOT NULL)";
+			String table_Disease = "CREATE TABLE Disease (id INTEGER PRIMARY KEY UNIQUE AUTOINCREMENT," + "name TEXT NOT NULL)";
 			s.executeUpdate(table_Disease);
 			
-			String table_Condition = "CREATE TABLE Condition (identifier INTEGER PRIMARY KEY AUTOINCREMENT," + "name TEXT NOT NULL)";
+			String table_Condition = "CREATE TABLE Condition (identifier INTEGER PRIMARY UNIQUE KEY AUTOINCREMENT," + "name TEXT NOT NULL)";
 			s.executeUpdate(table_Condition); 
 			
 			String table_Patient_Vaccine = "CREATE TABLE Patient_Vaccine(patient_id INTEGER REFERENCES Patient(id)," + "vaccine_id INTEGER REFERENCES Vaccine(identifier))";
