@@ -79,6 +79,10 @@ public class Menu {
 					switch (choice3) {
 
 					case 1: {
+						//Condition condition=new Condition( "pregnant");
+						//Disease disease=new Disease("CoVid");
+						//patientMan.insertCondition(condition);
+						//patientMan.insertDisease(disease);
 						registerPatient();
 						break;
 
@@ -170,16 +174,19 @@ public class Menu {
 			disease=null;
 		}else {
 			disease = patientMan.getDisease(d_name);
+			
 		}
 		System.out.println("Do you have/ Have you had any relevant condition, such as being pregnant, had a stroke, allergies....? (enter 'no' if negative)"); 
-		String c_name = r.readLine();
+		String c_type = r.readLine();
 		Condition condition;
-		if(c_name.equalsIgnoreCase("no")) {
+		if(c_type.equalsIgnoreCase("no")) {
 			condition=null;
 		}else {
-			condition = patientMan.getCondition(c_name);
+			condition = patientMan.getCondition(c_type);
+			
 		}
 		Patient patient = new Patient(id_document,name, surname, disease, condition);
+		
 		patientMan.insertPatient(patient);
 		System.out.println("You have registered as a patient!");
 	}

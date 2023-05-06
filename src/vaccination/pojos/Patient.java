@@ -34,6 +34,8 @@ public class Patient implements Serializable{
 		vaccines = new ArrayList<Vaccine>();  
 
 	}
+	
+	
 	public Patient(int id,String id_document, String name, String surname, Disease disease, Condition condition) {
 		this.id = id; 
 		this.name = name; 

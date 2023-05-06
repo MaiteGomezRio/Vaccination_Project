@@ -30,8 +30,8 @@ public class JDBCPatientManager implements PatientManager {
 			Statement s = c.createStatement(); //TODO change it into a PreparedSTatement?
 			String sql = "INSERT INTO Patient (id_document, name, surname, doctor, disease, condition) VALUES ('" + patient.getId_document() + "', "
 					+ patient.getName() + ", '" + patient.getSurname() + ",'"+patient.getDoctor() + 
-					patient.getDisease() + ", '"+patient.getCondition()+"')"; 
-			s.executeUpdate(sql); 
+					patient.getDisease().getName() + ", '"+patient.getCondition().getType()+"')"; 
+
 			s.close(); 
 		}catch(SQLException e) {
 			System.out.println("database error");
@@ -39,6 +39,47 @@ public class JDBCPatientManager implements PatientManager {
 		}
 		//TODO  when inserting a patient, shoud we insert it also on the table patientDoctor, and patientVaccine?
 	}
+	 
+	@Override
+	public void insertCondition(Condition con) {
+		try {
+			Statement s = c.createStatement(); 
+			String sql = "INSERT INTO Condition (type) VALUES ('"+con.getType()+"')"; 
+			s.executeUpdate(sql); 
+			s.close(); 
+		}catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+	}
+	@Override
+	
+	public void insertDisease(Disease d) {
+		try {
+			Statement s = c.createStatement(); 
+			String sql = "INSERT INTO Disease (name) VALUES ('"+d.getName()+"')"; 
+			s.executeUpdate(sql); 
+			s.close(); 
+		}catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+	}
+	@Override
+	public void assignDiseaseToPatient(int p_id, int d_id) {
+		try {
+			String sql = "INSERT INTO Patient (p_id, d_id) VALUES (?,?)";
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setInt(1, p_id);
+			p.setInt(2, d_id);
+			p.executeUpdate();
+			p.close();
+		} catch (SQLException e) {
+			System.out.println("Database error.");
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public List<Patient> searchPatientByName(String name) {
 		Patient patient = null;
