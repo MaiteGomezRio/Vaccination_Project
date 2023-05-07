@@ -47,8 +47,7 @@ public class ConnectionManager {
 			String table_Patient_Vaccine = "CREATE TABLE Patient_Vaccine(patient_id INTEGER REFERENCES Patient(id)," + "vaccine_id INTEGER REFERENCES Vaccine(identifier))";
 			s.executeUpdate(table_Patient_Vaccine);
 			
-			String table_Patient_Disease = "CREATE TABLE Patient_Disease (patient_id INTEGER NOT NULL REFERENCES Patient(id),"+"disease_id INTEGER NOT NULL REFERENCES "
-					+ "Disease(id))";
+			String table_Patient_Disease = "CREATE TABLE Patient_Disease (patient_id INTEGER REFERENCES Patient(id),"+"disease_id INTEGER REFERENCES Disease(id))";
 			s.executeUpdate(table_Patient_Disease);
 			
 			String table_Patient_Condition = "CREATE TABLE Patient_Condition (patient_id INTEGER REFERENCES Patient(id)," + "condition_identifier INTEGER REFERENCES Condition(identifier))"; 

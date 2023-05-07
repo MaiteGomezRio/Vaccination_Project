@@ -11,11 +11,11 @@ public class Condition implements Serializable{
 
 	public Condition(int c_id, String type) {
 		super();
-		this.type = type;
 		this.c_id=c_id;
+		this.type = type;	
 	}
 
-	public Condition( String type) {
+	public Condition(String type) {
 		super();
 		this.type = type;
 	
@@ -33,7 +33,13 @@ public class Condition implements Serializable{
 		return type;
 	}
 
+	public int getId() {
+		return c_id;
+	}
 
+	public void setId(int c_id) {
+		this.c_id = c_id;
+	}
 
 	public void setType(String type) {
 		this.type = type;

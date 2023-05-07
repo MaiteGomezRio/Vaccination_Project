@@ -28,8 +28,8 @@ public class JDBCPatientManager implements PatientManager {
 		try {
 			Statement s = c.createStatement(); 
 			String sql = "INSERT INTO Patient (id_document, name, surname, doctor, disease, condition) VALUES ('" + patient.getId_document() + "', "
-					+ patient.getName() + ", '" + patient.getSurname() + ",'"+patient.getDoctor().getId() + 
-					patient.getDisease().getName() + ", '"+patient.getCondition().getType()+"')"; 
+					+ patient.getName() + ", '" + patient.getSurname() + ",'"+patient.getDoctor() + 
+					patient.getDisease().getName() + ", '"+patient.getCondition()+"')"; 
 
 			s.close(); 
 		}catch(SQLException e) {
@@ -67,7 +67,7 @@ public class JDBCPatientManager implements PatientManager {
 	@Override
 	public void assignDiseaseToPatient(int p_id, int d_id) {
 		try {
-			String sql = "INSERT INTO Patient_Disease (p_id, d_id) VALUES (?,?)";
+			String sql = "INSERT INTO Patient_Disease (patient_id, disease_id) VALUES (?,?)";
 			PreparedStatement p = c.prepareStatement(sql);
 			p.setInt(1, p_id);
 			p.setInt(2, d_id);
@@ -167,14 +167,15 @@ public class JDBCPatientManager implements PatientManager {
 	}
 
 	@Override//i think this method will make sense later, when we link condition to patient and vaccine
-	public Condition getCondition(int c_id){
+	public Condition getCondition(String type){
+
 		try {
-			String sql = "SELECT * FROM Condition WHERE id LIKE ?";
+			String sql = "SELECT * FROM Condition WHERE type LIKE ?";
 			PreparedStatement p = c.prepareStatement(sql); 
-			p.setInt(1, c_id); 
+			p.setString(1, type); 
 			ResultSet rs = p.executeQuery();
 			rs.next();
-			String type = rs.getString("type"); 
+			Integer c_id=rs.getInt("id");
 	        Condition condition=new Condition(c_id,type);
 	        rs.close();
 	        p.close();
@@ -190,14 +191,14 @@ public class JDBCPatientManager implements PatientManager {
 	
 
 	@Override   //i think this method will make sense later, when we link disease to patient and vaccine
-	public Disease getDisease(int d_id) {
+	public Disease getDisease(String name) {
 		try {
 			String sql = "SELECT * FROM Disease WHERE name LIKE ?";
 			PreparedStatement p = c.prepareStatement(sql);
-			p.setInt(1,d_id);
+			p.setString(1,name);
 			ResultSet rs = p.executeQuery(); 
 			rs.next();
-			String name = rs.getString("id");
+			Integer d_id = rs.getInt("id");
 	        Disease disease=new Disease(d_id,name);
 	        rs.close();
 	        p.close();

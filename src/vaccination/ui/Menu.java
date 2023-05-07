@@ -79,10 +79,6 @@ public class Menu {
 					switch (choice3) {
 
 					case 1: {
-						//Condition condition=new Condition( "pregnant");
-						//Disease disease=new Disease("CoVid");
-						//patientMan.insertCondition(condition);
-						//patientMan.insertDisease(disease);
 						registerPatient();
 						break;
 
@@ -188,6 +184,9 @@ public class Menu {
 		Patient patient = new Patient(id_document,name, surname, disease, condition);
 		
 		patientMan.insertPatient(patient);
+		//TODO NO SE INSERTA O DA PROBLEMAS EN ESTA LÍNEA
+		patientMan.assignDiseaseToPatient(patient.getId(),disease.getId());
+		
 		System.out.println("You have registered as a patient!");
 	}
 
@@ -208,11 +207,11 @@ public class Menu {
 	}
 
 	public static void checkVaccinesOfPatient()throws IOException {  //this return the list of vaccines of a patient
-	
+		//TODO CORRECT COMMENTED 07/5/2023
 		System.out.println("Introduce the patient's name: ");
 		String patient_name=r.readLine();
-		List<Patient> list=patientMan.searchPatientByName(patient_name);
-		System.out.println(list); 
+		//List<Patient> list=patientMan.searchPatientByName(patient_name);
+		//System.out.println(list); 
 		System.out.println("Choose which one it is, type its ID: "); 
 		Integer id = Integer.parseInt(r.readLine());
    	 	System.out.println("The vaccines of the patient are: ");
@@ -232,13 +231,13 @@ public class Menu {
 		System.out.println("Tell me the name of the vaccine ");
 		String name = r.readLine();
 		List<Vaccine> vaccines = vaccineMan.searchVaccinesByPatient(patientId);
-		System.out.println(vaccines);
-		vaccineMan.assignVaccineToPatient(name, patientId);
+		System.out.println(vaccines);//TODO 07/05/2023
+		//vaccineMan.assignVaccineToPatient(name, patientId);
 	}
 
-	public static void removePatient(String p_name) {
-		Patient patient=(Patient) patientMan.searchPatientByName(p_name);
-		patientMan.removePatient(patient);// TODO create remove method in patient
+	public static void removePatient(String p_name) {//TODO 07/05/2023
+		//Patient patient=(Patient) patientMan.searchPatientByName(p_name);
+		//patientMan.removePatient(patient);// TODO create remove method in patient
 	}
 
 	public static void removeDoctor(String d_name) {

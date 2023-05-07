@@ -26,6 +26,9 @@ public class Disease implements Serializable{
 	public String getName() {
 		return name;
 	}
+	public int getId() {
+		return d_id;
+	}
 
 	public void setName(String name) {
 		this.name = name;
