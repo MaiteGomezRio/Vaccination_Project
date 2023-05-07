@@ -103,11 +103,11 @@ public class JDBCVaccineManager implements VaccineManager {
 		}
 	}
 	@Override
-	public void assignVaccineToPatient(String v_name, int p_id) {
+	public void assignVaccineToPatient(int v_id, int p_id) {
 		try {
-			String sql = "INSERT into Patient_Vaccine(v_name, p_id) WHERE VALUES (?,?)"; // TODO i think we need to																				// vaccine
+			String sql = "INSERT into Patient_Vaccine(v_id, p_id) WHERE VALUES (?,?)"; 																			// vaccine
 			PreparedStatement p = c.prepareStatement(sql);
-			p.setString(1, v_name);
+			p.setInt(1, v_id);
 			p.setInt(2, p_id);
 			p.executeUpdate();
 			p.close();
@@ -116,6 +116,23 @@ public class JDBCVaccineManager implements VaccineManager {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override 
+	public void assignVaccineToDisease(int v_id,int d_id) {
+		try {
+			String sql = "INSERT into Disease_Vaccine(d_id, v_id) WHERE VALUES (?,?)"; 																			// vaccine
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setInt(1, d_id);
+			p.setInt(2, v_id);
+			p.executeUpdate();
+			p.close();
+		} catch (SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		
+	}
+	
 	@Override
 	public List<Vaccine> getAllVaccines(){
 		List<Vaccine> list = new ArrayList<Vaccine>(); 

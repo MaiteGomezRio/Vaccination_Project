@@ -46,7 +46,7 @@ public class Patient implements Serializable{
 	}
 	
 	
-	public Patient(int id, String id_document, String name, String surname, Doctor doctor, Disease disease, Condition condition) {
+	public Patient(int id, String id_document, String name, String surname, Disease disease, Condition condition,Doctor doctor) {
 		this.id = id; 
 		this.name = name; 
 		this.surname = surname;
@@ -63,6 +63,14 @@ public class Patient implements Serializable{
 		this.disease = disease;
 		this.condition = condition; 
 		 
+	}
+	
+	public Patient(int id,String id_document, String name, String surname) {
+		this.id = id; 
+		this.id_document=id_document;
+		this.name = name; 
+		this.surname = surname;
+	 
 	}
 	
 	@Override 

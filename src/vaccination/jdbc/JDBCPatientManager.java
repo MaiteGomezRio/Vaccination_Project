@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,9 +26,9 @@ public class JDBCPatientManager implements PatientManager {
 	@Override
 	public void insertPatient(Patient patient) {
 		try {
-			Statement s = c.createStatement(); //TODO change it into a PreparedSTatement?
+			Statement s = c.createStatement(); 
 			String sql = "INSERT INTO Patient (id_document, name, surname, doctor, disease, condition) VALUES ('" + patient.getId_document() + "', "
-					+ patient.getName() + ", '" + patient.getSurname() + ",'"+patient.getDoctor() + 
+					+ patient.getName() + ", '" + patient.getSurname() + ",'"+patient.getDoctor().getId() + 
 					patient.getDisease().getName() + ", '"+patient.getCondition().getType()+"')"; 
 
 			s.close(); 
@@ -37,7 +36,7 @@ public class JDBCPatientManager implements PatientManager {
 			System.out.println("database error");
 			e.printStackTrace();
 		}
-		//TODO  when inserting a patient, shoud we insert it also on the table patientDoctor, and patientVaccine?
+		
 	}
 	 
 	@Override
@@ -68,7 +67,7 @@ public class JDBCPatientManager implements PatientManager {
 	@Override
 	public void assignDiseaseToPatient(int p_id, int d_id) {
 		try {
-			String sql = "INSERT INTO Patient (p_id, d_id) VALUES (?,?)";
+			String sql = "INSERT INTO Patient_Disease (p_id, d_id) VALUES (?,?)";
 			PreparedStatement p = c.prepareStatement(sql);
 			p.setInt(1, p_id);
 			p.setInt(2, d_id);
@@ -81,41 +80,41 @@ public class JDBCPatientManager implements PatientManager {
 	}
 	
 	@Override
-	public List<Patient> searchPatientByName(String name) {
-		Patient patient = null;
-		List<Patient> list_patients=new LinkedList<>();
+	public List<Patient> searchPatientByDoctor(int d_id) {
+		
+		List<Patient> patients_list=new LinkedList<>();
 		try {
-			String sql = "SELECT * FROM Patient WHERE name LIKE ?"; 
+			String sql = "SELECT * FROM Patient WHERE doctor LIKE ?"; 
 			PreparedStatement p = c.prepareStatement(sql); 
-			p.setString(1, "%"+name+"%");   // the percentages are so it looks for every name that contains that word. Ex: if you type dri it looks for rodrigo too. 
+			p.setString(1, "%"+d_id+"%");   // the percentages are so it looks for every name that contains that word. Ex: if you type dri it looks for rodrigo too. 
 			ResultSet rs = p.executeQuery(); 
 			while(rs.next()) {
-				if(name.equals(patient.getName())) {
-					int id = rs.getInt("id"); 
-					String surname = rs.getString("surname");
-					patient = new Patient(id, name, surname); 
-					list_patients.add(patient);
-				}
+				Integer id=rs.getInt("id");
+				String id_document=rs.getString("id_document");
+				String name = rs.getString("surname");
+				String surname = rs.getString("surname");
+				Patient patient = new Patient(id,id_document, name, surname); 
 				
-			}
+				patients_list.add(patient);
+			}	
 		}catch(SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
 		}
-		return list_patients; 
+		return patients_list; 
 	}
 	
 	@Override
 	public void removePatient(Patient patient) {
-		
+		//TODO remove patient method
 	}
-	//TODO remove patient method
+	
 	
 	
 	
 	@Override
 	//This method is used by the patient, when he wants to see his information. 
-	public Patient getPatientBeingAPatient(int p_id) {
+	public Patient getPatientInfoBeingAPatient(int p_id) {
 		try {
 		String sql = "SELECT * FROM Patient WHERE id LIKE ?";
 		PreparedStatement p = c.prepareStatement(sql); 
@@ -131,7 +130,7 @@ public class JDBCPatientManager implements PatientManager {
         Disease disease = new Disease(d_name); 
         String c_name = rs.getString("c_name"); 
         Condition condition = new Condition(c_name); 
-        Patient patient = new Patient(p_id,id_document,name, surname, disease, condition); 
+        Patient patient = new Patient(p_id,id_document,name, surname, disease, condition, doctor); 
        
         return patient; 
         
@@ -168,14 +167,17 @@ public class JDBCPatientManager implements PatientManager {
 	}
 
 	@Override//i think this method will make sense later, when we link condition to patient and vaccine
-	public Condition getCondition(String type){
+	public Condition getCondition(int c_id){
 		try {
-			String sql = "SELECT * FROM Condition WHERE type LIKE ?";
+			String sql = "SELECT * FROM Condition WHERE id LIKE ?";
 			PreparedStatement p = c.prepareStatement(sql); 
-			p.setString(1, type); 
-			ResultSet rs = p.executeQuery(); 
-			int c_id = rs.getInt("id"); 
+			p.setInt(1, c_id); 
+			ResultSet rs = p.executeQuery();
+			rs.next();
+			String type = rs.getString("type"); 
 	        Condition condition=new Condition(c_id,type);
+	        rs.close();
+	        p.close();
 	        return condition; 
 	        
 			}catch(SQLException e) {
@@ -184,18 +186,18 @@ public class JDBCPatientManager implements PatientManager {
 			}
 			return null; 
 	}
-	//TODO think how to ask and get the condition: id? type? SAME PROBLEM WITH DISEASE
+	
 	
 
 	@Override   //i think this method will make sense later, when we link disease to patient and vaccine
-	public Disease getDisease(String name) {
+	public Disease getDisease(int d_id) {
 		try {
 			String sql = "SELECT * FROM Disease WHERE name LIKE ?";
 			PreparedStatement p = c.prepareStatement(sql);
-			p.setString(1, name);
+			p.setInt(1,d_id);
 			ResultSet rs = p.executeQuery(); 
 			rs.next();
-			Integer d_id = rs.getInt("id");
+			String name = rs.getString("id");
 	        Disease disease=new Disease(d_id,name);
 	        rs.close();
 	        p.close();
