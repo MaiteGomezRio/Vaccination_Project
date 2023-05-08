@@ -14,8 +14,8 @@ public class Patient implements Serializable{
 	private String surname; 
 	private List<Vaccine> vaccines;
 	private Doctor doctor; 
-	private Disease disease;
-    private Condition condition; 
+	private List <Disease> disease;
+    private List<Condition> condition; 
 
 	
 	
