@@ -14,54 +14,62 @@ public class Patient implements Serializable{
 	private String surname; 
 	private List<Vaccine> vaccines;
 	private Doctor doctor; 
-	private List <Disease> disease;
-    private List<Condition> condition; 
+	private List <Disease> diseases;
+    private List<Condition> conditions; 
 
 	
 	
 	public Patient () {
 		super(); 
 		vaccines = new ArrayList<Vaccine>(); 
+		diseases= new ArrayList<Disease>();
+		conditions= new ArrayList<Condition>();
 	}
 	public Patient(int id) {
 		this.id = id; 	
 		vaccines = new ArrayList<Vaccine>();  //ALWAYS INITIALIZE THE LISTS  
+		diseases= new ArrayList<Disease>();
+		conditions= new ArrayList<Condition>();
 	}
 	public Patient(int id, String name, String surname) {
 		this.id = id; 
 		this.name = name; 
 		this.surname = surname;
-		vaccines = new ArrayList<Vaccine>();  
+		vaccines = new ArrayList<Vaccine>();
+		diseases= new ArrayList<Disease>();
+		conditions= new ArrayList<Condition>();
 
 	}
 	
-	
+	//TODO do we need this constructor?
 	public Patient(int id,String id_document, String name, String surname, Disease disease, Condition condition) {
 		this.id = id; 
 		this.name = name; 
 		this.surname = surname;
 		vaccines = new ArrayList<Vaccine>(); 
-		this.disease = disease;
-		this.condition = condition; 
+		diseases= new ArrayList<Disease>();
+		conditions= new ArrayList<Condition>();
 	}
 	
 	
-	public Patient(int id, String id_document, String name, String surname, Disease disease, Condition condition,Doctor doctor) {
+	public Patient(int id, String id_document, String name, String surname, Doctor doctor) {
 		this.id = id; 
 		this.name = name; 
 		this.surname = surname;
 		vaccines = new ArrayList<Vaccine>();   
-		this.disease = disease;
-		this.condition = condition; 
+		diseases= new ArrayList<Disease>();
+		conditions= new ArrayList<Condition>();
 		this.doctor = doctor; 
 	}
 	
+	
+	// TODO remove this constructor
 	public Patient(String id_document, String name, String surname, Disease disease, Condition condition) {
 		
 		this.name = name; 
 		this.surname = surname; 
-		this.disease = disease;
-		this.condition = condition; 
+		//this.disease = disease;
+		//this.condition = condition; 
 		 
 	}
 	
@@ -111,24 +119,29 @@ public class Patient implements Serializable{
 	public void setVaccines(List<Vaccine> vaccines) {
 		this.vaccines = vaccines;
 	}
+	
+	public List<Condition> getConditions(){
+		return conditions;
+	}
+	public void setConditions(List<Condition> conditions) {
+		this.conditions = conditions;
+	}
+	
+	public List<Disease> getDiseases(){
+		return diseases;
+	}
+	public void setDiseases(List<Disease> diseases) {
+		this.diseases = diseases;
+	}
+	
 	public Doctor getDoctor() {
 		return doctor;
 	}
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
-	public Condition getCondition() {
-		return condition;
-	}
-	public void setCondition(Condition condition) {
-		this.condition = condition;
-	}
-	public Disease getDisease() {
-		return disease;
-	}
-	public void setDisease(Disease disease) {
-		this.disease = disease;
-	}
+	
+	
 	
 	@Override
 	public int hashCode() {
