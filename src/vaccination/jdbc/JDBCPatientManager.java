@@ -27,10 +27,9 @@ public class JDBCPatientManager implements PatientManager {
 	public void insertPatient(Patient patient) {
 		try {
 			Statement s = c.createStatement(); 
-			String sql = "INSERT INTO Patient (id_document, name, surname, doctor, disease, condition) VALUES ('" + patient.getId_document() + "', "
-					+ patient.getName() + ", '" + patient.getSurname() + ",'"+patient.getDoctor() + 
-					patient.getDisease().getName() + ", '"+patient.getCondition()+"')"; 
-
+			String sql = "INSERT INTO Patient (id_document, name, surname, doctor) VALUES ('" + patient.getId_document() + "', "
+					+ patient.getName() + ", '" + patient.getSurname() + ",'"+patient.getDoctor() +"')";
+			s.execute(sql);
 			s.close(); 
 		}catch(SQLException e) {
 			System.out.println("database error");
@@ -106,8 +105,8 @@ public class JDBCPatientManager implements PatientManager {
         Disease disease = new Disease(d_name); 
         String c_name = rs.getString("c_name"); 
         Condition condition = new Condition(c_name); 
-        Patient patient = new Patient(p_id,id_document,name, surname, disease, condition, doctor); 
-       
+        //Patient patient = new Patient(p_id,id_document,name, surname, doctor); TODO how indicate a doctor
+        Patient patient = new Patient(p_id,id_document,name, surname);
         return patient; 
         
 		}catch(SQLException e) {
