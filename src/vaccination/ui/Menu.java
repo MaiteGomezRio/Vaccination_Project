@@ -244,7 +244,7 @@ public class Menu {
 
 	public static void removeDoctor(String d_name) {
 		Doctor doctor=(Doctor) doctorMan.searchDoctorByName(d_name);
-		doctorMan.removeDoctor(doctor);// TODO create remove method in doctor
+		directorMan.removeDoctor(d_name);
 	}
 
 	public static void removeVaccine(String v_name) {
