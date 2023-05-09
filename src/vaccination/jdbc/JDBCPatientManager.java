@@ -39,31 +39,7 @@ public class JDBCPatientManager implements PatientManager {
 		
 	}
 	 
-	@Override
-	public void insertCondition(Condition con) {
-		try {
-			Statement s = c.createStatement(); 
-			String sql = "INSERT INTO Condition (type) VALUES ('"+con.getType()+"')"; 
-			s.executeUpdate(sql); 
-			s.close(); 
-		}catch(SQLException e) {
-			System.out.println("database error");
-			e.printStackTrace();
-		}
-	}
-	@Override
 	
-	public void insertDisease(Disease d) {
-		try {
-			Statement s = c.createStatement(); 
-			String sql = "INSERT INTO Disease (name) VALUES ('"+d.getName()+"')"; 
-			s.executeUpdate(sql); 
-			s.close(); 
-		}catch(SQLException e) {
-			System.out.println("database error");
-			e.printStackTrace();
-		}
-	}
 	@Override
 	public void assignDiseaseToPatient(int p_id, int d_id) {
 		try {

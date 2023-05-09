@@ -34,30 +34,8 @@ public class JDBCVaccineManager implements VaccineManager {
 		}
 	}
 
-	// TODO if we remove the vaccine do we also have to remove it from the patient
-	// (?) i think i could create a method called removeVaccineFromPatient and call
-	// it from this method.
 	@Override
-	public void insertVaccine(Vaccine vaccine) {
-		try {
-			
-			String sql = "INSERT INTO Vaccine (name, dose)" + "VALUES (?,?)";
-			PreparedStatement p = c.prepareStatement(sql);
-			p.setString(1,vaccine.getName());
-			p.setInt(2, vaccine.getDose());
-			p.executeUpdate();
-			p.close();
-		} catch (SQLException e) {
-			System.out.println("database exception");
-			e.printStackTrace();
-		}
-
-	}
-
-	@Override
-	//TODO should we create method search patients by vaccines, search vaccines by disease?
-	// TODO should we better search by String patient name?
-	public List<Vaccine> searchVaccinesByPatient(int p_id) {
+	public List<Vaccine> searchVaccinesByPatient(int p_id){
 		List<Vaccine> list = new ArrayList<Vaccine>();
 		try {
 			String sql = "SELECT name FROM Patient_Vaccine WHERE p_id LIKE ?";

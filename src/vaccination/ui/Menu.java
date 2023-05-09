@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
 
+import vaccination.ifaces.DirectorManager;
 import vaccination.ifaces.DoctorManager;
 import vaccination.ifaces.PatientManager;
 import vaccination.ifaces.VaccineManager;
@@ -27,6 +28,7 @@ public class Menu {
 	private static DoctorManager doctorMan;
 	private static PatientManager patientMan;
 	private static VaccineManager vaccineMan;
+	private static DirectorManager directorMan;
 
 	public static void main(String[] args) {
 		ConnectionManager conMan = new ConnectionManager();
@@ -197,7 +199,7 @@ public class Menu {
 		System.out.println("doses: ");
 		Integer dose = Integer.parseInt(r.readLine());
 		Vaccine vaccine = new Vaccine(name, dose);
-		vaccineMan.insertVaccine(vaccine);
+		directorMan.insertVaccine(vaccine);
 		System.out.println("Vaccine "+ name+" registered");
 	}
 	// used when you want to put an specific vaccine to a patient
