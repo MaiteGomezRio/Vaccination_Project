@@ -158,22 +158,23 @@ public class Menu {
 
 		System.out.println("Please, introduce the following information: ");
 		
-		System.out.println("Id: ");
+		System.out.println("ID document: ");
 		String id_document=r.readLine();
 		System.out.println("Name: ");
 		String name = r.readLine();
 		System.out.println("Surname: ");
 		String surname = r.readLine();
 		
-		System.out.println("Have you had any disease? (enter 'no' if negative) "); 
-		String d_name = r.readLine();
-		Disease disease;
-		if(d_name.equalsIgnoreCase("no")) {
-			disease=null;
+		/*System.out.println("Have you had any disease? (enter 'no' if negative) "); 
+		//String d_name = r.readLine();
+		//Disease disease;
+		//if(d_name.equalsIgnoreCase("no")) {
+		//	disease=null;
 		}else {
 			disease = patientMan.getDisease(d_name);
 			
 		}
+		
 		System.out.println("Do you have/ Have you had any relevant condition, such as being pregnant, had a stroke, allergies....? (enter 'no' if negative)"); 
 		String c_type = r.readLine();
 		Condition condition;
@@ -182,12 +183,12 @@ public class Menu {
 		}else {
 			condition = patientMan.getCondition(c_type);
 			
-		}
-		Patient patient = new Patient(id_document,name, surname, disease, condition);
+		}*/
+		Patient patient = new Patient(id_document,name, surname);
 		
 		patientMan.insertPatient(patient);
 		//TODO NO SE INSERTA O DA PROBLEMAS EN ESTA LÍNEA
-		patientMan.assignDiseaseToPatient(patient.getId(),disease.getId());
+		//patientMan.assignDiseaseToPatient(patient.getId(),disease.getId());
 		
 		System.out.println("You have registered as a patient!");
 	}

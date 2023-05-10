@@ -41,6 +41,16 @@ public class Patient implements Serializable{
 
 	}
 	
+	public Patient(String id_document, String name, String surname) {
+		this.id = id; 
+		this.name = name; 
+		this.surname = surname;
+		vaccines = new ArrayList<Vaccine>();
+		diseases= new ArrayList<Disease>();
+		conditions= new ArrayList<Condition>();
+
+	}
+	
 	//TODO do we need this constructor?
 	public Patient(int id,String id_document, String name, String surname, Disease disease, Condition condition) {
 		this.id = id; 
