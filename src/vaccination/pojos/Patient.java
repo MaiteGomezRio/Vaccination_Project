@@ -42,7 +42,9 @@ public class Patient implements Serializable{
 	}
 	
 	public Patient(String id_document, String name, String surname) {
-		this.id = id; 
+		
+		super();
+		this.id_document = id_document; 
 		this.name = name; 
 		this.surname = surname;
 		vaccines = new ArrayList<Vaccine>();
@@ -84,7 +86,7 @@ public class Patient implements Serializable{
 	}
 	
 	public Patient(int id,String id_document, String name, String surname) {
-		this.id = id; 
+		
 		this.id_document=id_document;
 		this.name = name; 
 		this.surname = surname;
