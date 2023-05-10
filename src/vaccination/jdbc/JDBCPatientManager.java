@@ -141,30 +141,6 @@ public class JDBCPatientManager implements PatientManager {
 		return null; 
 	}
 
-	@Override//i think this method will make sense later, when we link condition to patient and vaccine
-	public Condition getCondition(String type){
-
-		try {
-			String sql = "SELECT * FROM Condition WHERE type LIKE ?";
-			PreparedStatement p = c.prepareStatement(sql); 
-			p.setString(1, type); 
-			ResultSet rs = p.executeQuery();
-			rs.next();
-			Integer c_id=rs.getInt("id");
-	        Condition condition=new Condition(c_id,type);
-	        rs.close();
-	        p.close();
-	        return condition; 
-	        
-			}catch(SQLException e) {
-				System.out.println("database error");
-				e.printStackTrace();
-			}
-			return null; 
-	}
-	
-	
-
 	@Override   //i think this method will make sense later, when we link disease to patient and vaccine
 	public Disease getDisease(String name) {
 		try {

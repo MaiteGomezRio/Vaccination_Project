@@ -21,7 +21,11 @@ public class Condition implements Serializable{
 	
 	}
 
-
+	public Condition(int c_id) {
+		super();
+		this.c_id = c_id;
+	
+	}
 	@Override
 	public String toString() {
 		return "Condition [type=" + type + "]";
@@ -44,7 +48,4 @@ public class Condition implements Serializable{
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
-
 }
