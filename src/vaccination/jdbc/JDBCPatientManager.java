@@ -39,20 +39,6 @@ public class JDBCPatientManager implements PatientManager {
 	}
 	 
 	
-	@Override
-	public void assignDiseaseToPatient(int p_id, int d_id) {
-		try {
-			String sql = "INSERT INTO Patient_Disease (patient_id, disease_id) VALUES (?,?)";
-			PreparedStatement p = c.prepareStatement(sql);
-			p.setInt(1, p_id);
-			p.setInt(2, d_id);
-			p.executeUpdate();
-			p.close();
-		} catch (SQLException e) {
-			System.out.println("Database error.");
-			e.printStackTrace();
-		}
-	}
 	
 	@Override
 	public List<Patient> searchPatientByDoctor(int d_id) {
@@ -163,27 +149,6 @@ public class JDBCPatientManager implements PatientManager {
 			return null; 
 	}
 	
-	
 
-	@Override   //i think this method will make sense later, when we link disease to patient and vaccine
-	public Disease getDisease(String name) {
-		try {
-			String sql = "SELECT * FROM Disease WHERE name LIKE ?";
-			PreparedStatement p = c.prepareStatement(sql);
-			p.setString(1,name);
-			ResultSet rs = p.executeQuery(); 
-			rs.next();
-			Integer d_id = rs.getInt("id");
-	        Disease disease=new Disease(d_id,name);
-	        rs.close();
-	        p.close();
-	        return disease; 
-	        
-			}catch(SQLException e) {
-				System.out.println("database error");
-				e.printStackTrace();
-			}
-			return null; 
-	}
 	
 }
