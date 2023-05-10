@@ -21,20 +21,6 @@ public class JDBCVaccineManager implements VaccineManager {
 	}
 
 	@Override
-	public void removeVaccine(String name) {
-		try {
-			String sql = "DELETE FROM Vaccine WHERE name = ?";
-			PreparedStatement p = c.prepareStatement(sql);
-			p.setString(1, name);
-			p.executeUpdate();
-			p.close();
-		} catch (SQLException e) {
-			System.out.println("database error");
-			e.printStackTrace();
-		}
-	}
-
-	@Override
 	public List<Vaccine> searchVaccinesByPatient(int p_id){
 		List<Vaccine> list = new ArrayList<Vaccine>();
 		try {

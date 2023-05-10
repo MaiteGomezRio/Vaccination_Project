@@ -91,4 +91,18 @@ public class JDBCDirectorManager implements DirectorManager{
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public void removeVaccine(String name) {
+		try {
+			String sql = "DELETE FROM Vaccine WHERE name = ?";
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setString(1, name);
+			p.executeUpdate();
+			p.close();
+		} catch (SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+	}
 }

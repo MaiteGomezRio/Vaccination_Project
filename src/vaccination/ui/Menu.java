@@ -248,7 +248,7 @@ public class Menu {
 	}
 
 	public static void removeVaccine(String v_name) {
-		vaccineMan.removeVaccine(v_name);
+		directorMan.removeVaccine(v_name);
 	}
 
 	private static void doctorMenu(String id) {
