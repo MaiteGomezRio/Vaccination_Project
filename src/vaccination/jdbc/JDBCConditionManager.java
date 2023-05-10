@@ -23,7 +23,7 @@ public class JDBCConditionManager implements ConditionManager{
 	public List<Condition> checkConditionsOfAVaccine(int v_id) {
 		List<Condition> list = new ArrayList<Condition>();
 		try {
-			String sql = "SELECT Condition FROM Patient_Condition_Vaccine WHERE vaccine_id = ?"; 
+			String sql = "SELECT condition_id FROM Patient_Condition_Vaccine WHERE vaccine_id = ?"; 
 			PreparedStatement p = c.prepareStatement(sql); 
 			p.setInt(1, v_id);   
 			ResultSet rs = p.executeQuery(); 

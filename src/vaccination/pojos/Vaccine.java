@@ -1,6 +1,7 @@
 package vaccination.pojos;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Vaccine implements Serializable{
 
@@ -11,22 +12,16 @@ public class Vaccine implements Serializable{
 	private int id;
 	private String name; 
     private Integer dose; 
-    private Patient patient;
+    private List<Patient> patients;
+    private Disease disease; 
+    private List<Condition> conditions; 
     
     //nose si es esta clase hay que poner hashcode y equals porque un paciente se puede poner la misma vacuna dos veces 
     
     public Vaccine() {
     	super(); 
     }
-    public Vaccine( String name, Integer dose, Patient patient) {    	
-    	this.name = name; 
-    	this.dose = dose; 
-    	this.patient = patient; // Is an N to N relationship 
-    }
-    
-    
-    
-    public Vaccine(String name, Integer dose) {
+    public Vaccine( String name, Integer dose) {    	
     	this.name = name; 
     	this.dose = dose; 
     }
@@ -47,10 +42,4 @@ public class Vaccine implements Serializable{
 	public void setDose(Integer dose) {
 		this.dose = dose;
 	}
-	public Patient getPatient() {
-		return patient;
-	}
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}	
 }
