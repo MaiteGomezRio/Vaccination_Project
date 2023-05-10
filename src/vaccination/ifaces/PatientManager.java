@@ -16,7 +16,6 @@ public interface PatientManager {
 	public List<Patient> searchPatientByDoctor(int d_id);
 	public Patient getPatientInfoBeingAPatient(int p_id);
 	public Patient getPatientBeingADoctor(int p_id);
-	public Condition getCondition(String type);
-	public Disease getDisease(String name);
+	
 }
  

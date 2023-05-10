@@ -13,4 +13,6 @@ public interface DiseaseManager {
 	public List<Disease> searchDiseasesByPatient(int p_id);
 
 	public Disease searchDiseaseByVaccine(int v_id); 
+	
+	public Disease getDisease(String name);
 }
