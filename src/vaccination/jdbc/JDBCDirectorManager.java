@@ -110,8 +110,8 @@ public class JDBCDirectorManager implements DirectorManager{
 
 
 	@Override
-	public void assignConditionToVacccine(int c_id, int v_id) {
-		//TODO finish method
+	public void assignConditionToVaccine(int c_id, int v_id) {
+		// TODO create this method
 		
 	}
 	
