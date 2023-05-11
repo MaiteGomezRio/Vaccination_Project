@@ -105,4 +105,22 @@ public class JDBCDirectorManager implements DirectorManager{
 			e.printStackTrace();
 		}
 	}
+	
+	public void assignDoctorToPatient(int d_id, int p_id) {
+		try {
+			String sql= "UPDATE Patient SET doctor=? WHERE p_id= ?";
+			PreparedStatement p = c.prepareStatement(sql);			
+			p.setInt(1, d_id);
+			p.setInt(2, p_id);
+			p.executeUpdate();
+			p.close();
+			
+		
+		} catch (SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+	}
+
+
 }

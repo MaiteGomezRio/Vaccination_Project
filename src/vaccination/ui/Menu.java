@@ -338,7 +338,21 @@ public class Menu {
    	 }
 	
 	public static void assignDoctorToPatient() {
-		//TODO create this function
+		
+		try {
+			System.out.println("Introduce the name of the doctor you want to assign: ");
+			String d_name=r.readLine();
+			System.out.println("Now, introduce the name of the patient assigned to that doctor: ");
+			String p_name=r.readLine();
+			
+			directorMan.assignDoctorToPatient();
+		} catch (IOException e) {
+			System.out.println("I/O exception");
+			e.printStackTrace();
+		}
+		
+	
+		
 	}
 	
 	public static void assignConditionToVaccine() {
