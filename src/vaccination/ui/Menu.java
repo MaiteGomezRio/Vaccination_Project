@@ -342,17 +342,20 @@ public class Menu {
 		try {
 			System.out.println("Introduce the name of the doctor you want to assign: ");
 			String d_name=r.readLine();
-			System.out.println("Now, introduce the name of the patient assigned to that doctor: ");
+			System.out.println("Now, introduce the id of the patient assigned to that doctor: ");
 			String p_name=r.readLine();
-			
-			directorMan.assignDoctorToPatient();
+			List<Doctor> doctors=doctorMan.searchDoctorByName(d_name);
+			//TODO it chooses a doctor from the list
+			//Doctor d=doctor selected from the list
+			//int d_id=d.getId();
+			//List<Patient> patients=patientMan.searchPatientByName(p_name);
+			//Patient p=patient selected from the list
+			//int p_id=p.getId();
+			//directorMan.assignDoctorToPatient(d_id,p_id);
 		} catch (IOException e) {
 			System.out.println("I/O exception");
 			e.printStackTrace();
 		}
-		
-	
-		
 	}
 	
 	public static void assignConditionToVaccine() {
