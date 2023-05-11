@@ -38,9 +38,10 @@ public class Menu {
 		while (true) {
 			try {
 				System.out.println("Welcome to the Vaccination app!");
-				System.out.println("Are you a doctor or a patient? Choose an option, please:");
+				System.out.println("Are you a doctor, a patient, or the director? Choose an option, please:");
 				System.out.println("1. Doctor");
 				System.out.println("2. Patient");
+				System.out.println("3. Director");
 				System.out.println("0. Exit");
 
 				int choice = Integer.parseInt(r.readLine());
