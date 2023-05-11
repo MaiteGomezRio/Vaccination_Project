@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import vaccination.ifaces.DiseaseManager;
 import vaccination.pojos.Disease;
+import vaccination.pojos.Patient;
+import vaccination.pojos.Vaccine;
 
 public class JDBCDiseaseManager implements DiseaseManager{
 	
@@ -50,16 +53,27 @@ public class JDBCDiseaseManager implements DiseaseManager{
 	}
 
 	@Override
-	public List<Disease> searchDiseasesByPatient(int p_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Disease> searchDiseaseByVaccine(int vaccine_id) {
+		
+		List<Disease> list = new ArrayList<Disease>();
+		try {
+			String sql = "SELECT disease_id FROM Disease_Vaccine WHERE vaccine_id LIKE ?";
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setString(1, "%" + vaccine_id + "%"); 
+			ResultSet rs = p.executeQuery();
+			while (rs.next()) {
+				String disease_name = rs.getString("name");
+				Disease disease=new Disease(disease_name);
+				list.add(disease);
+			}
+		} catch (SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		return list;
 	}
-
-	@Override
-	public Disease searchDiseaseByVaccine(int v_id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	
 	@Override   //i think this method will make sense later, when we link disease to patient and vaccine
 	public Disease getDisease(String name) {
 		try {
@@ -80,5 +94,28 @@ public class JDBCDiseaseManager implements DiseaseManager{
 			}
 			return null; 
 	}
+
+	@Override
+	public List<Disease> searchDiseasesByPatient(int p_id) {
+		List<Disease> list = new ArrayList<Disease>();
+		try {
+			String sql = "SELECT disease_id FROM Patient_Disease WHERE patient_id LIKE ?";
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setInt(1, p_id); 
+			ResultSet rs = p.executeQuery();
+			while (rs.next()) {
+				String disease_name = rs.getString("name");
+				Disease disease=new Disease(disease_name);
+				list.add(disease);
+			}
+		} catch (SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		return list;
+		
+	}
+
+
 
 }

@@ -1,12 +1,15 @@
 package vaccination.pojos;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Disease implements Serializable{
 
 	private static final long serialVersionUID = -6053416530349593639L;
 	private int d_id;
 	private String name;
+	private List<Vaccine> vaccines;
+	private List<Patient> patients; 
 
 	public Disease(String name) {
 		super();
