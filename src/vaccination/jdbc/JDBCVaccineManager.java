@@ -24,16 +24,14 @@ public class JDBCVaccineManager implements VaccineManager {
 	public List<Vaccine> searchVaccinesByPatient(int p_id){
 		List<Vaccine> list = new ArrayList<Vaccine>();
 		try {
-			String sql = "SELECT name FROM Patient_Vaccine WHERE p_id LIKE ?";
+			String sql = "SELECT vaccine_id FROM Patient_Vaccine WHERE p_id LIKE ?";
 			PreparedStatement p = c.prepareStatement(sql);
-			p.setString(1, "%" + p_id + "%"); // the percentages are so it looks for every name that contains that word.
-												// Ex: if you type dri it looks for rodrigo too.
+			p.setInt(1, p_id);
 			ResultSet rs = p.executeQuery();
 			while (rs.next()) {
-				String n = rs.getString("name");
+				String name = rs.getString("name");
 				Integer dose = rs.getInt("dose");
-				Patient patient = new Patient(p_id);
-				Vaccine v = new Vaccine(n, dose, patient);
+				Vaccine v = new Vaccine(name, dose);
 				list.add(v);
 			}
 		} catch (SQLException e) {
@@ -53,13 +51,9 @@ public class JDBCVaccineManager implements VaccineManager {
 			rs.next();
 			String name = rs.getString("name");
 			Integer dose = rs.getInt("dose");
-			//String patient_id = rs.getString("p_id");
-			//Patient patient = new Patient(patient_id);
 			Vaccine v = new Vaccine(name, dose);
 			return v;
-			// TODO i don't know if i should create another method for when it is not
-			// assigned to a patient, it would be the same but without putting patient on the
-			// constructor.
+		
 			} catch (SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
