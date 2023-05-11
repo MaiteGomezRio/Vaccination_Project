@@ -65,17 +65,10 @@ public class JDBCPatientManager implements PatientManager {
 		return patients_list; 
 	}
 	
-	@Override
-	public void removePatient(Patient patient) {
-		//TODO remove patient method
-	}
-	
-	
-	
 	
 	@Override
-	//This method is used by the patient, when he wants to see his information. 
-	public Patient getPatientInfoBeingAPatient(int p_id) {
+	
+	public Patient getPatientInfo(int p_id) {
 		try {
 		String sql = "SELECT * FROM Patient WHERE id LIKE ?";
 		PreparedStatement p = c.prepareStatement(sql); 
@@ -91,8 +84,7 @@ public class JDBCPatientManager implements PatientManager {
         Disease disease = new Disease(d_name); 
         String c_name = rs.getString("c_name"); 
         Condition condition = new Condition(c_name); 
-        //Patient patient = new Patient(p_id,id_document,name, surname, doctor); TODO how indicate a doctor
-        Patient patient = new Patient(p_id,id_document,name, surname);
+        Patient patient = new Patient(p_id,id_document,name, surname,disease,condition);
         return patient; 
         
 		}catch(SQLException e) {
@@ -101,33 +93,21 @@ public class JDBCPatientManager implements PatientManager {
 		}
 		return null; 
 	}
+
 	@Override
-	//This method is used by the doctor, when he wants to see the information of one patient. 
-	public Patient getPatientBeingADoctor(int p_id) {
+	public void assignDiseaseToPatient(int p_id, int d_id) {
 		try {
-		String sql = "SELECT * FROM Patient WHERE id LIKE ?";
-		PreparedStatement p = c.prepareStatement(sql); 
-		p.setInt(1, p_id); 
-		ResultSet rs = p.executeQuery(); 
-        rs.next();  //since there is only one unique result.
-        String id_document=rs.getString("id_document");
-        String name = rs.getString("name"); 
-        String surname = rs.getString("surname"); 
-        String d_name = rs.getString("d_name");
-        Disease disease = new Disease(d_name); 
-        String c_type = rs.getString("c_type"); 
-        Condition condition = new Condition(c_type); 
-        Patient patient = new Patient(p_id,id_document, name, surname, disease, condition); 
-        return patient; 
-        
-		}catch(SQLException e) {
-			System.out.println("database error");
+			String sql = "INSERT INTO Patient_Disease (patient_id, disease_id) VALUES (?,?)";
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setInt(1, p_id);
+			p.setInt(2, d_id);
+			p.executeUpdate();
+			p.close();
+		} catch (SQLException e) {
+			System.out.println("Database error.");
 			e.printStackTrace();
 		}
-		return null; 
+		
 	}
 
-
-	
-	
 }
