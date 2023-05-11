@@ -98,6 +98,9 @@ public class Menu {
 					}
 					break;
 				}
+				case 3:{
+					directorMenu();
+				}
 				case 0: {
 					conMan.closeConnection();
 					System.out.println("Thank you for using the database! Goodbye.");
@@ -144,7 +147,12 @@ public class Menu {
 		}
 
 	}
-
+	public static void registerCondition() {
+		
+	}
+	public static void registerDisease() {
+		
+	}
 	public static void selectDoctor() throws IOException {
 		System.out.println("Please, tell me the doctor's name: ");
 		String name = r.readLine();
@@ -165,31 +173,8 @@ public class Menu {
 		String name = r.readLine();
 		System.out.println("Surname: ");
 		String surname = r.readLine();
-		
-		/*System.out.println("Have you had any disease? (enter 'no' if negative) "); 
-		//String d_name = r.readLine();
-		//Disease disease;
-		//if(d_name.equalsIgnoreCase("no")) {
-		//	disease=null;
-		}else {
-			disease = patientMan.getDisease(d_name);
-			
-		}
-		
-		System.out.println("Do you have/ Have you had any relevant condition, such as being pregnant, had a stroke, allergies....? (enter 'no' if negative)"); 
-		String c_type = r.readLine();
-		Condition condition;
-		if(c_type.equalsIgnoreCase("no")) {
-			condition=null;
-		}else {
-			condition = patientMan.getCondition(c_type);
-			
-		}*/
 		Patient patient = new Patient(id_document,name, surname);
-		
 		patientMan.insertPatient(patient);
-		//TODO NO SE INSERTA O DA PROBLEMAS EN ESTA LÍNEA
-		//patientMan.assignDiseaseToPatient(patient.getId(),disease.getId());
 		
 		System.out.println("You have registered as a patient!");
 	}
@@ -204,13 +189,14 @@ public class Menu {
 		directorMan.insertVaccine(vaccine);
 		System.out.println("Vaccine "+ name+" registered");
 	}
+	
 	// used when you want to put an specific vaccine to a patient
 	public static void selectVaccines() throws IOException {
 		List<Vaccine> listVaccines = vaccineMan.getAllVaccines();
 		System.out.println(listVaccines);
 	}
 
-	public static void checkVaccinesOfPatient()throws IOException {  //this return the list of vaccines of a patient
+	public static void checkVaccinesOfPatient()throws IOException {  //this returns the list of vaccines of a patient
 		//TODO CORRECT COMMENTED 07/5/2023
 		System.out.println("Introduce the patient's name: ");
 		String patient_name=r.readLine();
@@ -230,6 +216,7 @@ public class Menu {
    		 return;
    	 	}*/
     }
+	
 	public static void assignVaccine(int patientId) throws IOException {
 
 		System.out.println("Tell me the name of the vaccine ");
@@ -239,18 +226,41 @@ public class Menu {
 		//vaccineMan.assignVaccineToPatient(name, patientId);
 	}
 
-	public static void removePatient(String p_name) {//TODO 07/05/2023
-		//Patient patient=(Patient) patientMan.searchPatientByName(p_name);
-		//patientMan.removePatient(patient);// TODO create remove method in patient
+	public static void removePatient() {
+		System.out.println("Introduce the name of the patient you want to remove from the database: ");
+		String p_name;
+		try {
+			p_name = r.readLine();
+			directorMan.removePatient(p_name);
+		} catch (IOException e) {
+			System.out.println("I/O exception");
+			e.printStackTrace();
+		}
 	}
-
-	public static void removeDoctor(String d_name) {
-		Doctor doctor=(Doctor) doctorMan.searchDoctorByName(d_name);
+	
+	public static void removeDoctor() {
+		try {
+		System.out.println("Introduce the name of the doctor you want to remove from the database: ");
+		String d_name=r.readLine();
 		directorMan.removeDoctor(d_name);
+		
+		}catch(IOException e) {
+			System.out.println("I/O exception");
+			e.printStackTrace();
+		}
 	}
 
-	public static void removeVaccine(String v_name) {
-		directorMan.removeVaccine(v_name);
+	public static void removeVaccine() {
+		try {
+			System.out.println("Introduce the name of the vaccine you want to remove from the database: ");
+			String v_name=r.readLine();
+			directorMan.removeVaccine(v_name);
+			
+		}catch(IOException e) {
+			System.out.println("I/O exception");
+			e.printStackTrace();
+		}
+		
 	}
 
 	private static void doctorMenu(String id) {
@@ -327,6 +337,14 @@ public class Menu {
    	 }
    	 }
 	
+	public static void assignDoctorToPatient() {
+		//TODO create this function
+	}
+	
+	public static void assignConditionToVaccine() {
+		//TODO create this function
+	}
+	
 	public static int generateRandom() {
 		Random random = new Random();
         long randomNumber = random.nextLong() % 10000000000L;
@@ -335,5 +353,91 @@ public class Menu {
         }
         return (int)randomNumber;
 	}
-
+	
+	public static void directorMenu() {
+		
+		while(true) {
+			System.out.println("What do you want to do? ");
+			System.out.println("1.Insert data.");
+			System.out.println("2.Remove data.");
+			System.out.println("3.Assign data.");
+			System.out.println("0.Exit");
+			
+			int choice3;
+			try {
+				choice3 = Integer.parseInt(r.readLine());
+				switch(choice3) {
+				
+				case 1:{
+					System.out.println("1.Insert condition");
+					System.out.println("2.Insert vaccine");
+					System.out.println("3.Insert disease");
+					System.out.println("0.Exit");
+					
+					int choice=Integer.parseInt(r.readLine());
+					switch(choice) {
+					case 1:{
+						registerCondition();
+						break;
+					}case 2:{
+						registerVaccine();
+						break;
+					}case 3:{
+						registerDisease();
+						break;
+					}case 0:{
+						return;
+					}
+					}
+					
+				}
+				case 2:{
+					System.out.println("1.Remove doctor");
+					System.out.println("2.Remove vaccine");
+					System.out.println("3.Remove patient");
+					System.out.println("0.Exit");
+					
+					int choice=Integer.parseInt(r.readLine());
+					switch(choice) {
+					case 1:{
+						removeDoctor();
+						break;
+					}case 2:{
+						removeVaccine();
+						break;
+					}case 3:{
+						removePatient();
+						break;
+						
+					}case 0:{
+						return;
+					}
+					}
+					
+				}case 4:{
+					System.out.println("1.Assign condition to vaccine");
+					System.out.println("2.Assign doctor to patient");
+					System.out.println("0.Exit");
+					int choice=Integer.parseInt(r.readLine());
+					switch(choice) {
+					case 1:{
+						assignConditionToVaccine();
+						break;
+					}case 2:{
+						assignDoctorToPatient();
+						break;
+					}case 0:{
+						return;
+					}
+					}	
+				}case 0:{
+					return;
+				}
+				}
+			}catch (NumberFormatException | IOException e) {
+					e.printStackTrace();
+			}
+		}		
+	}	
+	
 }
