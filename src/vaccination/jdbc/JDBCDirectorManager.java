@@ -19,6 +19,8 @@ public class JDBCDirectorManager implements DirectorManager{
 
 	}
 	
+	
+	
 	@Override
 	public void insertVaccine(Vaccine vaccine) {
 		try {	
@@ -105,7 +107,13 @@ public class JDBCDirectorManager implements DirectorManager{
 			e.printStackTrace();
 		}
 	}
+	@Override
+	public void assignConditionToVaccine(int c_id, int v_id) {
+		// TODO create this method
+		
+	}
 	
+	@Override
 	public void assignDoctorToPatient(int d_id, int p_id) {
 		try {
 			String sql= "UPDATE Patient SET doctor=? WHERE p_id= ?";
@@ -121,6 +129,8 @@ public class JDBCDirectorManager implements DirectorManager{
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 
 }

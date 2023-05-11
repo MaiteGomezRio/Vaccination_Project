@@ -40,6 +40,28 @@ public class JDBCVaccineManager implements VaccineManager {
 		}
 		return list;
 	}
+	
+	@Override 
+	public List<Vaccine> searchVaccinesByDisease(int d_id){
+		List<Vaccine> list = new ArrayList<Vaccine>();
+		try {
+			String sql= "SELECT vaccine_id FROM Disease_Vaccine WHERE d_id LIKE ?";
+			PreparedStatement p=c.prepareStatement(sql);
+			p.setInt(1, d_id);
+			ResultSet rs = p.executeQuery();
+			while (rs.next()) {
+				String name = rs.getString("name");
+				Integer dose = rs.getInt("dose");
+				Vaccine v = new Vaccine(name, dose);
+				list.add(v);
+			}
+		} catch (SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		return list;
+		}
+	
 
 	@Override
 	public Vaccine getVaccine(String v_name) {
