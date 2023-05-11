@@ -1,4 +1,4 @@
-package dogclinic.jpa;
+package vaccination.jpa;
 
 import java.util.List;
 
