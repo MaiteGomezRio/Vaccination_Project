@@ -77,6 +77,28 @@ public class JDBCDoctorManager implements DoctorManager {
 		}
 		return null; 
 	}
-	
+	@Override
+	public Doctor getDoctorByEmail(String email) {
+		try {
+		String sql = "SELECT * FROM Doctor WHERE email LIKE ?";
+		PreparedStatement p = c.prepareStatement(sql); 
+		p.setString(1, email); 
+		ResultSet rs = p.executeQuery(); 
+        rs.next();  
+        int id = rs.getInt("p_id"); 
+        String id_document=rs.getString("id_document");
+        String name = rs.getString("name"); 
+        String surname = rs.getString("surname"); 
+        Doctor doctor = new Doctor(id, id_document,name, surname); 
+        rs.close();
+        p.close(); 
+        return doctor; 
+        
+		}catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		return null; 
+	}
 }
 

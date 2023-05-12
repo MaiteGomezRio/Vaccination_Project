@@ -14,7 +14,7 @@ public interface PatientManager {
 	public void assignDiseaseToPatient(int p_id, int d_id);
 	public List<Patient> searchPatientByDoctor(int d_id);
 	public Patient getPatientInfo(int p_id);
-	
+	public List<Patient> searchPatientByName(String name);
 	
 }
  

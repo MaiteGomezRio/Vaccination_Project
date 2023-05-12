@@ -3,6 +3,7 @@ package vaccination.jpa;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -41,11 +42,15 @@ public class JPAUserManager implements UserManager{
 
 	@Override
 	public User login(String name, String password) {
-		Query q = em.createNativeQuery("SELECT FROM users WHERE name = ? AND password = ? ", User.class);
-		q.setParameter(1, name);
-		q.setParameter(2, password); 
-		User user = (User)q.getSingleResult();
-		return user; 
+		try {
+		    Query q = em.createNativeQuery("SELECT * FROM users WHERE username = ? AND password = ? ", User.class);
+		    q.setParameter(1, name);
+		    q.setParameter(2, password); 
+		    User user = (User)q.getSingleResult();
+		    return user;
+		}catch(NoResultException e){
+			return null;
+		}
 	}
 	@Override
 	public void assignRole(User user, Role role) {
@@ -68,4 +73,12 @@ public class JPAUserManager implements UserManager{
     	List<Role> roles = (List<Role>)q.getResultList(); 
     	return roles; 
     }
+    @Override
+    public Role getRole(String name) {
+    	Query q = em.createNativeQuery("SELECT * FROM roles WHERE name LIKE ?", Role.class);
+    	q.setParameter(1, name);
+    	Role r = (Role)q.getSingleResult();
+    	return r; 
+    }
+    //TODO IMPORTANTE: WE HAVE TO DO THE METHOD DELETEUSER, HE DOES NOT DO IT IN CLASS.s
 }

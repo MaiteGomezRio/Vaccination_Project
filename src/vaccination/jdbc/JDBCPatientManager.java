@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -109,5 +110,27 @@ public class JDBCPatientManager implements PatientManager {
 		}
 		
 	}
-
+	@Override
+	public List<Patient> searchPatientByName(String name){
+		List<Patient> list = new ArrayList<Patient>(); 
+		try {
+			String sql = "SELECT * FROM Patient WHERE name LIKE ?"; 
+			PreparedStatement p = c.prepareStatement(sql); 
+			p.setString(1, "%"+name+"%");   // the percentages are so it looks for every name that contains that word. Ex: if you type dri it looks for rodrigo too. 
+			ResultSet rs = p.executeQuery(); 
+			while(rs.next()) {
+				int id = rs.getInt("id");
+				String id_document=rs.getString("id_document");
+				String n = rs.getString("name"); 
+				String surname= rs.getString("surname");
+				String email = rs.getString("email"); 
+				Patient patient = new Patient(id, id_document,n, surname, email); 
+				list.add(patient); 
+			}
+		}catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		return list; 
+	}
 }

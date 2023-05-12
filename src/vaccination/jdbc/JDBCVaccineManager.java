@@ -83,11 +83,11 @@ public class JDBCVaccineManager implements VaccineManager {
 		}
 	}
 	@Override
-	public void assignVaccineToPatient(int v_id, int p_id) {
+	public void assignVaccineToPatient(String v_name, int p_id) {
 		try {
 			String sql = "INSERT into Patient_Vaccine(v_id, p_id) WHERE VALUES (?,?)"; 																			// vaccine
 			PreparedStatement p = c.prepareStatement(sql);
-			p.setInt(1, v_id);
+			p.setString(1, v_name);
 			p.setInt(2, p_id);
 			p.executeUpdate();
 			p.close();
@@ -133,6 +133,5 @@ public class JDBCVaccineManager implements VaccineManager {
 		}
 		return list; 
 	}
-
 	
 }

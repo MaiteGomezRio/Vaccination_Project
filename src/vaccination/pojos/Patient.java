@@ -12,6 +12,7 @@ public class Patient implements Serializable{
 	private String id_document;
 	private String name; 
 	private String surname; 
+	private String email;
 	private List<Vaccine> vaccines;
 	private Doctor doctor; 
 	private List <Disease> diseases;
@@ -41,7 +42,7 @@ public class Patient implements Serializable{
 
 	}
 	
-	public Patient(String id_document, String name, String surname) {
+	public Patient(String id_document, String name, String surname, String email) {
 		
 		super();
 		this.id_document = id_document; 
@@ -54,6 +55,14 @@ public class Patient implements Serializable{
 	}
 	
 
+	public Patient(int id, String id_document, String name, String surname, String email) {
+		super();
+		this.id = id;
+		this.id_document = id_document;
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+	}
 	public Patient(int id,String id_document, String name, String surname, Disease disease, Condition condition) {
 		this.id = id; 
 		this.name = name; 
@@ -152,9 +161,12 @@ public class Patient implements Serializable{
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
-	
-	
-	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

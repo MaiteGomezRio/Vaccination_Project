@@ -10,16 +10,20 @@ import java.util.Random;
 import vaccination.ifaces.DirectorManager;
 import vaccination.ifaces.DoctorManager;
 import vaccination.ifaces.PatientManager;
+import vaccination.ifaces.UserManager;
 import vaccination.ifaces.VaccineManager;
 import vaccination.jdbc.ConnectionManager;
 import vaccination.jdbc.JDBCDoctorManager;
 import vaccination.jdbc.JDBCPatientManager;
 import vaccination.jdbc.JDBCVaccineManager;
+import vaccination.jpa.JPAUserManager;
 import vaccination.pojos.Condition;
 import vaccination.pojos.Disease;
 import vaccination.pojos.Doctor;
 import vaccination.pojos.Patient;
+import vaccination.pojos.Role;
 import vaccination.pojos.Vaccine;
+import vaccination.pojos.User; 
 
 public class Menu {
 
@@ -29,83 +33,44 @@ public class Menu {
 	private static PatientManager patientMan;
 	private static VaccineManager vaccineMan;
 	private static DirectorManager directorMan;
+	private static UserManager userMan; 
 
 	public static void main(String[] args) {
 		ConnectionManager conMan = new ConnectionManager();
 		doctorMan = new JDBCDoctorManager(conMan.getConnection());
 		patientMan = new JDBCPatientManager(conMan.getConnection());
 		vaccineMan = new JDBCVaccineManager(conMan.getConnection());
+		userMan = new JPAUserManager(); 
 		while (true) {
 			try {
 				System.out.println("Welcome to the Vaccination app!");
-				System.out.println("Are you a doctor, a patient, or the director? Choose an option, please:");
-				System.out.println("1. Doctor");
-				System.out.println("2. Patient");
-				System.out.println("3. Director");
+				System.out.println("What do you want to do? :");
+				System.out.println("1. Register as a doctor");
+				System.out.println("2. Register as a patient");
+				System.out.println("3. Register as a director");
+				System.out.println("4. Log in"); 
 				System.out.println("0. Exit");
 
 				int choice = Integer.parseInt(r.readLine());
 
 				switch (choice) {
-				case 1: {
-					System.out.println("What do you want to do?: ");
-					System.out.println("1.Register in the app.");
-					System.out.println("2.Select doctor"); // this will then change by login
-					System.out.println("0.Exit");
-
-					int choice2 = Integer.parseInt(r.readLine());
-
-					switch (choice2) {
-					case 1: {
-						registerDoctor();
-						break;
-					}
-					case 2: {
-						selectDoctor();
-						break;
-					}
-					case 0: {
-						conMan.closeConnection();
-						return;
-					}
-					}
-					break;
-				}
-				case 2: {
-					System.out.println("What do you want to do: ");
-					System.out.println("1.Register in the app");
-					System.out.println("2.Check my vaccines");
-					System.out.println("0.Exit");
-
-					int choice3 = Integer.parseInt(r.readLine());
-
-					switch (choice3) {
-
-					case 1: {
-						registerPatient();
-						break;
-
-					}
-					case 2: {
-
-						checkVaccinesOfPatient();
-						break;
-					}
-					case 0: {
-						conMan.closeConnection();
-						return;
-					}
-					}
-					break;
-				}
-				case 3:{
-					directorMenu();
-				}
-				case 0: {
-					conMan.closeConnection();
-					System.out.println("Thank you for using the database! Goodbye.");
-					return;
-				}
+				    case 1: {
+					     registerDoctor(); 
+				    }
+				    case 2: {
+					     registerPatient(); 
+				    }
+				    case 3:{
+				       	 //registerDirector();
+				    }
+				    case 4:{
+					     login(); 
+				    }
+				    case 0: {
+					    conMan.closeConnection();
+					    System.out.println("Thank you for using the database! Goodbye.");
+					   return;
+				    }
 				}
 
 			} catch (NumberFormatException e) {
@@ -118,27 +83,48 @@ public class Menu {
 		}
 
 	}
+	public static void login() throws IOException{
+		while(true) {
+		System.out.println("Username: ");
+		String username = r.readLine();
+		System.out.println("Password: ");
+		String password = r.readLine();
+		User user = userMan.login(username, password); 
+		    if(user != null) {
+		    	if(user.getRole().getName().equals("doctor")) {
+		    		doctorMenu(user.getEmail());
+		    	}else if(user.getRole().getName().equals("patient")) {
+		    		//selectPatient(); 
+		    	}
+		    }else {
+			    System.out.println("Wrong username/password combination"); 
+		    }
+		}
+	}
 
 	public static void registerDoctor() throws IOException {
 		try {
 			System.out.println("Please, input the doctor's data:");
-			//TODO generate random id ???
-			int id=generateRandom();
-			
 			System.out.println("Id_document:");
 			String id_document = r.readLine();
-			
 			System.out.println("Name:");
 			String name = r.readLine();
-			
 			System.out.println("Surname:");
 			String surname = r.readLine();
-			
-			// System.out.println("Password:");
-			// String password = r.readLine();
+			System.out.println("Email: ");
+			String email = r.readLine();
+			System.out.println("Username: ");
+			String username = r.readLine();
+			System.out.println("Password:");
+			String password = r.readLine();
 
-			Doctor doctor = new Doctor(id_document,name, surname);
+			Doctor doctor = new Doctor(id_document,name, surname, email);
 			doctorMan.insertDoctor(doctor);
+			User user = new User(username, password, email); 
+			userMan.register(user);
+			Role role = userMan.getRole("doctor"); 
+			userMan.assignRole(user, role);
+			
 			System.out.println("You have registered as a doctor!");
 			
 		} catch (IOException e) {
@@ -153,7 +139,7 @@ public class Menu {
 	public static void registerDisease() {
 		
 	}
-	public static void selectDoctor() throws IOException {
+	/*public static void selectDoctor() throws IOException {
 		System.out.println("Please, tell me the doctor's name: ");
 		String name = r.readLine();
 		List<Doctor> listDoctors = doctorMan.searchDoctorByName(name);
@@ -161,7 +147,7 @@ public class Menu {
 		System.out.println("Choose which one it is, type its ID: ");
 		String id = r.readLine();
 		doctorMenu(id);
-	}
+	}*/
 
 	public static void registerPatient() throws IOException {
 
@@ -173,8 +159,19 @@ public class Menu {
 		String name = r.readLine();
 		System.out.println("Surname: ");
 		String surname = r.readLine();
-		Patient patient = new Patient(id_document,name, surname);
+		System.out.println("email: ");
+		String email = r.readLine(); 
+		System.out.println("username: "); 
+		String username = r.readLine();
+		System.out.println("password: ");
+		String password = r.readLine(); 
+		
+		Patient patient = new Patient(id_document,name, surname, email);
 		patientMan.insertPatient(patient);
+		User user = new User(username, password, email);
+		userMan.register(user);
+		Role role = userMan.getRole("patient"); 
+		userMan.assignRole(user, role);
 		
 		System.out.println("You have registered as a patient!");
 	}
@@ -217,13 +214,16 @@ public class Menu {
    	 	}*/
     }
 	
-	public static void assignVaccine(int patientId) throws IOException {
-
+	public static void assignVaccine() throws IOException {
+		System.out.println("Tell me the name of the patient.");
+        String name = r.readLine(); 
+        List<Patient> patients=patientMan.searchPatientByName(name);
+        System.out.println("Select the id of the patient: ");
+        int id = Integer.parseInt(r.readLine());
 		System.out.println("Tell me the name of the vaccine ");
-		String name = r.readLine();
-		List<Vaccine> vaccines = vaccineMan.searchVaccinesByPatient(patientId);
-		System.out.println(vaccines);//TODO 07/05/2023
-		//vaccineMan.assignVaccineToPatient(name, patientId);
+		String name_v = r.readLine();
+		vaccineMan.assignVaccineToPatient(name_v, id);
+		//System.out.println(vaccines);//TODO 07/05/2023
 	}
 
 	public static void removePatient() {
@@ -263,8 +263,8 @@ public class Menu {
 		
 	}
 
-	private static void doctorMenu(String id) {
-
+	private static void doctorMenu(String email) {
+        Doctor doctor = doctorMan.getDoctorByEmail(email); 
 		while (true) {
 			try {
 				System.out.println("Welcome doctor: ");
@@ -272,28 +272,31 @@ public class Menu {
 				System.out.println("1. Register a new vaccine.");
 				System.out.println("2. Check vaccines");
 				System.out.println("3. Check vaccines of a patient.");
-				System.out.println("4. Assign a vaccine to a patient."); 
+				System.out.println("4. Assign a vaccine to a patient.");
+				//TODO  unassign vaccine to a patient. 
 				System.out.println("0. Return");
 
 				int choice = Integer.parseInt(r.readLine());
 
 				switch (choice) {
-				case 1: {
-					registerVaccine();
-					break;
-				}
-				case 2: {
-					//selectVaccines();// TODO create a method that returns the list of vaccines in the databae
-					break;           //TODO create method selectVaccines()
-				}
-				case 3: {
-					//checkVaccinesOfPatient();
-					break;
-				}
-				case 0: {
-	
-					return;
-				}
+				    case 1: {
+					    registerVaccine();
+					    break;
+				    }
+				    case 2: {
+					    selectVaccines();
+					    break;           
+				    }
+				    case 3: {
+					    checkVaccinesOfPatient();
+					    break;
+				    }
+				    case 4:{
+					    assignVaccine(); 
+				    }
+				    case 0: {
+				     	return;
+				    }
 				}
 			} catch (IOException e) {
 				System.out.println("I/O exception");
@@ -457,4 +460,7 @@ public class Menu {
 		}		
 	}	
 	
+	public static void patientMenu() {
+		//TODO
+	}
 }
