@@ -46,7 +46,14 @@ public class Doctor implements Serializable {
 		this.surname = surname;
 		this.email = email; 
 	}
-
+	public Doctor(int id, String id_document, String name, String surname, String email) {
+		super();
+		this.id = id;
+		this.id_document = id_document;
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+	}
 
 	@Override
 	public String toString() {

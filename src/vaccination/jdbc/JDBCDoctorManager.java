@@ -89,7 +89,7 @@ public class JDBCDoctorManager implements DoctorManager {
         String id_document=rs.getString("id_document");
         String name = rs.getString("name"); 
         String surname = rs.getString("surname"); 
-        Doctor doctor = new Doctor(id, id_document,name, surname); 
+        Doctor doctor = new Doctor(id, id_document,name, surname, email); 
         rs.close();
         p.close(); 
         return doctor; 

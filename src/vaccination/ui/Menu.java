@@ -134,10 +134,26 @@ public class Menu {
 
 	}
 	public static void registerCondition() {
-		
+		try {
+			System.out.println("Please, input the condition's name: ");
+			String type = r.readLine();
+			Condition condition = new Condition(type);
+			directorMan.insertCondition(condition); 
+		}catch(IOException e) {
+			System.out.println("Exception");
+			e.printStackTrace();
+		}
 	}
 	public static void registerDisease() {
-		
+		try {
+			System.out.println("Please, tell me the name of the disease: ");
+			String name = r.readLine(); 
+			Disease disease = new Disease(name);
+			directorMan.insertDisease(disease);
+		}catch(IOException e) {
+			System.out.println("I/OException");
+			e.printStackTrace();
+		}
 	}
 	/*public static void selectDoctor() throws IOException {
 		System.out.println("Please, tell me the doctor's name: ");
@@ -193,25 +209,17 @@ public class Menu {
 		System.out.println(listVaccines);
 	}
 
-	public static void checkVaccinesOfPatient()throws IOException {  //this returns the list of vaccines of a patient
+	public static void checkVaccinesOfPatient()throws IOException {  
 		//TODO CORRECT COMMENTED 07/5/2023
 		System.out.println("Introduce the patient's name: ");
 		String patient_name=r.readLine();
-		//List<Patient> list=patientMan.searchPatientByName(patient_name);
-		//System.out.println(list); 
+		List<Patient> list=patientMan.searchPatientByName(patient_name);
+		System.out.println(list); 
 		System.out.println("Choose which one it is, type its ID: "); 
 		Integer id = Integer.parseInt(r.readLine());
    	 	System.out.println("The vaccines of the patient are: ");
    	 	List<Vaccine> vaccines = vaccineMan.searchVaccinesByPatient(id); 
    	 	System.out.println(vaccines);
-   	 	/*System.out.println("If you want to modify something of a specific vaccine, type it's name: "); 
-   	 	System.out.println("If not, press enter");
-   	 	String v_name = r.readLine();
-   	 	if(r.readLine()!=null) {
-   	 		vaccineMenu(v_name); 
-   	 	}else {
-   		 return;
-   	 	}*/
     }
 	
 	public static void assignVaccine() throws IOException {
@@ -307,39 +315,6 @@ public class Menu {
 			}
 		}
 	}
-	
-	public static void vaccineMenu(String name) {
-   	 while(true) {
-   		 try {
-   			 System.out.println("What do you want to do to the vaccine: ");
-   			 System.out.println("1.Assign to another patient");
-   			 System.out.println("2.Remove the vaccine");
-   			 System.out.println("0.Back to the doctor's menu");
-   			 
-   			 int choice = Integer.parseInt(r.readLine());
-   			 
-   			 switch(choice) {
-   			 case 1:{
-   				 //assignVaccine(int p_id);
-   				 break;
-   			 }
-   			 case 2:{
-   				 //removeVaccine(String v_name);
-   				 break;
-   			 }case 0:{
-   				 return;
-   			}}
-
-   		 }catch(NumberFormatException e){
-   			 System.out.println("You did not type a number.");
-   			 e.printStackTrace();
-   		 }catch(IOException e){
-   			 System.out.println("I/O Exception");
-   			 e.printStackTrace();
-   		 }
-   	 }
-   	 }
-	
 	public static void assignDoctorToPatient() {
 		
 		try {
@@ -460,7 +435,43 @@ public class Menu {
 		}		
 	}	
 	
-	public static void patientMenu() {
-		//TODO
+	public static void patientMenu(String email) {
+		Patient patient = patientMan.getPatientByEmail(email);
+		while(true) {
+			try {
+				System.out.println("Welcome patient!"); 
+				System.out.println("What do you want to do? Choose an option: ");
+				System.out.println("1. Check my vaccines");
+				System.out.println("2. Check my appointments"); 
+				System.out.println("3. Set an appointment"); 
+				System.out.println("4. Cancel an appointment"); 
+				System.out.println("0. Exit"); 
+				int option = Integer.parseInt(r.readLine()); 
+				
+				switch(option) {
+					case 1:{
+						checkVaccinesOfPatient(); 
+					}
+					case 2:{
+						//TODO
+					}
+					case 3:{
+						//TODO
+					}
+					case 4:{
+						//TODO
+					}
+					case 0:{
+						return; 
+					}
+				}
+			}catch(IOException e){
+				System.out.println("I/O Exception");
+				e.printStackTrace();
+			}catch(NumberFormatException e) {
+				System.out.println("You did not type a number");
+				e.printStackTrace();
+			}
+		}
 	}
 }
