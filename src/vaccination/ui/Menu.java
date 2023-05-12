@@ -61,7 +61,7 @@ public class Menu {
 					     registerPatient(); 
 				    }
 				    case 3:{
-				       	 //registerDirector();
+				       	 registerDirector();
 				    }
 				    case 4:{
 					     login(); 
@@ -74,7 +74,7 @@ public class Menu {
 				}
 
 			} catch (NumberFormatException e) {
-				System.out.println("You didn't type a number, idiot!");
+				System.out.println("You didn't type a number!");
 				e.printStackTrace();
 			} catch (IOException e) {
 				System.out.println("I/O Exception.");
@@ -94,7 +94,7 @@ public class Menu {
 		    	if(user.getRole().getName().equals("doctor")) {
 		    		doctorMenu(user.getEmail());
 		    	}else if(user.getRole().getName().equals("patient")) {
-		    		//selectPatient(); 
+		    		patientMenu(user.getEmail());
 		    	}
 		    }else {
 			    System.out.println("Wrong username/password combination"); 
@@ -113,8 +113,7 @@ public class Menu {
 			String surname = r.readLine();
 			System.out.println("Email: ");
 			String email = r.readLine();
-			System.out.println("Username: ");
-			String username = r.readLine();
+			String username=id_document;
 			System.out.println("Password:");
 			String password = r.readLine();
 
@@ -185,6 +184,29 @@ public class Menu {
 		Vaccine vaccine = new Vaccine(name, dose);
 		directorMan.insertVaccine(vaccine);
 		System.out.println("Vaccine "+ name+" registered");
+	}
+	public static void registerDirector() {
+		
+		try {
+			System.out.println("Introduce your id:");
+			String id_document=r.readLine();
+			System.out.println("Password:");
+			String password=r.readLine();
+			System.out.println("Email:");
+			String email = r.readLine();
+			String username=id_document;
+			User user = new User(username, password, email); 
+			userMan.register(user);
+			Role role = userMan.getRole("director"); 
+			userMan.assignRole(user, role);
+			
+			System.out.println("You have registered as a director!");
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		
 	}
 	
 	// used when you want to put an specific vaccine to a patient
