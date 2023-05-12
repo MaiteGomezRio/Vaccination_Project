@@ -224,15 +224,12 @@ public class Menu {
 		}
 		
 	}
-	
-	// used when you want to put an specific vaccine to a patient
 	public static void selectVaccines() throws IOException {
 		List<Vaccine> listVaccines = vaccineMan.getAllVaccines();
 		System.out.println(listVaccines);
 	}
 
 	public static void checkVaccinesOfPatient()throws IOException {  
-		//TODO CORRECT COMMENTED 07/5/2023
 		System.out.println("Introduce the patient's name: ");
 		String patient_name=r.readLine();
 		List<Patient> list=patientMan.searchPatientByName(patient_name);
@@ -253,7 +250,6 @@ public class Menu {
 		System.out.println("Tell me the name of the vaccine ");
 		String name_v = r.readLine();
 		vaccineMan.assignVaccineToPatient(name_v, id);
-		//System.out.println(vaccines);//TODO 07/05/2023
 	}
 
 	public static void removePatient() {
@@ -303,7 +299,7 @@ public class Menu {
 				System.out.println("2. Check vaccines");
 				System.out.println("3. Check vaccines of a patient.");
 				System.out.println("4. Assign a vaccine to a patient.");
-				//TODO  unassign vaccine to a patient. 
+				System.out.println("5. Unassign vaccine of a patient."); 				
 				System.out.println("0. Return");
 
 				int choice = Integer.parseInt(r.readLine());
@@ -345,7 +341,6 @@ public class Menu {
 			System.out.println("Now, introduce the id of the patient assigned to that doctor: ");
 			String p_name=r.readLine();
 			List<Doctor> doctors=doctorMan.searchDoctorByName(d_name);
-			//TODO it chooses a doctor from the list
 			//Doctor d=doctor selected from the list
 			//int d_id=d.getId();
 			//List<Patient> patients=patientMan.searchPatientByName(p_name);
@@ -359,7 +354,12 @@ public class Menu {
 	}
 	
 	public static void assignConditionToVaccine() {
-		//TODO create this function
+		try {
+			
+		}catch(IOException e) {
+			System.out.println("I/O Excepption"); 
+			e.printStackTrace();
+		}
 	}
 	
 	public static int generateRandom() {
