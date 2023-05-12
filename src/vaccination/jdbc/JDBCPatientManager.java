@@ -133,4 +133,27 @@ public class JDBCPatientManager implements PatientManager {
 		}
 		return list; 
 	}
+	@Override
+	public Patient getPatientByEmail(String email) {
+		try {
+		String sql = "SELECT * FROM Patient WHERE email LIKE ?";
+		PreparedStatement p = c.prepareStatement(sql); 
+		p.setString(1, email); 
+		ResultSet rs = p.executeQuery(); 
+        rs.next();  
+        int id = rs.getInt("p_id"); 
+        String id_document=rs.getString("id_document");
+        String name = rs.getString("name"); 
+        String surname = rs.getString("surname"); 
+        Patient patient = new Patient(id, id_document,name, surname, email); 
+        rs.close();
+        p.close(); 
+        return patient; 
+        
+		}catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		return null; 
+	}
 }
