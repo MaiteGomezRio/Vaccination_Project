@@ -225,11 +225,7 @@ public class Menu {
 		}
 		
 	}
-<<<<<<< HEAD
-=======
-	
-	
->>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
+
 	public static void selectVaccines() throws IOException {
 		List<Vaccine> listVaccines = vaccineMan.getAllVaccines();
 		System.out.println(listVaccines);
@@ -363,7 +359,7 @@ public class Menu {
 	
 	public static void assignConditionToVaccine() {
 		try {
-			
+			//TODO do
 		}catch(IOException e) {
 			System.out.println("I/O Excepption"); 
 			e.printStackTrace();
