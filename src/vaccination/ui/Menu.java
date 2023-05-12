@@ -138,6 +138,7 @@ public class Menu {
 	public static void registerDisease() {
 		
 	}
+	//TODO delete if not used4
 	/*public static void selectDoctor() throws IOException {
 		System.out.println("Please, tell me the doctor's name: ");
 		String name = r.readLine();
@@ -209,7 +210,7 @@ public class Menu {
 		
 	}
 	
-	// used when you want to put an specific vaccine to a patient
+	
 	public static void selectVaccines() throws IOException {
 		List<Vaccine> listVaccines = vaccineMan.getAllVaccines();
 		System.out.println(listVaccines);
@@ -240,12 +241,13 @@ public class Menu {
 		System.out.println("Tell me the name of the patient.");
         String name = r.readLine(); 
         List<Patient> patients=patientMan.searchPatientByName(name);
+        System.out.println(patients);
         System.out.println("Select the id of the patient: ");
         int id = Integer.parseInt(r.readLine());
 		System.out.println("Tell me the name of the vaccine ");
 		String name_v = r.readLine();
+		
 		vaccineMan.assignVaccineToPatient(name_v, id);
-		//System.out.println(vaccines);//TODO 07/05/2023
 	}
 
 	public static void removePatient() {
