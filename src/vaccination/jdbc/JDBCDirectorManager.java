@@ -1,5 +1,6 @@
 package vaccination.jdbc;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -108,8 +109,13 @@ public class JDBCDirectorManager implements DirectorManager{
 		}
 	}
 	@Override
-	public void assignConditionToVaccine(int c_id, int v_id) {
-		// TODO create this method
+	public void assignConditionToVaccine(String c_name, String v_name) {
+		try {
+			//TODO
+		}catch(IOException e) {
+			System.out.println("I/O Exception");
+			e.printStackTrace(); 
+		}
 		
 	}
 	

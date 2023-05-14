@@ -338,19 +338,18 @@ public class Menu {
 		}
 	}
 	public static void assignDoctorToPatient() {
-		
 		try {
 			System.out.println("Introduce the name of the doctor you want to assign: ");
 			String d_name=r.readLine();
-			System.out.println("Now, introduce the id of the patient assigned to that doctor: ");
-			String p_name=r.readLine();
 			List<Doctor> doctors=doctorMan.searchDoctorByName(d_name);
-			//Doctor d=doctor selected from the list
-			//int d_id=d.getId();
-			//List<Patient> patients=patientMan.searchPatientByName(p_name);
-			//Patient p=patient selected from the list
-			//int p_id=p.getId();
-			//directorMan.assignDoctorToPatient(d_id,p_id);
+			System.out.println("Introduce the id of the doctor: ");
+			int d_id = Integer.parseInt(r.readLine()); 
+			System.out.println("Now, introduce the name of the patient: ");
+			String p_name=r.readLine();
+			List<Patient> patients = patientMan.searchPatientByName(p_name); 
+			System.out.println("Introduce the id of the doctor: "); 
+			int p_id = Integer.parseInt(r.readLine()); 
+			directorMan.assignDoctorToPatient(d_id,p_id);
 		} catch (IOException e) {
 			System.out.println("I/O exception");
 			e.printStackTrace();
@@ -359,7 +358,11 @@ public class Menu {
 	
 	public static void assignConditionToVaccine() {
 		try {
-			//TODO do
+			System.out.println("Tell me the name of the condition: ");
+			String c_name = r.readLine(); 
+			System.out.println("Tell me the name of the vaccine: "); 
+			String v_name = r.readLine(); 
+			directorMan.assignConditionToVaccine(c_name, v_name);
 		}catch(IOException e) {
 			System.out.println("I/O Excepption"); 
 			e.printStackTrace();
