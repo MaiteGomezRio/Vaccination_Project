@@ -58,6 +58,11 @@ public class Role implements Serializable{
         		users.add(user); 
         	}
         }
+        public void deleteUser(User user) {
+        	if(!users.contains(user)) {
+        		users.remove(user); 
+        	}
+        }
 		@Override
 		public int hashCode() {
 			return Objects.hash(id);

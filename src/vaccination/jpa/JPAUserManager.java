@@ -80,5 +80,17 @@ public class JPAUserManager implements UserManager{
     	Role r = (Role)q.getSingleResult();
     	return r; 
     }
-    //TODO IMPORTANTE: WE HAVE TO DO THE METHOD DELETEUSER, HE DOES NOT DO IT IN CLASS.s
+  //TODO check if it works
+    @Override 
+    public void deleteUser(String name,String password) {
+    	Query q=em.createNativeQuery("SELECT* FROM users WHERE name LIKE ? AND password LIKE ?");
+    	em.getTransaction().begin();
+    	q.setParameter(1, name);
+    	q.setParameter(2,password);
+    	User user=(User)q.getSingleResult();
+    	Role role=user.getRole();
+    	role.deleteUser(user);
+    	em.getTransaction().commit();	
+    }
+    
 }
