@@ -34,9 +34,13 @@ public class JDBCAppointmentManager implements AppointmentManager{
 			System.out.println("database exception");
 			e.printStackTrace();
 		}
+<<<<<<< HEAD
 
 	}
 	
+=======
+	}
+>>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 	
 	@Override
 	public List<Appointment> checkAppointmentsOfPatient(int p_id) {
