@@ -31,8 +31,6 @@ public class JDBCAppointmentManager implements AppointmentManager{
 			System.out.println("database exception");
 			e.printStackTrace();
 		}
-
-	}
 	}
 	
 	@Override
