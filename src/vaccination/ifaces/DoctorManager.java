@@ -9,4 +9,6 @@ public interface DoctorManager {
 	public List<Doctor> searchDoctorByName(String name);
 	public Doctor getDoctor(String d_id);
 	public Doctor getDoctorByEmail(String email);
+	public int countNumberOfDoctors();
+	Doctor getDoctorById(int id);
 }
