@@ -62,9 +62,13 @@ public class Patient implements Serializable{
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
+		vaccines = new ArrayList<Vaccine>(); 
+		diseases= new ArrayList<Disease>();
+		conditions= new ArrayList<Condition>();
 	}
-	public Patient(int id,String id_document, String name, String surname, Disease disease, Condition condition) {
+	public Patient(int id,String id_document, String name, String surname) {
 		this.id = id; 
+		this.id_document=id_document;
 		this.name = name; 
 		this.surname = surname;
 		vaccines = new ArrayList<Vaccine>(); 
@@ -94,13 +98,6 @@ public class Patient implements Serializable{
 		 
 	}
 	
-	public Patient(int id,String id_document, String name, String surname) {
-		
-		this.id_document=id_document;
-		this.name = name; 
-		this.surname = surname;
-	 
-	}
 	
 	@Override 
 	public String toString() {
