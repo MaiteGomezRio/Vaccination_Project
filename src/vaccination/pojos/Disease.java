@@ -21,18 +21,7 @@ public class Disease implements Serializable{
 		this.d_id=d_id;
 		this.name = name;
 	}
-	
-	//TODO POR QUÉ AQUI UN RESGISTER VACCINE?
-	public static void registerVaccine() throws IOException {
-		System.out.println("Please, introduce the following information: ");
-		System.out.println("name: ");
-		String name = r.readLine();
-		System.out.println("doses: ");
-		Integer dose = Integer.parseInt(r.readLine());
-		Vaccine vaccine = new Vaccine(name, dose);
-		directorMan.insertVaccine(vaccine);
-		System.out.println("Vaccine "+ name+" registered");
-	}
+
 	
 	
 	@Override

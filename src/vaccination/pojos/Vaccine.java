@@ -26,6 +26,10 @@ public class Vaccine implements Serializable{
     	this.dose = dose; 
     	this.disease=disease;
     }
+    public Vaccine(String name, Integer dose) {
+    	this.name = name; 
+    	this.dose = dose;
+    }
     
     public Integer getId() {
 		return id;

@@ -1,6 +1,7 @@
 package vaccination.jdbc;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vaccination.ifaces.VaccineManager;
+import vaccination.pojos.Disease;
 import vaccination.pojos.Patient;
 import vaccination.pojos.Vaccine;
 
@@ -30,7 +32,7 @@ public class JDBCVaccineManager implements VaccineManager {
 			ResultSet rs = p.executeQuery();
 			while (rs.next()) {
 				String name = rs.getString("name");
-				Integer dose = rs.getInt("dose");
+				Integer dose = rs.getInt("dose");				
 				Vaccine v = new Vaccine(name, dose);
 				list.add(v);
 			}
@@ -45,15 +47,17 @@ public class JDBCVaccineManager implements VaccineManager {
 	public List<Vaccine> searchVaccinesByDisease(int d_id){
 		List<Vaccine> list = new ArrayList<Vaccine>();
 		try {
-			String sql= "SELECT vaccine_id FROM Disease_Vaccine WHERE d_id LIKE ?";
+			String sql= "SELECT * FROM Disease_Vaccine WHERE d_id LIKE ?";
 			PreparedStatement p=c.prepareStatement(sql);
 			p.setInt(1, d_id);
 			ResultSet rs = p.executeQuery();
 			while (rs.next()) {
 				String name = rs.getString("name");
-				Integer dose = rs.getInt("dose");
+				Integer dose = rs.getInt("dose");				
 				Vaccine v = new Vaccine(name, dose);
 				list.add(v);
+								
+				
 			}
 		} catch (SQLException e) {
 			System.out.println("database error");
