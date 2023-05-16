@@ -2,12 +2,15 @@ package vaccination.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import vaccination.ifaces.AppointmentManager;
 import vaccination.pojos.Appointment;
+import vaccination.pojos.Condition;
 
 public class JDBCAppointmentManager implements AppointmentManager{
 	private Connection c;
@@ -21,7 +24,7 @@ public class JDBCAppointmentManager implements AppointmentManager{
 		try {	
 			String sql = "INSERT INTO Appintment (date, patient, vaccine, doctor)" + "VALUES (?,?,?,?)";
 			PreparedStatement p = c.prepareStatement(sql);
-			p.setLoc(1, appointment.getDate());
+			p.setDate(1, appointment.getDate());
 			p.setString(2,appointment.getPatient().getName());
 			p.setString(3, appointment.getVaccine().getName());	
 			p.setString(4, appointment.getDoctor().getName());
@@ -33,11 +36,26 @@ public class JDBCAppointmentManager implements AppointmentManager{
 		}
 
 	}
-	}
+	
 	
 	@Override
 	public List<Appointment> checkAppointmentsOfPatient(int p_id) {
-		// TODO Auto-generated method stub
+		List<Appointment> list = new ArrayList<Appointment>();
+		try {
+			String sql = "SELECT appointment_id FROM Patient_Condition_Vaccine WHERE vaccine_id = ?"; 
+			PreparedStatement p = c.prepareStatement(sql); 
+			p.setInt(1, v_id);   
+			ResultSet rs = p.executeQuery(); 
+			while(rs.next()) {
+				int id = rs.getInt("condition_id");
+				Condition condition = new Condition(id); 
+				list.add(condition); 
+			}
+		}catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		return list; 
 		return null;
 	}
 
@@ -52,4 +70,9 @@ public class JDBCAppointmentManager implements AppointmentManager{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public void getAppointmentById(int id) {
+		//TODO do
+	}	
+	
 }
