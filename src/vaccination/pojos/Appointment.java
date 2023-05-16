@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Puts implements Serializable{
+public class Appointment implements Serializable{
 	
 	private static final long serialVersionUID = -8007500555158752133L;
 	private int id;
@@ -15,10 +15,10 @@ public class Puts implements Serializable{
 	private Vaccine vaccine; 
 
 	
-	public Puts() {
+	public Appointment() {
 		super(); 
 	}
-	public Puts(LocalDate date) {
+	public Appointment(LocalDate date) {
 		super(); 
 		this.date = date; 
 	}

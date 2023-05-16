@@ -68,8 +68,8 @@ public class JDBCPatientManager implements PatientManager {
 	
 	
 	@Override
-	
-	public Patient getPatientInfo(int p_id) {
+	//TODO HACER ESTE GETPATIENT
+	public Patient getPatient(int p_id) {
 		try {
 		String sql = "SELECT * FROM Patient WHERE id LIKE ?";
 		PreparedStatement p = c.prepareStatement(sql); 

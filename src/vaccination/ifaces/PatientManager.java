@@ -12,7 +12,7 @@ public interface PatientManager {
 
 	public void insertPatient(Patient patient);
 	public List<Patient> searchPatientByDoctor(int d_id);
-	public Patient getPatientInfo(int p_id);
+	public Patient getPatient(int p_id);
 	public List<Patient> searchPatientByName(String name);
 	public Patient getPatientByEmail(String email); 
 	
