@@ -21,9 +21,10 @@ public class Vaccine implements Serializable{
     public Vaccine() {
     	super(); 
     }
-    public Vaccine( String name, Integer dose) {    	
+    public Vaccine( String name, Integer dose, Disease disease) {    	
     	this.name = name; 
     	this.dose = dose; 
+    	this.disease=disease;
     }
     
     public Integer getId() {
@@ -36,6 +37,13 @@ public class Vaccine implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	 public Disease getDisease() {
+			return disease;
+		}
+		public void setDisease(Disease disease) {
+			this.disease = disease;
+		}
 	public Integer getDose() {
 		return dose;
 	}

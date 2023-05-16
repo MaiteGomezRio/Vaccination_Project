@@ -21,14 +21,15 @@ public class JDBCDirectorManager implements DirectorManager{
 	}
 	
 	
-	
+	//TODO cambiar disease en el constructor de vaccine a int del disease?
 	@Override
 	public void insertVaccine(Vaccine vaccine) {
 		try {	
-			String sql = "INSERT INTO Vaccine (name, dose)" + "VALUES (?,?)";
+			String sql = "INSERT INTO Vaccine (name, dose, Disease)" + "VALUES (?,?,?)";
 			PreparedStatement p = c.prepareStatement(sql);
 			p.setString(1,vaccine.getName());
 			p.setInt(2, vaccine.getDose());
+			p.set(3, vaccine.getDisease());
 			p.executeUpdate();
 			p.close();
 		} catch (SQLException e) {
@@ -108,13 +109,23 @@ public class JDBCDirectorManager implements DirectorManager{
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
 	@Override
 	public void assignConditionToVaccine(String c_name, String v_name) {
 		try {
-			//TODO
-		}catch(IOException e) {
-			System.out.println("I/O Exception");
-			e.printStackTrace(); 
+			String sql="UPDATE Condition_Vaccine SET c_name=? WHERE v_name= ?";
+			PreparedStatement p=c.prepareStatement(sql);	
+			p.setString(1, c_name);
+			p.setString(2, v_name);
+			p.executeUpdate();
+			p.close();
+		}
+		catch(SQLException sqx) {
+			System.out.println("database error");
+			sqx.printStackTrace();
+			
 		}
 		
 	}

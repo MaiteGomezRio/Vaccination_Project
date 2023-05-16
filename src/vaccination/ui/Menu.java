@@ -198,7 +198,10 @@ public class Menu {
 		String name = r.readLine();
 		System.out.println("doses: ");
 		Integer dose = Integer.parseInt(r.readLine());
-		Vaccine vaccine = new Vaccine(name, dose);
+		System.out.println("disease: ");
+		String dis_name=r.readLine();
+		Disease disease= new Disease(dis_name);
+		Vaccine vaccine = new Vaccine(name, dose, disease);
 		directorMan.insertVaccine(vaccine);
 		System.out.println("Vaccine "+ name+" registered");
 	}
