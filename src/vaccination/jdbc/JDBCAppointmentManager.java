@@ -1,6 +1,7 @@
 package vaccination.jdbc;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -17,7 +18,21 @@ public class JDBCAppointmentManager implements AppointmentManager{
 
 	@Override
 	public void insertAppointment(Appointment appointment) {
-		//TODO
+		try {	
+			String sql = "INSERT INTO Appintment (date, patient, vaccine, doctor)" + "VALUES (?,?,?,?)";
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setLoc(1, appointment.getDate());
+			p.setString(2,appointment.getPatient().getName());
+			p.setString(3, appointment.getVaccine().getName());	
+			p.setString(4, appointment.getDoctor().getName());
+			p.executeUpdate();
+			p.close();
+		} catch (SQLException e) {
+			System.out.println("database exception");
+			e.printStackTrace();
+		}
+
+	}
 	}
 	
 	@Override

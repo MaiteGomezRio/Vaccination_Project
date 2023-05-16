@@ -11,7 +11,7 @@ public class Appointment implements Serializable{
 	private int id;
 	private LocalDate date;
 	private Doctor doctor;
-	private Patient patients; 
+	private Patient patient; 
 	private Vaccine vaccine; 
 
 	
@@ -37,9 +37,30 @@ public class Appointment implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Puts [id=" + id + ", date=" + date + ", doctor=" + doctor + ", patients=" + patients + ", vaccine="
+		return "Puts [id=" + id + ", date=" + date + ", doctor=" + doctor + ", patient=" + patient + ", vaccine="
 				+ vaccine + "]";
 	}
     
-    
+	public Patient getPatient() {
+		return patient;
+	}
+	
+	public void setPatient(Patient patient) {
+		this.patient=patient;
+	}
+	public Doctor getDoctor() {
+		return doctor;
+	}
+	
+	public void setDoctor(Doctor doctor) {
+		this.doctor=doctor;
+	}
+	
+	public Vaccine getVaccine() {
+		return vaccine;
+	}
+	
+	public void setVaccine(Vaccine vaccine) {
+		this.doctor=vaccine;
+	}
 }
