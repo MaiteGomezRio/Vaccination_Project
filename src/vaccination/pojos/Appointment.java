@@ -44,12 +44,9 @@ public class Appointment implements Serializable{
 	}
 	@Override
 	public String toString() {
-<<<<<<< HEAD
+
 		return "Puts [id=" + id + ", date=" + date + ", doctor=" + doctor + ", patient=" + patient + ", vaccine="
-=======
-		return "Puts [id=" + id + ", date=" + date + ", doctor=" + doctor + ", patients=" + patient + ", vaccine="
->>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
-				+ vaccine + "]";
+
 	}
     
 	public Patient getPatient() {
