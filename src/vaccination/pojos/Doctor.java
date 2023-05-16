@@ -29,6 +29,7 @@ public class Doctor implements Serializable {
 		this.id_document=this.getId_document();
 		this.name=this.getName();
 		this.surname=this.getSurname();
+		patients = new ArrayList<Patient>();
 	}
 
 	public Doctor(int id, String id_document, String name, String surname) { 
@@ -37,7 +38,7 @@ public class Doctor implements Serializable {
 		this.id_document=id_document;
 		this.name = name;
 		this.surname = surname;
-		this.patients = new ArrayList<Patient>(); // ALWAYS INITIALIZE LISTS
+		patients = new ArrayList<Patient>(); // ALWAYS INITIALIZE LISTS
 	}
 	public Doctor(String id_document, String name, String surname, String email) {
 		super();
@@ -45,6 +46,7 @@ public class Doctor implements Serializable {
 		this.name = name;
 		this.surname = surname;
 		this.email = email; 
+		patients = new ArrayList<Patient>();
 	}
 	public Doctor(int id, String id_document, String name, String surname, String email) {
 		super();
@@ -53,6 +55,7 @@ public class Doctor implements Serializable {
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
+		patients = new ArrayList<Patient>();
 	}
 
 	@Override

@@ -44,27 +44,27 @@ public class ConnectionManager {
 			String table_Condition = "CREATE TABLE Condition (identifier INTEGER PRIMARY KEY AUTOINCREMENT," + "name TEXT NOT NULL)";
 			s.executeUpdate(table_Condition); 
 			
-			String table_Patient_Vaccine = "CREATE TABLE Patient_Vaccine(patient_id INTEGER REFERENCES Patient(id)," + "vaccine_id INTEGER REFERENCES Vaccine(identifier))";
+			String table_Patient_Vaccine = "CREATE TABLE Patient_Vaccine(patient_id INTEGER REFERENCES Patient(id)," + "vaccine_id INTEGER REFERENCES Vaccine(id))";
 			s.executeUpdate(table_Patient_Vaccine);
 			
 			String table_Patient_Disease = "CREATE TABLE Patient_Disease (patient_id INTEGER REFERENCES Patient(id),"+"disease_id INTEGER REFERENCES Disease(id))";
 			s.executeUpdate(table_Patient_Disease);
 			
-			String table_Patient_Condition = "CREATE TABLE Patient_Condition (patient_id INTEGER REFERENCES Patient(id)," + "condition_identifier INTEGER REFERENCES Condition(identifier))"; 
+			String table_Patient_Condition = "CREATE TABLE Patient_Condition (patient_id INTEGER REFERENCES Patient(id)," + "condition_id INTEGER REFERENCES Condition(id))"; 
 			s.executeUpdate(table_Patient_Condition);  
 			
 			String table_Disease_Vaccine = "CREATE TABLE Disease_Vaccine (disease_id INTEGER REFERENCES Disease(identifier)," 
-			         + "vaccine_identifier REFERENCES Vaccine(identifier))"; 
+			         + "vaccine_id REFERENCES Vaccine(id))"; 
 			s.executeUpdate(table_Disease_Vaccine); 
 			
-			String table_Puts = "CREATE TABLE Puts(Date Date PRIMARY KEY"+"patient_id INTEGER NOT NULL REFERENCES Patient(id),"+" vaccine_id INTEGER NOT NULL REFERENCES Vaccine(identifier)," + "attendance BOOLEAN)";
+			String table_Puts = "CREATE TABLE Puts(Date Date PRIMARY KEY"+"patient_id INTEGER NOT NULL REFERENCES Patient(id),"+" vaccine_id INTEGER NOT NULL REFERENCES Vaccine(id))";
 			s.executeUpdate(table_Puts);
 			
 			String table_Is_Immune="CREATE TABLE Is_Immune(patient_id INTEGER NOT NULL REFERENCES Patient(id),"+"disease_id INTEGER NOT NULL REFERENCES"
 					+ "Disease(id))";
 			s.executeUpdate(table_Is_Immune);
-			
-			String table_Condition_Vaccine= "CREATE TABLE Condition_Vaccine (condition_id INTEGER NOT NULL REFERENCES Condition(id),"+"vaccine_id NOT NULL REFERENCES Vaccine(identifier))";
+
+			String table_Condition_Vaccine= "CREATE TABLE Condition_Vaccine (condition_id INTEGER NOT NULL REFERENCES Condition(id),"+"vaccine_id NOT NULL REFERENCES Vaccine(id))";
 			s.executeUpdate(table_Condition_Vaccine);
 
 			s.close();
