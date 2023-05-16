@@ -72,6 +72,6 @@ public class Appointment implements Serializable{
 	}
 	
 	public void setVaccine(Vaccine vaccine) {
-		this.doctor=vaccine;
+		this.vaccine=vaccine;
 	}
 }
