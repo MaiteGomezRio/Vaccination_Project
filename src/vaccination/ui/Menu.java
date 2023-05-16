@@ -283,12 +283,9 @@ public class Menu {
 	
 	}
 	
-<<<<<<< HEAD
-	
-	
-=======
+
 	//TODO checkVaccinesOfDisease
->>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
+
 	//TODO checkConditionOfPatient
 	//TODO checkVaccinesAPatientHasOn
 	//TODO checkVaccinesAPatientHasToPut

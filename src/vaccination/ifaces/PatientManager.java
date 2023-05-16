@@ -15,5 +15,6 @@ public interface PatientManager {
 	public Patient getPatientInfo(int p_id);
 	public List<Patient> searchPatientByName(String name);
 	public Patient getPatientByEmail(String email); 
+	
 }
  
