@@ -3,9 +3,12 @@ package vaccination.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
+import java.time.*; 
 
 import vaccination.ifaces.ConditionManager;
 import vaccination.ifaces.DirectorManager;
@@ -29,6 +32,7 @@ import vaccination.pojos.User;
 public class Menu {
 
 	private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 
 	private static DoctorManager doctorMan;
 	private static PatientManager patientMan;
@@ -404,6 +408,22 @@ public class Menu {
         return (int)randomNumber;
 	}
 	
+	public void setAppointment(int p_id) {
+		try {
+			Patient patient = patientMan.getPatient(p_id); 
+			System.out.println("Please, tell me the vaccine you want to put in that appointment.");
+			String v_name = r.readLine(); 
+			Vaccine vaccine = vaccineMan.getVaccine(v_name); 
+			System.out.println("Please, tell me the date at which you want to set the appointment. (yyyy-MM-dd)");
+			String doa = r.readLine();
+			LocalDate doaLocalDate = LocalDate.parse(doa, formatter);       // the date is usually stored in the db as java.sql.Date, which stores the date as the amount of seconds that have passed sinc
+			Date doaDate = Date.valueOf(doaLocalDate);                      //we should not show the date as the amount of seconds that... so that is why we use Localdate.
+			Appointment appointment = new Appointment()														//we need to turn it into a Date in order to store it into the db. When i create the puts i whould pass the Date. 
+		}catch(IOException e) {
+			System.out.println("I/O Exception");
+		}
+	}
+	
 	public static void directorMenu(String email) {
 		
 		while(true) {
@@ -514,7 +534,7 @@ public class Menu {
 						//TODO
 					}
 					case 3:{
-						//TODO
+						setAppointment(patient.getId()); 
 					}
 					case 4:{
 						//TODO
