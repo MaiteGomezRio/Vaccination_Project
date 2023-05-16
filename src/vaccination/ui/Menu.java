@@ -169,6 +169,8 @@ public class Menu {
 		doctorMenu(id);
 	}*/
 
+	
+	
 	public static void registerPatient() throws IOException {
 
 		System.out.println("Please, introduce the following information: ");
@@ -257,6 +259,30 @@ public class Menu {
 		List<Vaccine> vaccines = vaccineMan.searchVaccinesByPatient(p_id); 
 		System.out.println(vaccines); 
 	}
+	public static void checkVaccinesOfDisease() throws IOException{
+		System.out.println("Type the ID of the disease you want to check: ");
+		Integer d_id= Integer.parseInt(r.readLine());			
+		List<Vaccine> list=vaccineMan.searchVaccinesByDisease(d_id);
+		System.out.println(list); 
+			
+	}
+	public static void checkDosesOfVaccine() throws IOException{
+		System.out.println("Type the name of the vaccine you want to check: ");
+		String v_name=r.readLine();
+		Vaccine vaccine=vaccineMan.getVaccine(v_name);
+		System.out.println(v_name+" has the total of: "+vaccine.getDose()+ " dosis");
+		
+			
+	}
+	public static void checkConditionsVaccine()  throws IOException{
+		
+		System.out.println("Which vaccine would yo like to check, type the ID: ");
+		Integer v_id= Integer.parseInt(r.readLine());
+		List<Condition> conditions=conMan.checkConditionsOfAVaccine(v_id);
+		System.out.println(conditions);
+	
+	}
+	
 	//TODO checkVaccinesOfDisease
 	//TODO checkConditionOfPatient
 	//TODO checkVaccinesAPatientHasOn
@@ -264,7 +290,7 @@ public class Menu {
 	//TODO checkDosesOfAVaccine????/vaccineInfo
 	//TODO checkConditionsOfVaccine
 	//TODO checkDiseasesOfPatient con immunity
-	
+	//TODO checkVaccinesOfPatient
 	public static void updateConditionsOfPatient(int p_id) {
 		
 		System.out.println("How many new conditions do you have? Introduce a number ");
@@ -354,6 +380,8 @@ public class Menu {
 			e.printStackTrace();
 		}
 	}
+	
+
 	public static void assignVaccineToPatient() throws IOException {
 		System.out.println("Tell me the name of the patient.");
         String name = r.readLine(); 
