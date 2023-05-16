@@ -16,17 +16,18 @@ public class JPAUserManager implements UserManager{
 	EntityManager em; 
 	
 	public JPAUserManager() {
-		em = Persistence.createEntityManagerFactory("vaccination-provider").createEntityManager();
+		em=Persistence.createEntityManagerFactory("vaccination-provider").createEntityManager();
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
 		em.getTransaction().commit();
 		//create the needed roles
-		if(this.getRoles() == null) {
+		if(this.getRoles().isEmpty()) {
 		   Role doctor = new Role("doctor");
 		   Role patient = new Role("patient"); 
 		   Role director = new Role("director"); 
 		   this.createRole(patient);
 		   this.createRole(doctor);
+		   this.createRole(director);
 		}
 	}
 	
