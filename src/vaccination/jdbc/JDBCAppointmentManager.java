@@ -22,7 +22,7 @@ public class JDBCAppointmentManager implements AppointmentManager{
 	@Override
 	public void insertAppointment(Appointment appointment) {
 		try {	
-			String sql = "INSERT INTO Appintment (date, patient, vaccine, doctor)" + "VALUES (?,?,?,?)";
+			String sql = "INSERT INTO Appointment (date, patient, vaccine, doctor)" + "VALUES (?,?,?,?)";
 			PreparedStatement p = c.prepareStatement(sql);
 			p.setDate(1, appointment.getDate());
 			p.setString(2,appointment.getPatient().getName());
