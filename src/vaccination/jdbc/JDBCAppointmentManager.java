@@ -36,12 +36,12 @@ public class JDBCAppointmentManager implements AppointmentManager{
 		}
 	
 	@Override
-	public List<Appointment> checkAppointmentsOfPatient(int p_id) {
+	public List<Appointment> checkAppointmentsOfPatient(int a_id) {
 		List<Appointment> list = new ArrayList<Appointment>();
 		try {
 			String sql = "SELECT appointment_id FROM  WHERE vaccine_id = ?"; 
 			PreparedStatement p = c.prepareStatement(sql); 
-			p.setInt(1, v_id);   
+			p.setInt(1, a_id);   
 			ResultSet rs = p.executeQuery(); 
 			while(rs.next()) {
 				int id = rs.getInt("condition_id");
