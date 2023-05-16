@@ -15,5 +15,4 @@ public interface DirectorManager {
 	public void assignConditionToVaccine(String c_name, String v_name);	
 	public void assignDoctorToPatient(int d_id, int p_id);
 	
-
 }

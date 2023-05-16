@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
 
+import vaccination.ifaces.ConditionManager;
 import vaccination.ifaces.DirectorManager;
 import vaccination.ifaces.DoctorManager;
 import vaccination.ifaces.PatientManager;
@@ -34,6 +35,7 @@ public class Menu {
 	private static VaccineManager vaccineMan;
 	private static DirectorManager directorMan;
 	private static UserManager userMan; 
+	private static ConditionManager conMan;
 
 	public static void main(String[] args) {
 		ConnectionManager conMan = new ConnectionManager();
@@ -245,18 +247,33 @@ public class Menu {
    	 	List<Vaccine> vaccines = vaccineMan.searchVaccinesByPatient(id); 
    	 	System.out.println(vaccines);
     }
-	
-	public static void assignVaccine() throws IOException {
-		System.out.println("Tell me the name of the patient.");
-        String name = r.readLine(); 
-        List<Patient> patients=patientMan.searchPatientByName(name);
-        System.out.println(patients);
-        System.out.println("Select the id of the patient: ");
-        int id = Integer.parseInt(r.readLine());
-		System.out.println("Tell me the name of the vaccine ");
-		String name_v = r.readLine();
+	//TODO checkVaccinesOfDisease
+	//TODO checkConditionOfPatient
+	//TODO checkVaccinesAPatientHasOn
+	//TODO checkVaccinesAPatientHasToPut
+	//TODO checkDosesOfAVaccine????/vaccineInfo
+	//TODO checkConditionsOfVaccine
+	//TODO checkDiseasesOfPatient con immunity
+	//TODO checkVaccinesOfPatient
+	public static void updateConditionsOfPatient(int p_id) {
 		
-		vaccineMan.assignVaccineToPatient(name_v, id);
+		System.out.println("How many new conditions do you have? Introduce a number ");
+		int number;
+		try {
+			number = Integer.parseInt(r.readLine());
+			for(int i=0; i<number; i++) {
+				System.out.println("Introduce condition name:");
+				String c_type=r.readLine();
+				Condition condition=new Condition(c_type);
+			}
+			conMan.updateConditionsOfPatient(p_id);
+			
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("I/O exception");
+			e.printStackTrace();
+		} 	
 	}
 
 	public static void removePatient() {
@@ -326,6 +343,18 @@ public class Menu {
 			System.out.println("I/O Excepption"); 
 			e.printStackTrace();
 		}
+	}
+	public static void assignVaccineToPatient() throws IOException {
+		System.out.println("Tell me the name of the patient.");
+        String name = r.readLine(); 
+        List<Patient> patients=patientMan.searchPatientByName(name);
+        System.out.println(patients);
+        System.out.println("Select the id of the patient: ");
+        int id = Integer.parseInt(r.readLine());
+		System.out.println("Tell me the name of the vaccine ");
+		String name_v = r.readLine();
+		
+		vaccineMan.assignVaccineToPatient(name_v, id);
 	}
 	
 	public static int generateRandom() {
@@ -399,6 +428,7 @@ public class Menu {
 				}case 4:{
 					System.out.println("1.Assign condition to vaccine");
 					System.out.println("2.Assign doctor to patient");
+					System.out.println("3.Assign disease to vaccine");
 					System.out.println("0.Exit");
 					int choice=Integer.parseInt(r.readLine());
 					switch(choice) {
@@ -408,6 +438,8 @@ public class Menu {
 					}case 2:{
 						assignDoctorToPatient();
 						break;
+					}case 3:{
+						//assignDiseaseToVaccine();
 					}case 0:{
 						return;
 					}
@@ -432,6 +464,7 @@ public class Menu {
 				System.out.println("2. Check my appointments"); 
 				System.out.println("3. Set an appointment"); 
 				System.out.println("4. Cancel an appointment"); 
+				System.out.println("5. Update my conditions"); 
 				System.out.println("0. Exit"); 
 				int option = Integer.parseInt(r.readLine()); 
 				
@@ -447,7 +480,9 @@ public class Menu {
 					}
 					case 4:{
 						//TODO
-					} 
+					}case 5:{
+						updateConditionsOfPatient(patient.getId());
+					}
 					case 0:{
 						return; 
 					}
@@ -491,7 +526,10 @@ public class Menu {
 					    break;
 				    }
 				    case 4:{
-					    assignVaccine(); 
+					    assignVaccineToPatient(); 
+					    break;
+				    }case 5:{
+				    	
 				    }
 				    case 0: {
 				     	return;
