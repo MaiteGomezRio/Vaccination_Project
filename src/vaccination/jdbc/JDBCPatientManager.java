@@ -95,7 +95,7 @@ public class JDBCPatientManager implements PatientManager {
 		return null; 
 	}
 
-	@Override
+	/*@Override
 	public void assignDiseaseToPatient(int p_id, int d_id) {
 		try {
 			String sql = "INSERT INTO Patient_Disease (patient_id, disease_id) VALUES (?,?)";
@@ -109,7 +109,7 @@ public class JDBCPatientManager implements PatientManager {
 			e.printStackTrace();
 		}
 		
-	}
+	}*/
 	@Override
 	public List<Patient> searchPatientByName(String name){
 		List<Patient> list = new ArrayList<Patient>(); 

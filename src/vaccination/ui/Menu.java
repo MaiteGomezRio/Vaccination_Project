@@ -236,17 +236,27 @@ public class Menu {
 		System.out.println(listVaccines);
 	}
 
-	public static void checkVaccinesOfPatient()throws IOException {  
-		System.out.println("Introduce the patient's name: ");
-		String patient_name=r.readLine();
-		List<Patient> list=patientMan.searchPatientByName(patient_name);
-		System.out.println(list); 
-		System.out.println("Choose which one it is, type its ID: "); 
-		Integer id = Integer.parseInt(r.readLine());
-   	 	System.out.println("The vaccines of the patient are: ");
-   	 	List<Vaccine> vaccines = vaccineMan.searchVaccinesByPatient(id); 
-   	 	System.out.println(vaccines);
+	public static void checkVaccinesOfPatientBeingADoctor()throws IOException { 
+		try {
+			System.out.println("Introduce the patient's name: ");
+			String patient_name=r.readLine();
+			List<Patient> list=patientMan.searchPatientByName(patient_name);
+			System.out.println(list); 
+			System.out.println("Choose which one it is, type its ID: "); 
+			Integer id = Integer.parseInt(r.readLine());
+	   	 	System.out.println("The vaccines of the patient are: ");
+	   	 	List<Vaccine> vaccines = vaccineMan.searchVaccinesByPatient(id); 
+	   	 	System.out.println(vaccines);
+		}catch(IOException e) {
+			System.out.println("I/O Exception"); 
+			e.printStackTrace();
+		}
     }
+	public static void checkVaccinesOfPatientBeingAPatient(int p_id) {
+		System.out.println("Your vaccines are:"); 
+		List<Vaccine> vaccines = vaccineMan.searchVaccinesByPatient(p_id); 
+		System.out.println(vaccines); 
+	}
 	//TODO checkVaccinesOfDisease
 	//TODO checkConditionOfPatient
 	//TODO checkVaccinesAPatientHasOn
@@ -254,7 +264,7 @@ public class Menu {
 	//TODO checkDosesOfAVaccine????/vaccineInfo
 	//TODO checkConditionsOfVaccine
 	//TODO checkDiseasesOfPatient con immunity
-	//TODO checkVaccinesOfPatient
+	
 	public static void updateConditionsOfPatient(int p_id) {
 		
 		System.out.println("How many new conditions do you have? Introduce a number ");
@@ -265,9 +275,9 @@ public class Menu {
 				System.out.println("Introduce condition name:");
 				String c_type=r.readLine();
 				Condition condition=new Condition(c_type);
-			}
-			conMan.updateConditionsOfPatient(p_id);
-			
+				int c_id = condition.getId();
+				conMan.updateConditionsOfPatient(p_id, c_id);
+			}		
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -470,7 +480,7 @@ public class Menu {
 				
 				switch(option) {
 					case 1:{
-						checkVaccinesOfPatient(); 
+						checkVaccinesOfPatientBeingAPatient(patient.getId()); 
 					}
 					case 2:{
 						//TODO
@@ -522,7 +532,7 @@ public class Menu {
 					    break;           
 				    }
 				    case 3: {
-					    checkVaccinesOfPatient();
+					    checkVaccinesOfPatientBeingADoctor();
 					    break;
 				    }
 				    case 4:{

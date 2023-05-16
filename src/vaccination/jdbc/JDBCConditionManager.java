@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +58,22 @@ public class JDBCConditionManager implements ConditionManager{
 				e.printStackTrace();
 			}
 			return null; 
+	}
+	@Override
+	public void updateConditionsOfPatient(int p_id, int c_id) {
+		try {
+			Statement s = c.createStatement();
+			String sql = "UPDATE Patient_Condition SET condition_id = ? WHERE patient_id = ? ";
+			PreparedStatement p = c.prepareStatement(sql); 
+			p.setInt(1, c_id);
+			p.setInt(2, p_id);
+			s.execute(sql); 
+			s.close(); 			
+		}catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		
 	}
 	
 }
