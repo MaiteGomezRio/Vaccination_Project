@@ -21,7 +21,7 @@ public class JDBCDirectorManager implements DirectorManager{
 	}
 	
 	
-	//TODO cambiar disease en el constructor de vaccine a int del disease?
+	
 	@Override
 	public void insertVaccine(Vaccine vaccine) {
 		try {	

@@ -276,12 +276,12 @@ public class Menu {
 	}
 	
 	
-	//TODO checkVaccinesOfDisease
+	
 	//TODO checkConditionOfPatient
 	//TODO checkVaccinesAPatientHasOn
 	//TODO checkVaccinesAPatientHasToPut
-	//TODO checkDosesOfAVaccine????/vaccineInfo
-	//TODO checkConditionsOfVaccine
+	
+	
 	//TODO checkDiseasesOfPatient con immunity
 	//TODO checkVaccinesOfPatient
 	public static void updateConditionsOfPatient(int p_id) {
