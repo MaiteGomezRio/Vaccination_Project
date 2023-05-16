@@ -95,7 +95,7 @@ public class Menu {
 		    		doctorMenu(user.getEmail());
 		    	}else if(user.getRole().getName().equals("patient")) {
 		    		patientMenu(user.getEmail());
-		    	}else if(user.getRole().getName().equals("director")) {
+		    	}else if(user.getRole().getName().equals("director")){
 		    		directorMenu(user.getEmail());
 		    	}
 		    }else {
@@ -375,6 +375,8 @@ public class Menu {
 					System.out.println("1.Remove doctor");
 					System.out.println("2.Remove vaccine");
 					System.out.println("3.Remove patient");
+					System.out.println("4.Remove disease");
+					System.out.println("5.Remove condition"); 
 					System.out.println("0.Exit");
 					
 					int choice=Integer.parseInt(r.readLine());
@@ -388,7 +390,10 @@ public class Menu {
 					}case 3:{
 						removePatient();
 						break;
-						
+					}case 4:{
+						removeDisease();
+					}case 5:{
+						removeCondition(); 
 					}case 0:{
 						return;
 					}
