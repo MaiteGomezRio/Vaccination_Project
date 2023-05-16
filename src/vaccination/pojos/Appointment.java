@@ -44,9 +44,7 @@ public class Appointment implements Serializable{
 	}
 	@Override
 	public String toString() {
-
-		return "Puts [id=" + id + ", date=" + date + ", doctor=" + doctor + ", patient=" + patient + ", vaccine="
-
+	    return "Puts [id=" + id + ", date=" + date + ", doctor=" + doctor + ", patient=" + patient + ", vaccine="+vaccine; 
 	}
     
 	public Patient getPatient() {
@@ -72,3 +70,5 @@ public class Appointment implements Serializable{
 		this.vaccine=vaccine;
 	}
 }
+
+//TODO are appointments unique??

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -292,10 +293,6 @@ public class Menu {
 	
 
 	//TODO checkVaccinesOfDisease
-<<<<<<< HEAD
-
-=======
->>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 	//TODO checkConditionOfPatient
 	//TODO checkVaccinesAPatientHasOn
 	//TODO checkVaccinesAPatientHasToPut
@@ -430,9 +427,29 @@ public class Menu {
 			
 		}catch(IOException e) {
 			System.out.println("I/O Exception");
+			e.printStackTrace(); 
 		}
 	}
+	public static void checkMyAppointmentsBeingAPatient(int p_id) {
+		System.out.println("Your vaccines are:"); 
+		List<Appointment> appointments = appointmentMan.checkAppointmentsOfPatient(p_id);
+		System.out.println(appointments); 
+	}
 	
+	public static void cancelAppointment(int p_id) {
+		try {
+			System.out.println("These are the list of your appointments: ");
+			List<Appointment> appointments = appointmentMan.checkAppointmentsOfPatient(p_id);
+			System.out.println(appointments); 
+			System.out.println("Please, tell me the id of the appointment you want to remove: ");
+			int id = Integer.parseInt(r.readLine());
+			Appointment appointment = appointmentMan.getAppointmentById(int id); 
+			appointmentMan.removeAppointment(appointment); 
+		}catch(IOException e) {
+			System.out.println("I/O Exception");
+			e.printStackTrace();
+		}
+	}
 	public static void directorMenu(String email) {
 		
 		while(true) {
@@ -540,7 +557,7 @@ public class Menu {
 						checkVaccinesOfPatientBeingAPatient(patient.getId()); 
 					}
 					case 2:{
-						//TODO
+						checkMyAppointmentsBeingAPatient(patient.getId()); 
 					}
 					case 3:{
 						setAppointment(patient.getId()); 
