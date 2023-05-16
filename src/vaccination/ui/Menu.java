@@ -8,8 +8,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
-import java.time.*; 
+import java.time.*;
 
+import vaccination.ifaces.AppointmentManager;
 import vaccination.ifaces.ConditionManager;
 import vaccination.ifaces.DirectorManager;
 import vaccination.ifaces.DoctorManager;
@@ -21,6 +22,7 @@ import vaccination.jdbc.JDBCDoctorManager;
 import vaccination.jdbc.JDBCPatientManager;
 import vaccination.jdbc.JDBCVaccineManager;
 import vaccination.jpa.JPAUserManager;
+import vaccination.pojos.Appointment;
 import vaccination.pojos.Condition;
 import vaccination.pojos.Disease;
 import vaccination.pojos.Doctor;
@@ -40,6 +42,7 @@ public class Menu {
 	private static DirectorManager directorMan;
 	private static UserManager userMan; 
 	private static ConditionManager conMan;
+	private static AppointmentManager appointmentMan; 
 
 	public static void main(String[] args) {
 		ConnectionManager conMan = new ConnectionManager();
@@ -289,12 +292,13 @@ public class Menu {
 	
 
 	//TODO checkVaccinesOfDisease
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 	//TODO checkConditionOfPatient
 	//TODO checkVaccinesAPatientHasOn
 	//TODO checkVaccinesAPatientHasToPut
-	
-	
 	//TODO checkDiseasesOfPatient con immunity
 	//TODO checkVaccinesOfPatient
 	public static void updateConditionsOfPatient(int p_id) {
@@ -410,8 +414,9 @@ public class Menu {
         return (int)randomNumber;
 	}
 	
-	public void setAppointment(int p_id) {
+	public static void setAppointment(int p_id) {
 		try {
+			
 			Patient patient = patientMan.getPatient(p_id); 
 			System.out.println("Please, tell me the vaccine you want to put in that appointment.");
 			String v_name = r.readLine(); 
@@ -420,7 +425,9 @@ public class Menu {
 			String doa = r.readLine();
 			LocalDate doaLocalDate = LocalDate.parse(doa, formatter);       // the date is usually stored in the db as java.sql.Date, which stores the date as the amount of seconds that have passed sinc
 			Date doaDate = Date.valueOf(doaLocalDate);                      //we should not show the date as the amount of seconds that... so that is why we use Localdate.
-			Appointment appointment = new Appointment()														//we need to turn it into a Date in order to store it into the db. When i create the puts i whould pass the Date. 
+			Appointment appointment = new Appointment(doaDate, patient, vaccine); 	//we need to turn it into a Date in order to store it into the db. When i create the puts i whould pass the Date. 
+			appointmentMan.insertAppointment(appointment);
+			
 		}catch(IOException e) {
 			System.out.println("I/O Exception");
 		}
