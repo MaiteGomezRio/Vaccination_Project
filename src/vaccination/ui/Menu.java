@@ -95,6 +95,8 @@ public class Menu {
 		    		doctorMenu(user.getEmail());
 		    	}else if(user.getRole().getName().equals("patient")) {
 		    		patientMenu(user.getEmail());
+		    	}else if(user.getRole().getName().equals("director")) {
+		    		directorMenu(user.getEmail());
 		    	}
 		    }else {
 			    System.out.println("Wrong username/password combination"); 
@@ -177,11 +179,9 @@ public class Menu {
 		String surname = r.readLine();
 		System.out.println("email: ");
 		String email = r.readLine(); 
-		System.out.println("username: "); 
-		String username = r.readLine();
 		System.out.println("password: ");
 		String password = r.readLine(); 
-		
+		String username=id_document;
 		Patient patient = new Patient(id_document,name, surname, email);
 		patientMan.insertPatient(patient);
 		User user = new User(username, password, email);
@@ -293,50 +293,6 @@ public class Menu {
 		
 	}
 
-	private static void doctorMenu(String email) {
-        Doctor doctor = doctorMan.getDoctorByEmail(email); 
-		while (true) {
-			try {
-				System.out.println("Welcome doctor: ");
-				System.out.println("Choose an option.");
-				System.out.println("1. Register a new vaccine.");
-				System.out.println("2. Check vaccines");
-				System.out.println("3. Check vaccines of a patient.");
-				System.out.println("4. Assign a vaccine to a patient.");
-				System.out.println("5. Unassign vaccine of a patient."); 				
-				System.out.println("0. Return");
-
-				int choice = Integer.parseInt(r.readLine());
-
-				switch (choice) {
-				    case 1: {
-					    registerVaccine();
-					    break;
-				    }
-				    case 2: {
-					    selectVaccines();
-					    break;           
-				    }
-				    case 3: {
-					    checkVaccinesOfPatient();
-					    break;
-				    }
-				    case 4:{
-					    assignVaccine(); 
-				    }
-				    case 0: {
-				     	return;
-				    }
-				}
-			} catch (IOException e) {
-				System.out.println("I/O exception");
-				e.printStackTrace();
-			} catch (NumberFormatException e) {
-				System.out.println("You did not type a number");
-				e.printStackTrace();
-			}
-		}
-	}
 	public static void assignDoctorToPatient() {
 		try {
 			System.out.println("Introduce the name of the doctor you want to assign: ");
@@ -378,7 +334,7 @@ public class Menu {
         return (int)randomNumber;
 	}
 	
-	public static void directorMenu() {
+	public static void directorMenu(String email) {
 		
 		while(true) {
 			System.out.println("What do you want to do? ");
@@ -498,6 +454,51 @@ public class Menu {
 				System.out.println("I/O Exception");
 				e.printStackTrace();
 			}catch(NumberFormatException e) {
+				System.out.println("You did not type a number");
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private static void doctorMenu(String email) {
+        Doctor doctor = doctorMan.getDoctorByEmail(email); 
+		while (true) {
+			try {
+				System.out.println("Welcome doctor: ");
+				System.out.println("Choose an option.");
+				System.out.println("1. Register a new vaccine.");
+				System.out.println("2. Check vaccines");
+				System.out.println("3. Check vaccines of a patient.");
+				System.out.println("4. Assign a vaccine to a patient.");
+				System.out.println("5. Unassign vaccine of a patient."); 				
+				System.out.println("0. Return");
+
+				int choice = Integer.parseInt(r.readLine());
+
+				switch (choice) {
+				    case 1: {
+					    registerVaccine();
+					    break;
+				    }
+				    case 2: {
+					    selectVaccines();
+					    break;           
+				    }
+				    case 3: {
+					    checkVaccinesOfPatient();
+					    break;
+				    }
+				    case 4:{
+					    assignVaccine(); 
+				    }
+				    case 0: {
+				     	return;
+				    }
+				}
+			} catch (IOException e) {
+				System.out.println("I/O exception");
+				e.printStackTrace();
+			} catch (NumberFormatException e) {
 				System.out.println("You did not type a number");
 				e.printStackTrace();
 			}
