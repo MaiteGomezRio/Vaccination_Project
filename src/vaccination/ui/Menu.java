@@ -299,30 +299,34 @@ public class Menu {
 			try {
 				System.out.println("Welcome doctor: ");
 				System.out.println("Choose an option.");
-				System.out.println("1. Register a new vaccine.");
-				System.out.println("2. Check vaccines");
-				System.out.println("3. Check vaccines of a patient.");
-				System.out.println("4. Assign a vaccine to a patient.");
-				System.out.println("5. Unassign vaccine of a patient."); 				
+				System.out.println("1. Check vaccines");
+				System.out.println("2. Check vaccines of a patient.");
+				System.out.println("3. Assign a vaccine to a patient.");
+				System.out.println("4. Unassign vaccine of a patient."); 
+				System.out.println("5. Check appointents of a patient."); 
+				System.out.println("6. Check my appointments"); 
 				System.out.println("0. Return");
 
 				int choice = Integer.parseInt(r.readLine());
 
 				switch (choice) {
 				    case 1: {
-					    registerVaccine();
-					    break;
-				    }
-				    case 2: {
 					    selectVaccines();
 					    break;           
 				    }
-				    case 3: {
+				    case 2: {
 					    checkVaccinesOfPatient();
 					    break;
 				    }
-				    case 4:{
+				    case 3:{
 					    assignVaccine(); 
+				    }
+				    case 4:{
+				    	//TODO
+				    }case 5:{
+				    	//TODO
+				    }case 6:{
+				    	//TODO
 				    }
 				    case 0: {
 				     	return;
@@ -419,6 +423,8 @@ public class Menu {
 					System.out.println("1.Remove doctor");
 					System.out.println("2.Remove vaccine");
 					System.out.println("3.Remove patient");
+					System.out.println("4.Remove disease");
+					System.out.println("5.Remove condition"); 
 					System.out.println("0.Exit");
 					
 					int choice=Integer.parseInt(r.readLine());
@@ -432,7 +438,10 @@ public class Menu {
 					}case 3:{
 						removePatient();
 						break;
-						
+					}case 4:{
+						removeDisease();
+					}case 5:{
+						removeCondition(); 
 					}case 0:{
 						return;
 					}
