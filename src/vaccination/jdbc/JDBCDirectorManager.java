@@ -132,6 +132,24 @@ public class JDBCDirectorManager implements DirectorManager{
 		
 	}
 	
+	// TODO borrar, disease is introduced when the vaccine is registered 1-N relation 
+	/*@Override 
+	public void assignVaccineToDisease(int v_id,int d_id) {
+		try {
+			String sql = "INSERT into Disease_Vaccine(d_id, v_id) WHERE VALUES (?,?)"; 																			// vaccine
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setInt(1, d_id);
+			p.setInt(2, v_id);
+			p.executeUpdate();
+			p.close();
+		} catch (SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		
+	}
+	*/
+	
 	@Override
 	public void assignDoctorToPatient(int d_id, int p_id) {
 		try {

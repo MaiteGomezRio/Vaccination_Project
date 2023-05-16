@@ -101,21 +101,6 @@ public class JDBCVaccineManager implements VaccineManager {
 		}
 	}
 	
-	@Override 
-	public void assignVaccineToDisease(int v_id,int d_id) {
-		try {
-			String sql = "INSERT into Disease_Vaccine(d_id, v_id) WHERE VALUES (?,?)"; 																			// vaccine
-			PreparedStatement p = c.prepareStatement(sql);
-			p.setInt(1, d_id);
-			p.setInt(2, v_id);
-			p.executeUpdate();
-			p.close();
-		} catch (SQLException e) {
-			System.out.println("database error");
-			e.printStackTrace();
-		}
-		
-	}
 	
 	@Override
 	public List<Vaccine> getAllVaccines(){
