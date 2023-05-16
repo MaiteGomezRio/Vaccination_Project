@@ -30,6 +30,14 @@ public class Appointment implements Serializable{
 		this.patient = patient;
 		this.vaccine = vaccine;
 	}
+	
+	public Appointment(Date date, Doctor doctor, Patient patient, Vaccine vaccine) {
+		super();
+		this.date = date;
+		this.doctor = doctor;
+		this.patient = patient;
+		this.vaccine = vaccine;
+	}
 	public int getId() {
 		return id;
 	}
@@ -70,5 +78,3 @@ public class Appointment implements Serializable{
 		this.vaccine=vaccine;
 	}
 }
-
-//TODO are appointments unique??

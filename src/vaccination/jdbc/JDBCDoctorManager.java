@@ -78,7 +78,29 @@ public class JDBCDoctorManager implements DoctorManager {
 		return null; 
 	}
 	
-
+	@Override
+	public Doctor getDoctorById(int id) {
+		try {
+		String sql = "SELECT * FROM Doctor WHERE id LIKE ?";
+		PreparedStatement p = c.prepareStatement(sql); 
+		p.setInt(1, id); 
+		ResultSet rs = p.executeQuery(); 
+        rs.next();   
+        String id_document=rs.getString("id_document");
+        String name = rs.getString("name"); 
+        String surname = rs.getString("surname"); 
+        String email = rs.getString("email");
+        Doctor doctor = new Doctor(id, id_document,name, surname, email); 
+        rs.close();
+        p.close(); 
+        return doctor; 
+        
+		}catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		return null; 
+	}
 	@Override
 	public Doctor getDoctorByEmail(String email) {
 		try {
@@ -101,6 +123,21 @@ public class JDBCDoctorManager implements DoctorManager {
 			e.printStackTrace();
 		}
 		return null; 
+	}
+	@Override
+	public int countNumberOfDoctors() {
+		try {
+			String sql = "SELECT COUNT(*) FROM Doctor"; 
+			PreparedStatement p = c.prepareStatement(sql); 
+			ResultSet rs = p.executeQuery(); 
+	        if(rs.next()) {
+	        	return rs.getInt(1); //the 1 means that it counts the number of rows that are in the first column of the table (doctor id) 
+	        }
+		}catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		return -1;
 	}
 }
 

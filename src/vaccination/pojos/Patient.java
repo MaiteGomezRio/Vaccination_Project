@@ -17,6 +17,7 @@ public class Patient implements Serializable{
 	private Doctor doctor; 
 	private List <Disease> diseases;
     private List<Condition> conditions; 
+    private List<Appointment> appointments; 
 
 	
 	
@@ -163,6 +164,13 @@ public class Patient implements Serializable{
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
 	}
 	@Override
 	public int hashCode() {
