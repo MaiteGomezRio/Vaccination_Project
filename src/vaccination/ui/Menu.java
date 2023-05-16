@@ -287,12 +287,17 @@ public class Menu {
 	
 	}
 	
+<<<<<<< HEAD
+	
+	
+=======
 	//TODO checkVaccinesOfDisease
+>>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 	//TODO checkConditionOfPatient
 	//TODO checkVaccinesAPatientHasOn
 	//TODO checkVaccinesAPatientHasToPut
-	//TODO checkDosesOfAVaccine????/vaccineInfo
-	//TODO checkConditionsOfVaccine
+	
+	
 	//TODO checkDiseasesOfPatient con immunity
 	//TODO checkVaccinesOfPatient
 	public static void updateConditionsOfPatient(int p_id) {
