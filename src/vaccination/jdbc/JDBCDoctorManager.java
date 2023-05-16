@@ -77,6 +77,8 @@ public class JDBCDoctorManager implements DoctorManager {
 		}
 		return null; 
 	}
+	
+
 	@Override
 	public Doctor getDoctorByEmail(String email) {
 		try {

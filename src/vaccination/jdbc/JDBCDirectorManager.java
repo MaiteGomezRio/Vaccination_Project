@@ -28,8 +28,8 @@ public class JDBCDirectorManager implements DirectorManager{
 			String sql = "INSERT INTO Vaccine (name, dose, Disease)" + "VALUES (?,?,?)";
 			PreparedStatement p = c.prepareStatement(sql);
 			p.setString(1,vaccine.getName());
-			p.setInt(2, vaccine.getDose());
-			p.set(3, vaccine.getDisease());
+			p.setInt(2, vaccine.getDose());	
+			p.setString(3, vaccine.getDisease().getName());
 			p.executeUpdate();
 			p.close();
 		} catch (SQLException e) {
@@ -38,6 +38,8 @@ public class JDBCDirectorManager implements DirectorManager{
 		}
 
 	}
+	
+	
 
 	@Override
 	public void insertCondition(Condition con) {
