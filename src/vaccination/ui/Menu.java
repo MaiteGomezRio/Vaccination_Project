@@ -8,6 +8,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.time.*;
@@ -284,6 +286,38 @@ public class Menu {
 		System.out.println(list); 
 			
 	}
+<<<<<<< HEAD
+=======
+	public static void checkVaccinesOfPatient() throws IOException{
+		System.out.println("Type the name of the disease you want to check vaccines of: ");
+		String d_name= r.readLine();	
+		Disease disease=diseaseMan.getDisease(d_name);
+		List<Vaccine> list=vaccineMan.searchVaccinesByDisease(disease.getId());
+		System.out.println(list); 
+			
+	}
+	public static void checkVaccinesAPatientHasOn(int p_id) {
+		System.out.println("The vaccines you have already put on are: ");
+		List<Appointment> appointments=appointmentMan.searchAppointmentsByPatient(p_id); 
+		Iterator<Appointment> it=appointments.iterator();
+		List<Appointment> appointmentsOn=new ArrayList<>();
+		while(it.hasNext()) {
+			if(it.next().getDate().isBefore(LocalDate.now())) {
+				appointmentsOn.add(it.next());
+			}
+		}
+		List<Vaccine> list=//TODO method that returns only the ones that have an appointment before LocalDate.now
+	}
+	//TODO checkVaccinesAPatientHasToPut
+	//TODO checkDiseasesOfPatient con immunity
+	
+	public static void checkConditionsOfPatient(int p_id) throws IOException{
+		System.out.println("Your conditions are: ");
+		List<Condition> list=conMan.getConditionsOfPatient(p_id);
+		System.out.println(list); 
+			
+	}
+>>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 	public static void checkAppointmentsOfPatient(int p_id) {
 		System.out.println("Your appointments are: ");
 		List<Appointment> list=appointmentMan.searchAppointmentsByPatient(p_id);
@@ -303,10 +337,6 @@ public class Menu {
 		System.out.println(conditions);	
 	}
 
-	//TODO checkConditionOfPatient
-	//TODO checkVaccinesAPatientHasOn
-	//TODO checkVaccinesAPatientHasToPut
-	//TODO checkDiseasesOfPatient con immunity
 	public static void updateConditionsOfPatient(int p_id) {
 		
 		System.out.println("How many new conditions do you have? Introduce a number ");
@@ -400,8 +430,6 @@ public class Menu {
 	public static void setAppointment(int p_id) {
 		try {
 			//NOS DIJO RODRIGO QUE DIESEMOS POR HECHO QUE ANTES DE SET APPOINTMENT, EL PACIENTE HA HECHO UN UPDATE DE SUS CONDITIONS.
-            
-			
 			Patient patient = patientMan.getPatient(p_id); 
 			System.out.println("Please, tell me the disease you want to put a vaccine of.");
 			String d_name = r.readLine(); 			
