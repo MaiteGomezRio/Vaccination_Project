@@ -89,16 +89,6 @@ public class Patient implements Serializable{
 	}
 	
 	
-	// TODO remove this constructor
-	public Patient(String id_document, String name, String surname, Disease disease, Condition condition) {
-		
-		this.name = name; 
-		this.surname = surname; 
-		//this.disease = disease;
-		//this.condition = condition; 
-		 
-	}
-	
 	
 	@Override 
 	public String toString() {

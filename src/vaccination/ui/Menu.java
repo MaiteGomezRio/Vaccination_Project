@@ -244,6 +244,10 @@ public class Menu {
 		List<Vaccine> listVaccines = vaccineMan.getAllVaccines();
 		System.out.println(listVaccines);
 	}
+	public static void selectPatients(int d_id) throws IOException {
+		List<Patient> listPatients = patientMan.searchPatientsByDoctor(d_id);
+		System.out.println(listPatients);
+	}
 
 	/*public static void checkVaccinesOfPatientBeingADoctor()throws IOException { 
 		try {
@@ -297,6 +301,25 @@ public class Menu {
 			}
 		}
 		System.out.println(vaccines);
+	}
+	public static void checkVaccinesPatientHasToPut() {
+
+		try {
+			System.out.println("Introduce the name of the patient you want to check: ");
+			String name=r.readLine();
+			List<Patient> list=patientMan.searchPatientByName(name);
+			System.out.println(list);
+			System.out.println("Tell me which one it is, type it's Id");
+			int p_id = Integer.parseInt(r.readLine());
+			checkVaccinesAPatientHasToPut(p_id);
+		} catch (NumberFormatException e) {
+			System.out.println("I/O exception");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("I/O exception");
+			e.printStackTrace();
+		}
+		
 	}
 	public static void checkVaccinesAPatientHasOn(int p_id) {
 		System.out.println("The vaccines you have have already put on are: ");
@@ -654,7 +677,8 @@ public class Menu {
 				System.out.println("Choose an option.");
 				System.out.println("1. Check vaccines");
 				System.out.println("2. Check vaccines of a patient.");
-				System.out.println("3. Check my appointments."); 				
+				System.out.println("3. Check all my patients");
+				System.out.println("4. Check my appointments."); 				
 				System.out.println("0. Return");
 
 				int choice = Integer.parseInt(r.readLine());
@@ -668,7 +692,10 @@ public class Menu {
 				    	checkVaccinesPatientHasToPut();
 					    break;           
 				    }
-				    case 3: {
+				    case 3:{
+				    	selectPatients(doctor.getId());
+				    }
+				    case 4: {
 				    	selectAppointments(doctor.getId());
 					    break;
 				    }
@@ -685,23 +712,5 @@ public class Menu {
 			}
 		}
 	}
-	public static void checkVaccinesPatientHasToPut() {
-
-		try {
-			System.out.println("Introduce the name of the patient you want to check: ");
-			String name=r.readLine();
-			List<Patient> list=patientMan.searchPatientByName(name);
-			System.out.println(list);
-			System.out.println("Tell me which one it is, type it's Id");
-			int p_id = Integer.parseInt(r.readLine());
-			checkVaccinesAPatientHasToPut(p_id);
-		} catch (NumberFormatException e) {
-			System.out.println("I/O exception");
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println("I/O exception");
-			e.printStackTrace();
-		}
-		
-	}
+	
 }

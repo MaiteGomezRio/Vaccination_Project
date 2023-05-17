@@ -14,6 +14,7 @@ import vaccination.pojos.Condition;
 import vaccination.pojos.Disease;
 import vaccination.pojos.Doctor;
 import vaccination.pojos.Patient;
+import vaccination.pojos.Vaccine;
 
 public class JDBCPatientManager implements PatientManager {
 	
@@ -42,11 +43,11 @@ public class JDBCPatientManager implements PatientManager {
 	
 	
 	@Override
-	public List<Patient> searchPatientByDoctor(int d_id) {
+	public List<Patient> searchPatientsByDoctor(int d_id) {
 		
 		List<Patient> patients_list=new LinkedList<>();
 		try {
-			String sql = "SELECT * FROM Patient WHERE doctor LIKE ?"; 
+			String sql = "SELECT * FROM Patient WHERE doctor_id LIKE ?"; 
 			PreparedStatement p = c.prepareStatement(sql); 
 			p.setString(1, "%"+d_id+"%");   // the percentages are so it looks for every name that contains that word. Ex: if you type dri it looks for rodrigo too. 
 			ResultSet rs = p.executeQuery(); 
@@ -151,4 +152,5 @@ public class JDBCPatientManager implements PatientManager {
 		}
 		return null; 
 	}
+	
 }
