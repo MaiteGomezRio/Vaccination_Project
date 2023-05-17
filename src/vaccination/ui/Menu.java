@@ -286,8 +286,7 @@ public class Menu {
 		System.out.println(list); 
 			
 	}
-<<<<<<< HEAD
-=======
+
 	public static void checkVaccinesOfPatient() throws IOException{
 		System.out.println("Type the name of the disease you want to check vaccines of: ");
 		String d_name= r.readLine();	
@@ -296,19 +295,37 @@ public class Menu {
 		System.out.println(list); 
 			
 	}
-	public static void checkVaccinesAPatientHasOn(int p_id) {
-		System.out.println("The vaccines you have already put on are: ");
+	public static void checkVaccinesAPatientHasToPut(int p_id) {
+		System.out.println("The vaccines you have have to put on are: ");
 		List<Appointment> appointments=appointmentMan.searchAppointmentsByPatient(p_id); 
 		Iterator<Appointment> it=appointments.iterator();
-		List<Appointment> appointmentsOn=new ArrayList<>();
+		List<Vaccine> vaccines=new ArrayList<>();
+		Vaccine vaccine;
 		while(it.hasNext()) {
-			if(it.next().getDate().isBefore(LocalDate.now())) {
-				appointmentsOn.add(it.next());
+			Date date=Date.valueOf(LocalDate.now());
+			if(it.next().getDate().after(date)) {
+				vaccine=it.next().getVaccine();
+				vaccines.add(vaccine);	
 			}
 		}
-		List<Vaccine> list=//TODO method that returns only the ones that have an appointment before LocalDate.now
+		System.out.println(vaccines);
 	}
-	//TODO checkVaccinesAPatientHasToPut
+	public static void checkVaccinesAPatientHasOn(int p_id) {
+		System.out.println("The vaccines you have have already put on are: ");
+		List<Appointment> appointments=appointmentMan.searchAppointmentsByPatient(p_id); 
+		Iterator<Appointment> it=appointments.iterator();
+		List<Vaccine> vaccines=new ArrayList<>();
+		Vaccine vaccine;
+		while(it.hasNext()) {
+			Date date=Date.valueOf(LocalDate.now());
+			if(it.next().getDate().before(date)) {
+				vaccine=it.next().getVaccine();
+				vaccines.add(vaccine);	
+			}
+		}
+		System.out.println(vaccines);
+	}
+	
 	//TODO checkDiseasesOfPatient con immunity
 	
 	public static void checkConditionsOfPatient(int p_id) throws IOException{
