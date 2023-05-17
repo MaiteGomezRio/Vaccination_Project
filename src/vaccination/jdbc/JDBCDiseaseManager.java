@@ -82,7 +82,7 @@ public class JDBCDiseaseManager implements DiseaseManager{
 			p.setString(1,name);
 			ResultSet rs = p.executeQuery(); 
 			rs.next();
-			Integer d_id = rs.getInt("id");
+			Integer d_id = rs.getInt("id");			
 	        Disease disease=new Disease(d_id,name);
 	        rs.close();
 	        p.close();

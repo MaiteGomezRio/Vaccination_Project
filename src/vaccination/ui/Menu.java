@@ -14,6 +14,7 @@ import java.time.*;
 import vaccination.ifaces.AppointmentManager;
 import vaccination.ifaces.ConditionManager;
 import vaccination.ifaces.DirectorManager;
+import vaccination.ifaces.DiseaseManager;
 import vaccination.ifaces.DoctorManager;
 import vaccination.ifaces.PatientManager;
 import vaccination.ifaces.UserManager;
@@ -41,7 +42,7 @@ public class Menu {
 	private static PatientManager patientMan;
 	private static VaccineManager vaccineMan;
 	private static DirectorManager directorMan;
-	private static DirectorManager diseaseMan;
+	private static DiseaseManager diseaseMan;
 	private static UserManager userMan; 
 	private static ConditionManager conMan;
 	private static AppointmentManager appointmentMan; 
@@ -279,7 +280,7 @@ public class Menu {
 	public static void checkVaccinesOfPatient() throws IOException{
 		System.out.println("Type the name of the disease you want to check vaccines of: ");
 		String d_name= r.readLine();	
-		Disease disease=diseaseMan.searchDiseaseByName(d_name);
+		Disease disease=diseaseMan.getDisease(d_name);
 		List<Vaccine> list=vaccineMan.searchVaccinesByDisease(disease.getId());
 		System.out.println(list); 
 			
@@ -423,23 +424,33 @@ public class Menu {
 		try {
 			
 			Patient patient = patientMan.getPatient(p_id); 
+			//first ask what disease they want to get vaccinated
 			System.out.println("Please, tell me the disease you want to put a vaccine of.");
 			String d_name = r.readLine(); 
 			Disease disease = diseaseMan.getDisease(d_name); 
 			int d_id = disease.getId();
-			//List<Vaccines> vaccines = vaccineMan.searchVaccinesByDisease(d_id); 
-            System.out.println("Please, tell me the name of the condition you have: "); 
+			// Get all the possible vaccines according to the disease
+			List<Vaccine> vaccines = vaccineMan.searchVaccinesByDisease(d_id); 
+			for(int i=0; i<vaccines.size();i++ ) {				
+				Vaccine v=vaccines.get(i);				
+			List<Condition> conditionsVaccine=conMan.checkConditionsOfAVaccine(v.getId());
+			//search and show the patient the relevant conditions of the vaccines
+			System.out.println(conditionsVaccine);
+			}			
+			// verify that the condition chosen, get the one that does not match with a vaccine condition
+            System.out.println("Do you have any of these relevant conditions, type the name: "); 
             String c_name = r.readLine(); 
             Condition condition = conMan.getCondition(c_name); 
             int c_id = condition.getId(); 
-            Vaccine vaccine = conMan.getVaccineDependingOncondition(d_id, c_id); 
+            Vaccine vaccine = conMan.getVaccineDependingOnCondition(d_id, c_id); 
+            
 			System.out.println("Please, tell me the date at which you want to set the appointment. (yyyy-MM-dd)");
 			String doa = r.readLine();
 			LocalDate doaLocalDate = LocalDate.parse(doa, formatter);       // the date is usually stored in the db as java.sql.Date, which stores the date as the amount of seconds that have passed sinc
 			Date doaDate = Date.valueOf(doaLocalDate);
 			int bound=doctorMan.countNumberOfDoctors();
-			int d_id=generateRandomInt(bound);
-			Doctor doctor=doctorMan.getDoctorById(d_id);														//we should not show the date as the amount of seconds that... so that is why we use Localdate.
+			int doc_id=generateRandomInt(bound);
+			Doctor doctor=doctorMan.getDoctorById(doc_id);														//we should not show the date as the amount of seconds that... so that is why we use Localdate.
 			Appointment appointment = new Appointment(doaDate, doctor, patient, vaccine); 	//we need to turn it into a Date in order to store it into the db. When i create the puts i whould pass the Date. 
 			appointmentMan.insertAppointment(appointment);
 			
@@ -448,6 +459,7 @@ public class Menu {
 			e.printStackTrace(); 
 		}
 	}
+	
 	public static void checkMyAppointmentsBeingAPatient(int p_id) {
 		System.out.println("Your vaccines are:"); 
 		List<Appointment> appointments = appointmentMan.checkAppointmentsOfPatient(p_id);
@@ -461,8 +473,9 @@ public class Menu {
 			System.out.println(appointments); 
 			System.out.println("Please, tell me the id of the appointment you want to remove: ");
 			int id = Integer.parseInt(r.readLine());
-			Appointment appointment = appointmentMan.getAppointmentById(int id); 
-			appointmentMan.removeAppointment(appointment); 
+			//Appointment appointment = appointmentMan.getAppointmentById(int id); 
+			appointmentMan.removeAppointment(p_id);
+		 
 		}catch(IOException e) {
 			System.out.println("I/O Exception");
 			e.printStackTrace();
