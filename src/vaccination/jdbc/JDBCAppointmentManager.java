@@ -30,14 +30,7 @@ public class JDBCAppointmentManager implements AppointmentManager{
 	@Override
 	public void insertAppointment(Appointment appointment) {
 		try {	
-			String sql = "INSERT INTO Appointment (date, patient, vaccine, doctor)" + "VALUES (?,?,?,?)";
-			PreparedStatement p = c.prepareStatement(sql);
-			p.setDate(1, appointment.getDate());
-			p.setString(2,appointment.getPatient().getName());
-			p.setString(3, appointment.getVaccine().getName());	
-			p.setString(4, appointment.getDoctor().getName());
-			p.executeUpdate();
-			p.close();
+			
 	         String sql = "INSERT INTO Appointment (date, doctor, patient, vaccine)" + "VALUES (?, ?, ?, ? )";
 	         PreparedStatement p = c.prepareStatement(sql);
 			 p.setDate(1, appointment.getDate());
@@ -74,7 +67,7 @@ public class JDBCAppointmentManager implements AppointmentManager{
 				LocalDate doaLocalDate = LocalDate.parse(doa, formatter);       
 				Date doaDate = Date.valueOf(doaLocalDate); 
 		      
-				Appointment appointment = new Appointment(doaDate,patient,vaccine,doctor);
+				Appointment appointment = new Appointment(doaDate,doctor,patient,vaccine);
 				list.add(appointment); 
 			}
 		}

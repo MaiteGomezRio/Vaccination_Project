@@ -423,14 +423,15 @@ public class Menu {
 	}
 	public static void setAppointment(int p_id) {
 		try {
+			//NOS DIJO RODRIGO QUE DIESEMOS POR HECHO QUE ANTES DE SET APPOINTMENT, EL PACIENTE HA HECHO UN UPDATE DE SUS CONDITIONS.
+            
 			
 			Patient patient = patientMan.getPatient(p_id); 
 			//first ask what disease they want to get vaccinated
 			System.out.println("Please, tell me the disease you want to put a vaccine of.");
-			String d_name = r.readLine(); 
+			String d_name = r.readLine(); 			
 			Disease disease = diseaseMan.getDisease(d_name); 
 			int d_id = disease.getId();
-<<<<<<< HEAD
 			// Get all the possible vaccines according to the disease
 			List<Vaccine> vaccines = vaccineMan.searchVaccinesByDisease(d_id); 
 			for(int i=0; i<vaccines.size();i++ ) {				
@@ -446,16 +447,6 @@ public class Menu {
             int c_id = condition.getId(); 
             Vaccine vaccine = conMan.getVaccineDependingOnCondition(d_id, c_id); 
             
-=======
-			//List<Vaccines> vaccines = vaccineMan.searchVaccinesByDisease(d_id); 
-			//List<Condition> conditions = conditionMan.getConditionsOfPatient(p_id); 
-            //System.out.println("Please, tell me the name of the condition you have: "); 
-            //String c_name = r.readLine(); 
-            //Condition condition = conMan.getCondition(c_name); 
-            //int c_id = condition.getId(); 
-			//NOS DIJO RODRIGO QUE DIESEMOS POR HECHO QUE ANTES DE SET APPOINTMENT, EL PACIENTE HA HECHO UN UPDATE DE SUS CONDITIONS.
-            Vaccine vaccine = conMan.getVaccineDependingOnCondition(d_id, p_id); 
->>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 			System.out.println("Please, tell me the date at which you want to set the appointment. (yyyy-MM-dd)");
 			String doa = r.readLine();
 			LocalDate doaLocalDate = LocalDate.parse(doa, formatter);       // the date is usually stored in the db as java.sql.Date, which stores the date as the amount of seconds that have passed sinc
