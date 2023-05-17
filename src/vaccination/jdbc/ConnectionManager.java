@@ -65,8 +65,8 @@ public class ConnectionManager {
 					+ "Disease(id))";
 			s.executeUpdate(table_Is_Immune);
 
-			String table_Condition_Vaccine= "CREATE TABLE Condition_Vaccine (condition_id INTEGER NOT NULL REFERENCES Condition(id),"+"vaccine_id NOT NULL REFERENCES Vaccine(id))";
-			s.executeUpdate(table_Condition_Vaccine);
+			String table_Vaccine_Condition= "CREATE TABLE Vaccine_Condition (vaccine_id INTEGER NOT NULL REFERENCES Vaccine(id),"+"condition_id INTEGER NOT NULL REFERENCES Condition(id)";
+			s.executeUpdate(table_Vaccine_Condition);
 
 			s.close();
 		} catch (SQLException e) {
