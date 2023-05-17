@@ -101,7 +101,7 @@ public class JDBCDirectorManager implements DirectorManager{
 	@Override
 	public void removeVaccine(String name) {
 		try {
-			String sql = "DELETE FROM Vaccine WHERE name = ?";
+			String sql = "DELETE * FROM Vaccine WHERE name = ?";
 			PreparedStatement p = c.prepareStatement(sql);
 			p.setString(1, name);
 			p.executeUpdate();

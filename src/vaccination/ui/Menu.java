@@ -355,24 +355,43 @@ public class Menu {
 
 	public static void updateConditionsOfPatient(int p_id) {
 		
-		System.out.println("How many new conditions do you have? Introduce a number ");
-		int number;
+		System.out.println("1. Add new conditions");
+		System.out.println("2. Delete existing conditions");
+		int option;
 		try {
-			number = Integer.parseInt(r.readLine());
-			for(int i=0; i<number; i++) {
-				System.out.println("Introduce condition name:");
-				String c_type=r.readLine();
-				Condition condition=new Condition(c_type);
-				int c_id = condition.getId();
-				conMan.updateConditionsOfPatient(p_id, c_id);
-			}		
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println("I/O exception");
-			e.printStackTrace();
-		} 	
-	}
+			 option = Integer.parseInt(r.readLine());
+			switch(option) {
+			case 1:{
+				System.out.println("How many new conditions do you have? Introduce a number ");
+				int number;
+					number = Integer.parseInt(r.readLine());
+					for(int i=0; i<number; i++) {
+						System.out.println("Introduce condition name:");
+						String c_type=r.readLine();
+						Condition condition=new Condition(c_type);
+						int c_id = condition.getId();
+						conMan.updateConditionsOfPatient(p_id, c_id);
+					}	
+				
+			}case 2:{
+				
+				System.out.println("Which condition do you want to remove, type it's name: ");
+				String type = r.readLine();
+					Condition condition=conMan.getCondition(type);
+					conMan.removeConditionOfPatient(p_id, condition.getId());
+					System.out.println("Condition deleted! ");
+				
+			}}
+		} catch (NumberFormatException e1) {
+			System.out.println("You did not type a number");
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			System.out.println("I/O Exception");
+			e1.printStackTrace();
+		}
+		
+		}
+		
 
 	public static void removePatient() {
 		System.out.println("Introduce the name of the patient you want to remove from the database: ");
@@ -487,12 +506,11 @@ public class Menu {
 	public static void cancelAppointment(int p_id) {
 		try {
 			System.out.println("These are the list of your appointments: ");
-			List<Appointment> appointments = appointmentMan.checkAppointmentsOfPatient(p_id);
+			List<Appointment> appointments = appointmentMan.searchAppointmentsByPatient(p_id);
 			System.out.println(appointments); 
 			System.out.println("Please, tell me the id of the appointment you want to remove: ");
 			int id = Integer.parseInt(r.readLine());
-			//Appointment appointment = appointmentMan.getAppointmentById(int id); 
-			appointmentMan.removeAppointment(p_id);
+			appointmentMan.removeAppointment(id);
 		 
 		}catch(IOException e) {
 			System.out.println("I/O Exception");
@@ -593,27 +611,30 @@ public class Menu {
 			try {
 				System.out.println("Welcome patient!"); 
 				System.out.println("What do you want to do? Choose an option: ");
-				System.out.println("1. Check my vaccines");
-				System.out.println("2. Check my appointments"); 
-				System.out.println("3. Set an appointment"); 
-				System.out.println("4. Cancel an appointment"); 
-				System.out.println("5. Update my conditions"); 
+				System.out.println("1. Check vaccines I have alreadyd put on");
+				System.out.println("2. Check vaccines I still have to put");
+				System.out.println("3. Check my appointments"); 
+				System.out.println("4. Set an appointment"); 
+				System.out.println("5. Cancel an appointment"); 
+				System.out.println("6. Update my conditions"); 
 				System.out.println("0. Exit"); 
 				int option = Integer.parseInt(r.readLine()); 
 				
 				switch(option) {
 					case 1:{
-						checkVaccinesOfPatientBeingAPatient(patient.getId()); 
-					}
-					case 2:{
-						checkMyAppointmentsBeingAPatient(patient.getId()); 
+						checkVaccinesAPatientHasOn(patient.getId()); 
+					}case 2:{
+						checkVaccinesAPatientHasToPut(patient.getId());
 					}
 					case 3:{
-						setAppointment(patient.getId()); 
+						checkAppointmentsOfPatient(patient.getId()); 
 					}
 					case 4:{
-						//TODO
-					}case 5:{
+						setAppointment(patient.getId()); //TODO PRIORDAD ABSOLUTAAAAA!!!!!
+					}
+					case 5:{
+						cancelAppointment(patient.getId());
+					}case 6:{
 						updateConditionsOfPatient(patient.getId());
 					}
 					case 0:{

@@ -117,5 +117,25 @@ public class JDBCConditionManager implements ConditionManager{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	@Override
+	public Vaccine getVaccineDependingOnCondition(int d_id, int p_id, int c_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void removeConditionOfPatient(int p_id, int c_id) {
+		try {
+			String sql = "DELETE condition_id FROM Patient_Condition WHERE condition_id = ? AND patient_id = ?";
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setInt(1,c_id);
+			p.setInt(2,p_id);
+			p.executeUpdate();
+			p.close();
+		} catch (SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		
+	}
+	
 }
