@@ -21,7 +21,7 @@ public class JDBCConditionManager implements ConditionManager{
 		this.c = c;
 
 	}
-	@Override
+	/*@Override
 	public List<Condition> checkConditionsOfAVaccine(int v_id) {
 		List<Condition> list = new ArrayList<Condition>();
 		try {
@@ -39,7 +39,7 @@ public class JDBCConditionManager implements ConditionManager{
 			e.printStackTrace();
 		}
 		return list; 
-	}
+	}*/
 	public Condition getCondition(String type){
 
 		try {
@@ -76,12 +76,31 @@ public class JDBCConditionManager implements ConditionManager{
 		}
 		
 	}
-	public Vaccine getVaccineDependingOnCondition(int d_id, int c_id) {
+	@Override 
+	public List<Condition> getConditionsOfPatient(int p_id) {
+		List<Condition> conditions = new ArrayList<Condition>();
 		try {
-			String sql = "SELECT vaccine_id FROM Disease_Vaccine JOIN Vaccine_Condition ON Disease_Vaccine.vaccine_id = Vaccine_Condition.vaccine_id JOIN Patient_Condition ON Patient_Condition.condition_id = Vaccine_Condition.condition_id WHERE disease_id = ? AND vaccine_id NOT CONTAINT condition_id = ?";
+			String sql = "SELECT condition_id FROM Patient_Condition WHERE patient_id = ?"; 
+			PreparedStatement p = c.prepareStatement(sql); 
+			p.setInt(1, p_id);  
+			ResultSet rs = p.executeQuery(); 
+			while(rs.next()) {
+				int id = rs.getInt("condition_id");
+				Condition condition = new Condition(id); 
+			    conditions.add(condition); 
+			}
+		}catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		return conditions; 
+	}
+	public Vaccine getVaccineDependingOnCondition(int d_id, int p_id) {
+		try {
+			String sql = "SELECT vaccine_id FROM Disease_Vaccine JOIN Vaccine_Condition ON Disease_Vaccine.vaccine_id = Vaccine_Condition.vaccine_id JOIN Patient_Condition ON Patient_Condition.condition_id = Vaccine_Condition.condition_id WHERE disease_id = ? AND patient_id = ? AND vaccine_id NOT CONTAIN condition_id = ?";
 			PreparedStatement p = c.prepareStatement(sql); 
 			p.setInt(1, d_id); 
-			p.setInt(2, c_id);
+			p.setInt(2, p_id);
 			ResultSet rs = p.executeQuery(); 
 			rs.next(); 
 		    int id = rs.getInt("vaccine_id"); 
@@ -92,5 +111,10 @@ public class JDBCConditionManager implements ConditionManager{
 			e.printStackTrace();
 		}
 		return null; 
+	}
+	@Override
+	public List<Condition> checkConditionsOfAVaccine(int v_id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
