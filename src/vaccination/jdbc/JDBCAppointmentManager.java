@@ -48,10 +48,10 @@ public class JDBCAppointmentManager implements AppointmentManager{
 	
 	
 	@Override
-	public List<Appointment> checkAppointmentsOfPatient(int p_id) {
+	public List<Appointment> searchAppointmentsByPatient(int p_id) {
 		List<Appointment> list= new ArrayList<Appointment>();
 		try {
-			String sql ="SELECT * FROM Appointment WHERE p_id = ?";
+			String sql ="SELECT * FROM Appointment WHERE patient_id = ?";
 			PreparedStatement p= c.prepareStatement(sql);
 			p.setInt(1, p_id);
 			ResultSet rs= p.executeQuery();
@@ -81,8 +81,34 @@ public class JDBCAppointmentManager implements AppointmentManager{
 
 	@Override
 	public List<Appointment> searchAppointmentsByDoctor(int d_id) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Appointment> list= new ArrayList<Appointment>();
+		try {
+			String sql ="SELECT * FROM Appointment WHERE doctor_id = ?";
+			PreparedStatement p= c.prepareStatement(sql);
+			p.setInt(1, d_id);
+			ResultSet rs= p.executeQuery();
+			while(rs.next()) {
+				
+				Integer patient_id = rs.getInt("patient_id");
+				 Patient patient = new Patient(patient_id);
+				 Integer vaccine_id= rs.getInt("vaccine_id");
+				 Vaccine vaccine= new Vaccine(vaccine_id);
+				 Integer doctor_id = rs.getInt("doctor_id");
+		        Doctor doctor = new Doctor(doctor_id); 
+		        String doa = rs.getString("Date");
+				LocalDate doaLocalDate = LocalDate.parse(doa, formatter);       
+				Date doaDate = Date.valueOf(doaLocalDate); 
+		      
+				Appointment appointment = new Appointment(doaDate,doctor,patient,vaccine);
+				list.add(appointment); 
+			}
+		}
+		catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+							
+		return list; 
 	}
 	@Override
 	public void removeAppointment(int a_id) {
@@ -99,9 +125,5 @@ public class JDBCAppointmentManager implements AppointmentManager{
 		
 	}
 
-	@Override
-	public List<Appointment> searchAppointmentsByPatient(int p_id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }

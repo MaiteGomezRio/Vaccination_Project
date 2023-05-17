@@ -257,7 +257,7 @@ public class Menu {
 		System.out.println(listVaccines);
 	}
 
-	public static void checkVaccinesOfPatientBeingADoctor()throws IOException { 
+	/*public static void checkVaccinesOfPatientBeingADoctor()throws IOException { 
 		try {
 			System.out.println("Introduce the patient's name: ");
 			String patient_name=r.readLine();
@@ -272,12 +272,12 @@ public class Menu {
 			System.out.println("I/O Exception"); 
 			e.printStackTrace();
 		}
-    }
-	public static void checkVaccinesOfPatientBeingAPatient(int p_id) {
+    }*/
+	/*public static void checkVaccinesOfPatientBeingAPatient(int p_id) {
 		System.out.println("Your vaccines are:"); 
 		List<Vaccine> vaccines = vaccineMan.searchVaccinesByPatient(p_id); 
 		System.out.println(vaccines); 
-	}
+	}*/
 	public static void checkVaccinesOfDisease() throws IOException{
 		System.out.println("Type the name of the disease you want to check: ");
 		String d_name= r.readLine();	
@@ -287,14 +287,14 @@ public class Menu {
 			
 	}
 
-	public static void checkVaccinesOfPatient() throws IOException{
+	/*public static void checkVaccinesOfPatient() throws IOException{
 		System.out.println("Type the name of the disease you want to check vaccines of: ");
 		String d_name= r.readLine();	
 		Disease disease=diseaseMan.getDisease(d_name);
 		List<Vaccine> list=vaccineMan.searchVaccinesByDisease(disease.getId());
 		System.out.println(list); 
 			
-	}
+	}*/
 	public static void checkVaccinesAPatientHasToPut(int p_id) {
 		System.out.println("The vaccines you have have to put on are: ");
 		List<Appointment> appointments=appointmentMan.searchAppointmentsByPatient(p_id); 
@@ -442,6 +442,11 @@ public class Menu {
 	public static int generateRandomInt(int bound) {
 	    Random random = new Random();
 	    return random.nextInt(bound);
+	}
+	
+	public static void selectAppointments(int d_id) throws IOException {
+		List<Appointment> listAppointments = appointmentMan.searchAppointmentsByDoctor(d_id);
+		System.out.println(listAppointments);
 	}
 	public static void setAppointment(int p_id) {
 		try {
@@ -631,33 +636,25 @@ public class Menu {
 			try {
 				System.out.println("Welcome doctor: ");
 				System.out.println("Choose an option.");
-				System.out.println("1. Register a new vaccine.");
-				System.out.println("2. Check vaccines");
-				System.out.println("3. Check vaccines of a patient.");
-				System.out.println("4. Assign a vaccine to a patient.");
-				System.out.println("5. Unassign vaccine of a patient."); 				
+				System.out.println("1. Check vaccines");
+				System.out.println("2. Check vaccines of a patient.");
+				System.out.println("3. Check my appointments."); 				
 				System.out.println("0. Return");
 
 				int choice = Integer.parseInt(r.readLine());
 
 				switch (choice) {
 				    case 1: {
-					    registerVaccine();
+				    	selectVaccines();
 					    break;
 				    }
 				    case 2: {
-					    selectVaccines();
+				    	checkVaccinesPatientHasToPut();
 					    break;           
 				    }
 				    case 3: {
-					    checkVaccinesOfPatientBeingADoctor();
+				    	selectAppointments(doctor.getId());
 					    break;
-				    }
-				    case 4:{
-					    assignVaccineToPatient(); 
-					    break;
-				    }case 5:{
-				    	
 				    }
 				    case 0: {
 				     	return;
@@ -671,5 +668,24 @@ public class Menu {
 				e.printStackTrace();
 			}
 		}
+	}
+	public static void checkVaccinesPatientHasToPut() {
+
+		try {
+			System.out.println("Introduce the name of the patient you want to check: ");
+			String name=r.readLine();
+			List<Patient> list=patientMan.searchPatientByName(name);
+			System.out.println(list);
+			System.out.println("Tell me which one it is, type it's Id");
+			int p_id = Integer.parseInt(r.readLine());
+			checkVaccinesAPatientHasToPut(p_id);
+		} catch (NumberFormatException e) {
+			System.out.println("I/O exception");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("I/O exception");
+			e.printStackTrace();
+		}
+		
 	}
 }
