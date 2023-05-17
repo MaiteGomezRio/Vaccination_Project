@@ -423,15 +423,22 @@ public class Menu {
 		try {
 			
 			Patient patient = patientMan.getPatient(p_id); 
-			System.out.println("Please, tell me the vaccine you want to put in that appointment.");
-			String v_name = r.readLine(); 
-			Vaccine vaccine = vaccineMan.getVaccine(v_name); 
+			System.out.println("Please, tell me the disease you want to put a vaccine of.");
+			String d_name = r.readLine(); 
+			Disease disease = diseaseMan.getDisease(d_name); 
+			int d_id = disease.getId();
+			//List<Vaccines> vaccines = vaccineMan.searchVaccinesByDisease(d_id); 
+            System.out.println("Please, tell me the name of the condition you have: "); 
+            String c_name = r.readLine(); 
+            Condition condition = conMan.getCondition(c_name); 
+            int c_id = condition.getId(); 
+            Vaccine vaccine = conMan.getVaccineDependingOncondition(d_id, c_id); 
 			System.out.println("Please, tell me the date at which you want to set the appointment. (yyyy-MM-dd)");
 			String doa = r.readLine();
 			LocalDate doaLocalDate = LocalDate.parse(doa, formatter);       // the date is usually stored in the db as java.sql.Date, which stores the date as the amount of seconds that have passed sinc
 			Date doaDate = Date.valueOf(doaLocalDate);
 			int bound=doctorMan.countNumberOfDoctors();
-			int d_id=generateRandom(bound);
+			int d_id=generateRandomInt(bound);
 			Doctor doctor=doctorMan.getDoctorById(d_id);														//we should not show the date as the amount of seconds that... so that is why we use Localdate.
 			Appointment appointment = new Appointment(doaDate, doctor, patient, vaccine); 	//we need to turn it into a Date in order to store it into the db. When i create the puts i whould pass the Date. 
 			appointmentMan.insertAppointment(appointment);

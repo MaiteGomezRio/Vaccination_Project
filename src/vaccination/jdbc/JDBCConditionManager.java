@@ -11,6 +11,7 @@ import java.util.List;
 import vaccination.ifaces.ConditionManager;
 import vaccination.pojos.Condition;
 import vaccination.pojos.Doctor;
+import vaccination.pojos.Vaccine;
 
 public class JDBCConditionManager implements ConditionManager{
 	
@@ -47,7 +48,7 @@ public class JDBCConditionManager implements ConditionManager{
 			p.setString(1, type); 
 			ResultSet rs = p.executeQuery();
 			rs.next();
-			Integer c_id=rs.getInt("id");
+		    int c_id=rs.getInt("id");
 	        Condition condition=new Condition(c_id,type);
 	        rs.close();
 	        p.close();
@@ -75,5 +76,21 @@ public class JDBCConditionManager implements ConditionManager{
 		}
 		
 	}
-	
+	public Vaccine getVaccineDependingOnCondition(int d_id, int c_id) {
+		try {
+			String sql = "SELECT vaccine_id FROM Disease_Vaccine JOIN Vaccine_Condition ON Disease_Vaccine.vaccine_id = Vaccine_Condition.vaccine_id JOIN Patient_Condition ON Patient_Condition.condition_id = Vaccine_Condition.condition_id WHERE disease_id = ? AND vaccine_id NOT CONTAINT condition_id = ?";
+			PreparedStatement p = c.prepareStatement(sql); 
+			p.setInt(1, d_id); 
+			p.setInt(2, c_id);
+			ResultSet rs = p.executeQuery(); 
+			rs.next(); 
+		    int id = rs.getInt("vaccine_id"); 
+		    Vaccine vaccine = new Vaccine(id);
+		    return vaccine;
+		}catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		return null; 
+	}
 }

@@ -74,7 +74,7 @@ public class JDBCDiseaseManager implements DiseaseManager{
 	}
 	
 	
-	@Override   //i think this method will make sense later, when we link disease to patient and vaccine
+	@Override  
 	public Disease getDisease(String name) {
 		try {
 			String sql = "SELECT * FROM Disease WHERE name LIKE ?";
