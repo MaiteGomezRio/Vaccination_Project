@@ -31,7 +31,10 @@ public class Vaccine implements Serializable{
     	this.dose = dose;
     }
     
-    public Integer getId() {
+    public Vaccine(int id) {
+		this.id=id;
+	}
+	public Integer getId() {
 		return id;
 	}
     

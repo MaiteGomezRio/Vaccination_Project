@@ -26,9 +26,18 @@ public class Appointment implements Serializable{
 	//TODO EL DOCTOR SE ASIGNA AUTOMATICAMENTE??
 	public Appointment(Date date, Patient patient, Vaccine vaccine) {
 		super();
+	
 		this.date = date;
 		this.patient = patient;
 		this.vaccine = vaccine;
+	}
+	public Appointment(Date date, Patient patient, Vaccine vaccine, Doctor doctor) {
+		super();
+	
+		this.date = date;
+		this.patient = patient;
+		this.vaccine = vaccine;
+		this.doctor=doctor;
 	}
 	public int getId() {
 		return id;
@@ -45,7 +54,7 @@ public class Appointment implements Serializable{
 	@Override
 	public String toString() {
 
-		return "Puts [id=" + id + ", date=" + date + ", doctor=" + doctor + ", patient=" + patient + ", vaccine="
+		return "Puts [id=" + id + ", date=" + date + ", doctor=" + doctor + ", patient=" + patient + ", vaccine="+vaccine;
 
 	}
     

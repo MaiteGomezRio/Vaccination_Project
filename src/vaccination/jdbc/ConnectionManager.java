@@ -57,7 +57,7 @@ public class ConnectionManager {
 			         + "vaccine_id REFERENCES Vaccine(id))"; 
 			s.executeUpdate(table_Disease_Vaccine); 
 			
-			String table_Appointment = "CREATE TABLE Appointment(Date Date PRIMARY KEY"+"patient_id INTEGER NOT NULL REFERENCES Patient(id),"+" vaccine_id INTEGER NOT NULL REFERENCES Vaccine(id))" +
+			String table_Appointment = "CREATE TABLE Appointment(id INTEGER PRIMARY KEY AUTOINCREMENT Date Date NOT NULL"+"patient_id INTEGER NOT NULL REFERENCES Patient(id),"+" vaccine_id INTEGER NOT NULL REFERENCES Vaccine(id))" +
 					                   "doctor_id INTEGER NOT NULL REFERENCES Doctor()id";
 			s.executeUpdate(table_Appointment);
 			

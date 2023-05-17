@@ -79,7 +79,7 @@ public class JDBCPatientManager implements PatientManager {
         String id_document=rs.getString("id_document");
         String name = rs.getString("name"); 
         String surname = rs.getString("surname"); 
-        int doctor_id = rs.getInt("doctor_id");
+        Integer doctor_id = rs.getInt("doctor_id");
         Doctor doctor = new Doctor(doctor_id); 
         String d_name = rs.getString("d_name");
         Disease disease = new Disease(d_name); 
@@ -119,7 +119,7 @@ public class JDBCPatientManager implements PatientManager {
 			p.setString(1, "%"+name+"%");   // the percentages are so it looks for every name that contains that word. Ex: if you type dri it looks for rodrigo too. 
 			ResultSet rs = p.executeQuery(); 
 			while(rs.next()) {
-				int id = rs.getInt("id");
+				Integer id = rs.getInt("id");
 				String id_document=rs.getString("id_document");
 				String n = rs.getString("name"); 
 				String surname= rs.getString("surname");
