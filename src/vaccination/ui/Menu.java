@@ -317,7 +317,6 @@ public class Menu {
 		System.out.println(list); 
 			
 	}
->>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 	public static void checkAppointmentsOfPatient(int p_id) {
 		System.out.println("Your appointments are: ");
 		List<Appointment> list=appointmentMan.searchAppointmentsByPatient(p_id);
