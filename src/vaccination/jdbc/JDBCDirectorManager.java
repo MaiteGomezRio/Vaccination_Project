@@ -25,11 +25,11 @@ public class JDBCDirectorManager implements DirectorManager{
 	@Override
 	public void insertVaccine(Vaccine vaccine) {
 		try {	
-			String sql = "INSERT INTO Vaccine (name, dose, Disease)" + "VALUES (?,?,?)";
+			String sql = "INSERT INTO Vaccine (name, dose, disease_id)" + "VALUES (?,?,?)";
 			PreparedStatement p = c.prepareStatement(sql);
 			p.setString(1,vaccine.getName());
 			p.setInt(2, vaccine.getDose());	
-			p.setString(3, vaccine.getDisease().getName());
+			p.setInt(3, vaccine.getDisease().getId());
 			p.executeUpdate();
 			p.close();
 		} catch (SQLException e) {
@@ -68,12 +68,12 @@ public class JDBCDirectorManager implements DirectorManager{
 	}
 
 	@Override
-	public void removePatient(String name) {
+	public void removePatient(int p_id) {
 		try {
-			String sql = "DELETE FROM Patient WHERE name = ?";
+			String sql = "DELETE * FROM Patient WHERE id = ?";
 			PreparedStatement p;
 			p = c.prepareStatement(sql);
-			p.setString(1, name);
+			p.setInt(1, p_id);
 			p.executeUpdate();
 			p.close();
 		} catch (SQLException e) {
@@ -84,12 +84,12 @@ public class JDBCDirectorManager implements DirectorManager{
 	}
 	
 	@Override
-	public void removeDoctor(String name) {
+	public void removeDoctor(int d_id) {
 		try {
-			String sql = "DELETE FROM Doctor WHERE name = ?";
+			String sql = "DELETE * FROM Doctor WHERE id = ?";
 			PreparedStatement p;
 			p = c.prepareStatement(sql);
-			p.setString(1, name);
+			p.setInt(1, d_id);
 			p.executeUpdate();
 			p.close();
 		} catch (SQLException e) {
@@ -115,12 +115,12 @@ public class JDBCDirectorManager implements DirectorManager{
 	
 	
 	@Override
-	public void assignConditionToVaccine(String c_name, String v_name) {
+	public void assignConditionToVaccine(int c_id, int v_id) {
 		try {
-			String sql="UPDATE Condition_Vaccine SET c_name=? WHERE v_name= ?";
+			String sql="INSERT INTO Condition_Vaccine (condition_id, vaccine_id)" + "VALUES (?,?)";
 			PreparedStatement p=c.prepareStatement(sql);	
-			p.setString(1, c_name);
-			p.setString(2, v_name);
+			p.setInt(1, c_id);
+			p.setInt(2, v_id);
 			p.executeUpdate();
 			p.close();
 		}
@@ -131,12 +131,10 @@ public class JDBCDirectorManager implements DirectorManager{
 		}
 		
 	}
-	
-	// TODO borrar, disease is introduced when the vaccine is registered 1-N relation 
-	/*@Override 
-	public void assignVaccineToDisease(int v_id,int d_id) {
+	@Override 
+	public void assignDiseaseToVaccine(int d_id,int v_id) {
 		try {
-			String sql = "INSERT into Disease_Vaccine(d_id, v_id) WHERE VALUES (?,?)"; 																			// vaccine
+			String sql = "INSERT into Disease_Vaccine(disease_id, vaccine_id) WHERE VALUES (?,?)"; 																			// vaccine
 			PreparedStatement p = c.prepareStatement(sql);
 			p.setInt(1, d_id);
 			p.setInt(2, v_id);
@@ -148,12 +146,12 @@ public class JDBCDirectorManager implements DirectorManager{
 		}
 		
 	}
-	*/
+	
 	
 	@Override
 	public void assignDoctorToPatient(int d_id, int p_id) {
 		try {
-			String sql= "UPDATE Patient SET doctor=? WHERE p_id= ?";
+			String sql= "UPDATE Patient SET doctor_id = ? WHERE p_id= ?";
 			PreparedStatement p = c.prepareStatement(sql);			
 			p.setInt(1, d_id);
 			p.setInt(2, p_id);

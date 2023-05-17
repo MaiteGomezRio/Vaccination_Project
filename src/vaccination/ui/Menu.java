@@ -398,7 +398,11 @@ public class Menu {
 		String p_name;
 		try {
 			p_name = r.readLine();
-			directorMan.removePatient(p_name);
+			List<Patient> patients = patientMan.searchPatientByName(p_name); 
+			System.out.println(patients); 
+			System.out.println("Please tell me which one it is, type its id:"); 
+			int p_id = Integer.parseInt(r.readLine()); 
+			directorMan.removePatient(p_id);
 		} catch (IOException e) {
 			System.out.println("I/O exception");
 			e.printStackTrace();
@@ -409,7 +413,11 @@ public class Menu {
 		try {
 		System.out.println("Introduce the name of the doctor you want to remove from the database: ");
 		String d_name=r.readLine();
-		directorMan.removeDoctor(d_name);
+		List<Doctor> doctors = doctorMan.searchDoctorByName(d_name); 
+		System.out.println(doctors); 
+		System.out.println("Please tell me which one it is, type its id:"); 
+		int d_id = Integer.parseInt(r.readLine()); 
+		directorMan.removeDoctor(d_id);
 		
 		}catch(IOException e) {
 			System.out.println("I/O exception");
@@ -434,16 +442,36 @@ public class Menu {
 		try {
 			System.out.println("Tell me the name of the condition: ");
 			String c_name = r.readLine(); 
+			Condition condition = conMan.getCondition(c_name);
+			int c_id = condition.getId();
 			System.out.println("Tell me the name of the vaccine: "); 
 			String v_name = r.readLine(); 
-			directorMan.assignConditionToVaccine(c_name, v_name);
+			Vaccine vaccine = vaccineMan.getVaccine(v_name);
+			int v_id = vaccine.getId();
+			directorMan.assignConditionToVaccine(c_id, v_id);
 		}catch(IOException e) {
 			System.out.println("I/O Excepption"); 
 			e.printStackTrace();
 		}
 	}
 	
-
+	public static void assignDiseaseToVaccine() {
+		try {
+			System.out.println("Tell me the name of the disease: ");
+			String d_name = r.readLine(); 
+			Disease disease = diseaseMan.getDisease(d_name);
+			int d_id = disease.getId();
+			System.out.println("Tell me the name of the vaccine: "); 
+			String v_name = r.readLine(); 
+			Vaccine vaccine = vaccineMan.getVaccine(v_name);
+			int v_id = vaccine.getId();
+			directorMan.assignDiseaseToVaccine(d_id, v_id);
+		}catch(IOException e) {
+			System.out.println("I/O Excepption"); 
+			e.printStackTrace();
+		}
+	}
+	
 	public static void assignVaccineToPatient() throws IOException {
 		System.out.println("Tell me the name of the patient.");
         String name = r.readLine(); 
@@ -578,8 +606,7 @@ public class Menu {
 					
 				}case 4:{
 					System.out.println("1.Assign condition to vaccine");
-					System.out.println("2.Assign doctor to patient");
-					System.out.println("3.Assign disease to vaccine");
+					System.out.println("2.Assign disease to vaccine");
 					System.out.println("0.Exit");
 					int choice=Integer.parseInt(r.readLine());
 					switch(choice) {
@@ -587,10 +614,8 @@ public class Menu {
 						assignConditionToVaccine();
 						break;
 					}case 2:{
-						assignDoctorToPatient();
+						assignDiseaseToVaccine();
 						break;
-					}case 3:{
-						//assignDiseaseToVaccine();
 					}case 0:{
 						return;
 					}

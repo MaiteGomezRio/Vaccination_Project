@@ -35,23 +35,6 @@ public class JDBCDiseaseManager implements DiseaseManager{
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public void assignDiseaseToVaccine(int d_id, int v_id) {
-		try {
-			String sql = "INSERT INTO Patient_Disease (patient_id, disease_id) VALUES (?,?)";
-			PreparedStatement p = c.prepareStatement(sql);
-			p.setInt(1, d_id);
-			p.setInt(2, v_id);
-			p.executeUpdate();
-			p.close();
-		} catch (SQLException e) {
-			System.out.println("Database error.");
-			e.printStackTrace();
-		}
-		
-	}
-
 	@Override
 	public List<Disease> searchDiseaseByVaccine(int vaccine_id) {
 		
