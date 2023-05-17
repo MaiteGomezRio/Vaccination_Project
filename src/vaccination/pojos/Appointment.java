@@ -31,6 +31,7 @@ public class Appointment implements Serializable{
 		this.patient = patient;
 		this.vaccine = vaccine;
 	}
+<<<<<<< HEAD
 	public Appointment(Date date, Patient patient, Vaccine vaccine, Doctor doctor) {
 		super();
 	
@@ -38,6 +39,15 @@ public class Appointment implements Serializable{
 		this.patient = patient;
 		this.vaccine = vaccine;
 		this.doctor=doctor;
+=======
+	
+	public Appointment(Date date, Doctor doctor, Patient patient, Vaccine vaccine) {
+		super();
+		this.date = date;
+		this.doctor = doctor;
+		this.patient = patient;
+		this.vaccine = vaccine;
+>>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 	}
 	public int getId() {
 		return id;
@@ -53,9 +63,13 @@ public class Appointment implements Serializable{
 	}
 	@Override
 	public String toString() {
+<<<<<<< HEAD
 
 		return "Puts [id=" + id + ", date=" + date + ", doctor=" + doctor + ", patient=" + patient + ", vaccine="+vaccine;
 
+=======
+	    return "Puts [id=" + id + ", date=" + date + ", doctor=" + doctor + ", patient=" + patient + ", vaccine="+vaccine; 
+>>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 	}
     
 	public Patient getPatient() {

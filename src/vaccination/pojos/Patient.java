@@ -17,6 +17,7 @@ public class Patient implements Serializable{
 	private Doctor doctor; 
 	private List <Disease> diseases;
     private List<Condition> conditions; 
+    private List<Appointment> appointments; 
 
 	
 	
@@ -62,9 +63,13 @@ public class Patient implements Serializable{
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
+		vaccines = new ArrayList<Vaccine>(); 
+		diseases= new ArrayList<Disease>();
+		conditions= new ArrayList<Condition>();
 	}
-	public Patient(int id,String id_document, String name, String surname, Disease disease, Condition condition) {
+	public Patient(int id,String id_document, String name, String surname) {
 		this.id = id; 
+		this.id_document=id_document;
 		this.name = name; 
 		this.surname = surname;
 		vaccines = new ArrayList<Vaccine>(); 
@@ -94,13 +99,6 @@ public class Patient implements Serializable{
 		 
 	}
 	
-	public Patient(int id,String id_document, String name, String surname) {
-		
-		this.id_document=id_document;
-		this.name = name; 
-		this.surname = surname;
-	 
-	}
 	
 	@Override 
 	public String toString() {
@@ -166,6 +164,13 @@ public class Patient implements Serializable{
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
 	}
 	@Override
 	public int hashCode() {

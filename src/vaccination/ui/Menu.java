@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -40,6 +41,7 @@ public class Menu {
 	private static PatientManager patientMan;
 	private static VaccineManager vaccineMan;
 	private static DirectorManager directorMan;
+	private static DirectorManager diseaseMan;
 	private static UserManager userMan; 
 	private static ConditionManager conMan;
 	private static AppointmentManager appointmentMan; 
@@ -267,40 +269,47 @@ public class Menu {
 		System.out.println(vaccines); 
 	}
 	public static void checkVaccinesOfDisease() throws IOException{
-		System.out.println("Type the ID of the disease you want to check: ");
-		Integer d_id= Integer.parseInt(r.readLine());			
-		List<Vaccine> list=vaccineMan.searchVaccinesByDisease(d_id);
+		System.out.println("Type the name of the disease you want to check: ");
+		String d_name= r.readLine();	
+		Disease disease=new Disease(d_name);
+		List<Vaccine> list=vaccineMan.searchVaccinesByDisease(disease.getId());
 		System.out.println(list); 
 			
 	}
+	public static void checkVaccinesOfPatient() throws IOException{
+		System.out.println("Type the name of the disease you want to check vaccines of: ");
+		String d_name= r.readLine();	
+		Disease disease=diseaseMan.searchDiseaseByName(d_name);
+		List<Vaccine> list=vaccineMan.searchVaccinesByDisease(disease.getId());
+		System.out.println(list); 
+			
+	}
+	public static void checkAppointmentsOfPatient(int p_id) {
+		System.out.println("Your appointments are: ");
+		List<Appointment> list=appointmentMan.searchAppointmentsByPatient(p_id);
+		System.out.println(list); 
+	}
+	
 	public static void checkDosesOfVaccine() throws IOException{
 		System.out.println("Type the name of the vaccine you want to check: ");
 		String v_name=r.readLine();
 		Vaccine vaccine=vaccineMan.getVaccine(v_name);
-		System.out.println(v_name+" has the total of: "+vaccine.getDose()+ " dosis");
-		
-			
+		System.out.println(v_name+" has the total of: "+vaccine.getDose()+ " dosis");	
 	}
 	public static void checkConditionsVaccine()  throws IOException{
 		
-		System.out.println("Which vaccine would yo like to check, type the ID: ");
-		Integer v_id= Integer.parseInt(r.readLine());
-		List<Condition> conditions=conMan.checkConditionsOfAVaccine(v_id);
+		System.out.println("Which vaccine would yo like to check, type the name: ");
+		String v_name=r.readLine();
+		Vaccine vaccine=vaccineMan.getVaccine(v_name);
+		List<Condition> conditions=conMan.checkConditionsOfAVaccine(vaccine.getId());
 		System.out.println(conditions);
 	
 	}
-	
 
-	//TODO checkVaccinesOfDisease
-<<<<<<< HEAD
-
-=======
->>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 	//TODO checkConditionOfPatient
 	//TODO checkVaccinesAPatientHasOn
 	//TODO checkVaccinesAPatientHasToPut
 	//TODO checkDiseasesOfPatient con immunity
-	//TODO checkVaccinesOfPatient
 	public static void updateConditionsOfPatient(int p_id) {
 		
 		System.out.println("How many new conditions do you have? Introduce a number ");
@@ -405,15 +414,11 @@ public class Menu {
 		vaccineMan.assignVaccineToPatient(name_v, id);
 	}
 	
-	public static int generateRandom() {
-		Random random = new Random();
-        long randomNumber = random.nextLong() % 10000000000L;
-        if (randomNumber < 0) {
-            randomNumber += 10000000000L;
-        }
-        return (int)randomNumber;
-	}
 	
+	public static int generateRandomInt(int bound) {
+	    Random random = new Random();
+	    return random.nextInt(bound);
+	}
 	public static void setAppointment(int p_id) {
 		try {
 			
@@ -424,15 +429,38 @@ public class Menu {
 			System.out.println("Please, tell me the date at which you want to set the appointment. (yyyy-MM-dd)");
 			String doa = r.readLine();
 			LocalDate doaLocalDate = LocalDate.parse(doa, formatter);       // the date is usually stored in the db as java.sql.Date, which stores the date as the amount of seconds that have passed sinc
-			Date doaDate = Date.valueOf(doaLocalDate);                      //we should not show the date as the amount of seconds that... so that is why we use Localdate.
-			Appointment appointment = new Appointment(doaDate, patient, vaccine); 	//we need to turn it into a Date in order to store it into the db. When i create the puts i whould pass the Date. 
+			Date doaDate = Date.valueOf(doaLocalDate);
+			int bound=doctorMan.countNumberOfDoctors();
+			int d_id=generateRandom(bound);
+			Doctor doctor=doctorMan.getDoctorById(d_id);														//we should not show the date as the amount of seconds that... so that is why we use Localdate.
+			Appointment appointment = new Appointment(doaDate, doctor, patient, vaccine); 	//we need to turn it into a Date in order to store it into the db. When i create the puts i whould pass the Date. 
 			appointmentMan.insertAppointment(appointment);
 			
 		}catch(IOException e) {
 			System.out.println("I/O Exception");
+			e.printStackTrace(); 
 		}
 	}
+	public static void checkMyAppointmentsBeingAPatient(int p_id) {
+		System.out.println("Your vaccines are:"); 
+		List<Appointment> appointments = appointmentMan.checkAppointmentsOfPatient(p_id);
+		System.out.println(appointments); 
+	}
 	
+	public static void cancelAppointment(int p_id) {
+		try {
+			System.out.println("These are the list of your appointments: ");
+			List<Appointment> appointments = appointmentMan.checkAppointmentsOfPatient(p_id);
+			System.out.println(appointments); 
+			System.out.println("Please, tell me the id of the appointment you want to remove: ");
+			int id = Integer.parseInt(r.readLine());
+			Appointment appointment = appointmentMan.getAppointmentById(int id); 
+			appointmentMan.removeAppointment(appointment); 
+		}catch(IOException e) {
+			System.out.println("I/O Exception");
+			e.printStackTrace();
+		}
+	}
 	public static void directorMenu(String email) {
 		
 		while(true) {
@@ -540,7 +568,7 @@ public class Menu {
 						checkVaccinesOfPatientBeingAPatient(patient.getId()); 
 					}
 					case 2:{
-						//TODO
+						checkMyAppointmentsBeingAPatient(patient.getId()); 
 					}
 					case 3:{
 						setAppointment(patient.getId()); 

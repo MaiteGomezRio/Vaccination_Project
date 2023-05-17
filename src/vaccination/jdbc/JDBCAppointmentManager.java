@@ -30,7 +30,7 @@ public class JDBCAppointmentManager implements AppointmentManager{
 	@Override
 	public void insertAppointment(Appointment appointment) {
 		try {	
-			String sql = "INSERT INTO Appintment (date, patient, vaccine, doctor)" + "VALUES (?,?,?,?)";
+			String sql = "INSERT INTO Appointment (date, patient, vaccine, doctor)" + "VALUES (?,?,?,?)";
 			PreparedStatement p = c.prepareStatement(sql);
 			p.setDate(1, appointment.getDate());
 			p.setString(2,appointment.getPatient().getName());
@@ -38,9 +38,17 @@ public class JDBCAppointmentManager implements AppointmentManager{
 			p.setString(4, appointment.getDoctor().getName());
 			p.executeUpdate();
 			p.close();
+	         String sql = "INSERT INTO Appointment (date, doctor, patient, vaccine)" + "VALUES (?, ?, ?, ? )";
+	         PreparedStatement p = c.prepareStatement(sql);
+			 p.setDate(1, appointment.getDate());
+			 p.setInt(2, appointment.getDoctor().getId());
+			 p.setInt(3, appointment.getPatient().getId());
+			 p.setInt(4, appointment.getVaccine().getId());
+			 p.executeUpdate();
+			 p.close();
 		} catch (SQLException e) {
 			System.out.println("database exception");
-			e.printStackTrace();
+			e.printStackTrace(); 
 		}
 
 	}
@@ -79,14 +87,28 @@ public class JDBCAppointmentManager implements AppointmentManager{
 	}
 
 	@Override
-	public List<Appointment> checkAppointmentsOfDoctor(int d_id) {
+	public List<Appointment> searchAppointmentsByDoctor(int d_id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public void removeAppointment(int a_id) {
+		try {
+			String sql = "DELETE * FROM Appointment WHERE id = ?";
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setInt(1, a_id);
+			p.executeUpdate();
+			p.close();
+		} catch (SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		
+	}
 
 	@Override
-	public void removeAppointment(Appointment appointment) {
+	public List<Appointment> searchAppointmentsByPatient(int p_id) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 }

@@ -115,6 +115,27 @@ public class JDBCDiseaseManager implements DiseaseManager{
 		return list;
 		
 	}
+	
+	@Override
+	public List<Disease> searchDiseaseByName(String d_name) {
+		List<Disease> list = new ArrayList<Disease>();
+		try {
+			String sql = "SELECT disease_id FROM Disease WHERE name LIKE ?";
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setString(1, d_name); 
+			ResultSet rs = p.executeQuery();
+			while (rs.next()) {
+				String disease_name = rs.getString("name");
+				Disease disease=new Disease(disease_name);
+				list.add(disease);
+			}
+		} catch (SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		return list;
+		
+	}
 
 
 

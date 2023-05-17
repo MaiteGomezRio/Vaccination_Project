@@ -30,6 +30,9 @@ public class Vaccine implements Serializable{
     	this.name = name; 
     	this.dose = dose;
     }
+    public Vaccine(String name) {
+    	this.name=name;
+    }
     
     public Vaccine(int id) {
 		this.id=id;
@@ -57,4 +60,5 @@ public class Vaccine implements Serializable{
 	public void setDose(Integer dose) {
 		this.dose = dose;
 	}
+	
 }

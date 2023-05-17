@@ -68,7 +68,6 @@ public class JDBCPatientManager implements PatientManager {
 	
 	
 	@Override
-	//TODO HACER ESTE GETPATIENT
 	public Patient getPatient(int p_id) {
 		try {
 		String sql = "SELECT * FROM Patient WHERE id LIKE ?";
@@ -81,11 +80,7 @@ public class JDBCPatientManager implements PatientManager {
         String surname = rs.getString("surname"); 
         Integer doctor_id = rs.getInt("doctor_id");
         Doctor doctor = new Doctor(doctor_id); 
-        String d_name = rs.getString("d_name");
-        Disease disease = new Disease(d_name); 
-        String c_name = rs.getString("c_name"); 
-        Condition condition = new Condition(c_name); 
-        Patient patient = new Patient(p_id,id_document,name, surname,disease,condition);
+        Patient patient = new Patient(p_id,id_document,name, surname, doctor);
         return patient; 
         
 		}catch(SQLException e) {
@@ -95,8 +90,8 @@ public class JDBCPatientManager implements PatientManager {
 		return null; 
 	}
 
-	/*@Override
-	public void assignDiseaseToPatient(int p_id, int d_id) {
+	//TODO hacer antes del día 2
+	/*public void assignDiseaseToPatient(int p_id, int d_id) {
 		try {
 			String sql = "INSERT INTO Patient_Disease (patient_id, disease_id) VALUES (?,?)";
 			PreparedStatement p = c.prepareStatement(sql);
