@@ -117,4 +117,5 @@ public class JDBCConditionManager implements ConditionManager{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

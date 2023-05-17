@@ -199,6 +199,12 @@ public class Menu {
 		String username=id_document;
 		Patient patient = new Patient(id_document,name, surname, email);
 		patientMan.insertPatient(patient);
+		
+		int bound=doctorMan.countNumberOfDoctors();
+		int doc_id=generateRandomInt(bound);
+		Doctor doctor=doctorMan.getDoctorById(doc_id);
+		directorMan.assignDoctorToPatient(doc_id,patient.getId());
+		
 		User user = new User(username, password, email);
 		userMan.register(user);
 		Role role = userMan.getRole("patient"); 
@@ -278,34 +284,23 @@ public class Menu {
 		System.out.println(list); 
 			
 	}
-	public static void checkVaccinesOfPatient() throws IOException{
-		System.out.println("Type the name of the disease you want to check vaccines of: ");
-		String d_name= r.readLine();	
-		Disease disease=diseaseMan.getDisease(d_name);
-		List<Vaccine> list=vaccineMan.searchVaccinesByDisease(disease.getId());
-		System.out.println(list); 
-			
-	}
 	public static void checkAppointmentsOfPatient(int p_id) {
 		System.out.println("Your appointments are: ");
 		List<Appointment> list=appointmentMan.searchAppointmentsByPatient(p_id);
 		System.out.println(list); 
 	}
-	
 	public static void checkDosesOfVaccine() throws IOException{
 		System.out.println("Type the name of the vaccine you want to check: ");
 		String v_name=r.readLine();
 		Vaccine vaccine=vaccineMan.getVaccine(v_name);
 		System.out.println(v_name+" has the total of: "+vaccine.getDose()+ " dosis");	
 	}
-	public static void checkConditionsVaccine()  throws IOException{
-		
+	public static void checkConditionsVaccine()  throws IOException{	
 		System.out.println("Which vaccine would yo like to check, type the name: ");
 		String v_name=r.readLine();
 		Vaccine vaccine=vaccineMan.getVaccine(v_name);
 		List<Condition> conditions=conMan.checkConditionsOfAVaccine(vaccine.getId());
-		System.out.println(conditions);
-	
+		System.out.println(conditions);	
 	}
 
 	//TODO checkConditionOfPatient
@@ -370,25 +365,6 @@ public class Menu {
 		
 	}
 
-	public static void assignDoctorToPatient() {
-		try {
-			System.out.println("Introduce the name of the doctor you want to assign: ");
-			String d_name=r.readLine();
-			List<Doctor> doctors=doctorMan.searchDoctorByName(d_name);
-			System.out.println("Introduce the id of the doctor: ");
-			int d_id = Integer.parseInt(r.readLine()); 
-			System.out.println("Now, introduce the name of the patient: ");
-			String p_name=r.readLine();
-			List<Patient> patients = patientMan.searchPatientByName(p_name); 
-			System.out.println("Introduce the id of the doctor: "); 
-			int p_id = Integer.parseInt(r.readLine()); 
-			directorMan.assignDoctorToPatient(d_id,p_id);
-		} catch (IOException e) {
-			System.out.println("I/O exception");
-			e.printStackTrace();
-		}
-	}
-	
 	public static void assignConditionToVaccine() {
 		try {
 			System.out.println("Tell me the name of the condition: ");
@@ -427,34 +403,29 @@ public class Menu {
             
 			
 			Patient patient = patientMan.getPatient(p_id); 
-			//first ask what disease they want to get vaccinated
 			System.out.println("Please, tell me the disease you want to put a vaccine of.");
 			String d_name = r.readLine(); 			
 			Disease disease = diseaseMan.getDisease(d_name); 
 			int d_id = disease.getId();
-			// Get all the possible vaccines according to the disease
 			List<Vaccine> vaccines = vaccineMan.searchVaccinesByDisease(d_id); 
 			for(int i=0; i<vaccines.size();i++ ) {				
 				Vaccine v=vaccines.get(i);				
-			List<Condition> conditionsVaccine=conMan.checkConditionsOfAVaccine(v.getId());
+			    List<Condition> conditionsVaccine=conMan.checkConditionsOfAVaccine(v.getId());
 			//search and show the patient the relevant conditions of the vaccines
-			System.out.println(conditionsVaccine);
+			    System.out.println(conditionsVaccine);
 			}			
 			// verify that the condition chosen, get the one that does not match with a vaccine condition
             System.out.println("Do you have any of these relevant conditions, type the name: "); 
             String c_name = r.readLine(); 
             Condition condition = conMan.getCondition(c_name); 
             int c_id = condition.getId(); 
-            Vaccine vaccine = conMan.getVaccineDependingOnCondition(d_id, c_id); 
+            Vaccine vaccine = conMan.getVaccineDependingOnCondition(d_id, p_id, c_id); 
             
 			System.out.println("Please, tell me the date at which you want to set the appointment. (yyyy-MM-dd)");
 			String doa = r.readLine();
 			LocalDate doaLocalDate = LocalDate.parse(doa, formatter);       // the date is usually stored in the db as java.sql.Date, which stores the date as the amount of seconds that have passed sinc
-			Date doaDate = Date.valueOf(doaLocalDate);
-			int bound=doctorMan.countNumberOfDoctors();
-			int doc_id=generateRandomInt(bound);
-			Doctor doctor=doctorMan.getDoctorById(doc_id);														//we should not show the date as the amount of seconds that... so that is why we use Localdate.
-			Appointment appointment = new Appointment(doaDate, doctor, patient, vaccine); 	//we need to turn it into a Date in order to store it into the db. When i create the puts i whould pass the Date. 
+			Date doaDate = Date.valueOf(doaLocalDate);						//we should not show the date as the amount of seconds that... so that is why we use Localdate.											
+			Appointment appointment = new Appointment(doaDate, patient.getDoctor(), patient, vaccine); 	//we need to turn it into a Date in order to store it into the db. When i create the puts i whould pass the Date. 
 			appointmentMan.insertAppointment(appointment);
 			
 		}catch(IOException e) {
@@ -463,12 +434,7 @@ public class Menu {
 		}
 	}
 	
-	public static void checkMyAppointmentsBeingAPatient(int p_id) {
-		System.out.println("Your vaccines are:"); 
-		List<Appointment> appointments = appointmentMan.checkAppointmentsOfPatient(p_id);
-		System.out.println(appointments); 
-	}
-	
+
 	public static void cancelAppointment(int p_id) {
 		try {
 			System.out.println("These are the list of your appointments: ");

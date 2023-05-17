@@ -9,6 +9,6 @@ public interface ConditionManager {
 	public List<Condition> checkConditionsOfAVaccine(int v_id);
 	public Condition getCondition(String type); 
 	public void updateConditionsOfPatient(int p_id, int c_id);
-	public Vaccine getVaccineDependingOnCondition(int d_id, int c_id);
+	public Vaccine getVaccineDependingOnCondition(int d_id, int p_id, int c_id);
 	List<Condition> getConditionsOfPatient(int p_id);
 }
