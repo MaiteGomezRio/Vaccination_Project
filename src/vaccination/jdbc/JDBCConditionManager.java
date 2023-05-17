@@ -97,7 +97,12 @@ public class JDBCConditionManager implements ConditionManager{
 	}
 	public Vaccine getVaccineDependingOnCondition(int d_id, int p_id) {
 		try {
-			String sql = "SELECT vaccine_id FROM Disease_Vaccine JOIN Vaccine_Condition ON Disease_Vaccine.vaccine_id = Vaccine_Condition.vaccine_id JOIN Patient_Condition ON Patient_Condition.condition_id = Vaccine_Condition.condition_id WHERE disease_id = ? AND patient_id = ? AND vaccine_id NOT CONTAIN condition_id = ?";
+			String sql = "SELECT vaccine_id"
+					+ "FROM Disease_Vaccine"
+					+ "JOIN Condition_Vaccine ON Disease_Vaccine.vaccine_id = Condition_Vaccine.vaccine_id"
+					+ "JOIN Patient_Condition ON Patient_Condition.condition_id = Condition_Vaccine.condition_id"
+					+ "WHERE disease_id = ? AND patient_id = ? AND vaccine_id NOT IN (SELECT condition_id FROM Condition_Vaccine)"
+					+ "";
 			PreparedStatement p = c.prepareStatement(sql); 
 			p.setInt(1, d_id); 
 			p.setInt(2, p_id);
@@ -105,23 +110,14 @@ public class JDBCConditionManager implements ConditionManager{
 			rs.next(); 
 		    int id = rs.getInt("vaccine_id"); 
 		    Vaccine vaccine = new Vaccine(id);
-		    return vaccine;
+		    return vaccine; 
 		}catch(SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
 		}
-		return null; 
-	}
-	@Override
-	public List<Condition> checkConditionsOfAVaccine(int v_id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
-	@Override
-	public Vaccine getVaccineDependingOnCondition(int d_id, int p_id, int c_id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	@Override
 	public void removeConditionOfPatient(int p_id, int c_id) {
 		try {
