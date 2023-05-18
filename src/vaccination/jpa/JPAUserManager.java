@@ -12,7 +12,7 @@ import vaccination.pojos.Role;
 import vaccination.pojos.User; 
 
 public class JPAUserManager implements UserManager{
-	
+	//prueba
 	private EntityManager em; 
 	public JPAUserManager() {
 		this.connect();
