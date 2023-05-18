@@ -84,6 +84,7 @@ public class Menu {
 				    case 0: {
 					    conMan.closeConnection();
 					    System.out.println("Thank you for using the database! Goodbye.");
+					    userMan.disconnect();
 					   return;
 				    }
 				}
