@@ -172,6 +172,18 @@ public class Menu {
 			e.printStackTrace();
 		}
 	}
+	//TODO delete if not used4
+	/*public static void selectDoctor() throws IOException {
+		System.out.println("Please, tell me the doctor's name: ");
+		String name = r.readLine();
+		List<Doctor> listDoctors = doctorMan.searchDoctorByName(name);
+		System.out.println(listDoctors);
+		System.out.println("Choose which one it is, type its ID: ");
+		String id = r.readLine();
+		doctorMenu(id);
+	}*/
+
+	
 	
 	public static void registerPatient() throws IOException {
 
@@ -245,10 +257,6 @@ public class Menu {
 		List<Vaccine> listVaccines = vaccineMan.getAllVaccines();
 		System.out.println(listVaccines);
 	}
-	public static void selectPatients(int d_id) throws IOException {
-		List<Patient> listPatients = patientMan.searchPatientsByDoctor(d_id);
-		System.out.println(listPatients);
-	}
 
 	/*public static void checkVaccinesOfPatientBeingADoctor()throws IOException { 
 		try {
@@ -303,25 +311,6 @@ public class Menu {
 		}
 		System.out.println(vaccines);
 	}
-	public static void checkVaccinesPatientHasToPut() {
-
-		try {
-			System.out.println("Introduce the name of the patient you want to check: ");
-			String name=r.readLine();
-			List<Patient> list=patientMan.searchPatientByName(name);
-			System.out.println(list);
-			System.out.println("Tell me which one it is, type it's Id");
-			int p_id = Integer.parseInt(r.readLine());
-			checkVaccinesAPatientHasToPut(p_id);
-		} catch (NumberFormatException e) {
-			System.out.println("I/O exception");
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println("I/O exception");
-			e.printStackTrace();
-		}
-		
-	}
 	public static void checkVaccinesAPatientHasOn(int p_id) {
 		System.out.println("The vaccines you have have already put on are: ");
 		List<Appointment> appointments=appointmentMan.searchAppointmentsByPatient(p_id); 
@@ -356,6 +345,13 @@ public class Menu {
 		String v_name=r.readLine();
 		Vaccine vaccine=vaccineMan.getVaccine(v_name);
 		System.out.println(v_name+" has the total of: "+vaccine.getDose()+ " dosis");	
+	}
+	public static void checkConditionsVaccine()  throws IOException{	
+		System.out.println("Which vaccine would yo like to check, type the name: ");
+		String v_name=r.readLine();
+		Vaccine vaccine=vaccineMan.getVaccine(v_name);
+		List<Condition> conditions=conMan.checkConditionsOfAVaccine(vaccine.getId());
+		System.out.println(conditions);	
 	}
 
 	public static void updateConditionsOfPatient(int p_id) {
@@ -501,7 +497,6 @@ public class Menu {
 		System.out.println(listAppointments);
 	}
 	public static void setAppointment(int p_id) {
-		//seleccionar todas las vaccines para ese disease que no tengan las condition de patient
 		try {
 			//NOS DIJO RODRIGO QUE DIESEMOS POR HECHO QUE ANTES DE SET APPOINTMENT, EL PACIENTE HA HECHO UN UPDATE DE SUS CONDITIONS.
 			Patient patient = patientMan.getPatient(p_id); 
@@ -509,8 +504,20 @@ public class Menu {
 			String d_name = r.readLine(); 			
 			Disease disease = diseaseMan.getDisease(d_name); 
 			int d_id = disease.getId();
-			Vaccine vaccine=conMan.getVaccineDependingOnCondition(d_id, p_id);
-			
+			List<Vaccine> vaccines = vaccineMan.searchVaccinesByDisease(d_id); 
+			for(int i=0; i<vaccines.size();i++ ) {				
+				Vaccine v=vaccines.get(i);				
+			    List<Condition> conditionsVaccine=conMan.checkConditionsOfAVaccine(v.getId());
+			//search and show the patient the relevant conditions of the vaccines
+			    System.out.println(conditionsVaccine);
+			}			
+			// verify that the condition chosen, get the one that does not match with a vaccine condition
+            System.out.println("Do you have any of these relevant conditions, type the name: "); 
+            String c_name = r.readLine(); 
+            Condition condition = conMan.getCondition(c_name); 
+            int c_id = condition.getId(); 
+            Vaccine vaccine = conMan.getVaccineDependingOnCondition(d_id, p_id, c_id); 
+            
 			System.out.println("Please, tell me the date at which you want to set the appointment. (yyyy-MM-dd)");
 			String doa = r.readLine();
 			LocalDate doaLocalDate = LocalDate.parse(doa, formatter);       // the date is usually stored in the db as java.sql.Date, which stores the date as the amount of seconds that have passed sinc
@@ -678,8 +685,7 @@ public class Menu {
 				System.out.println("Choose an option.");
 				System.out.println("1. Check vaccines");
 				System.out.println("2. Check vaccines of a patient.");
-				System.out.println("3. Check all my patients");
-				System.out.println("4. Check my appointments."); 				
+				System.out.println("3. Check my appointments."); 				
 				System.out.println("0. Return");
 
 				int choice = Integer.parseInt(r.readLine());
@@ -693,10 +699,7 @@ public class Menu {
 				    	checkVaccinesPatientHasToPut();
 					    break;           
 				    }
-				    case 3:{
-				    	selectPatients(doctor.getId());
-				    }
-				    case 4: {
+				    case 3: {
 				    	selectAppointments(doctor.getId());
 					    break;
 				    }

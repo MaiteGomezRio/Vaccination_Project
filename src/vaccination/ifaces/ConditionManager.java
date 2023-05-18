@@ -10,5 +10,6 @@ public interface ConditionManager {
 	public void updateConditionsOfPatient(int p_id, int c_id);
 	public void removeConditionOfPatient(int p_id, int c_id);
 	public List<Condition> getConditionsOfPatient(int p_id);
+	
 	public Vaccine getVaccineDependingOnCondition(int d_id, int p_id);
 }
