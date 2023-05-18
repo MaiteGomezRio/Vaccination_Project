@@ -13,22 +13,35 @@ import vaccination.pojos.User;
 
 public class JPAUserManager implements UserManager{
 	
-	EntityManager em; 
-	
+	private EntityManager em; 
 	public JPAUserManager() {
-		em=Persistence.createEntityManagerFactory("vaccination-provider").createEntityManager();
+		this.connect();
+	}
+	
+	public void connect() {
+		// TODO Auto-generated method stub
+		
+		em = Persistence.createEntityManagerFactory("VaccinationProject-provider").createEntityManager();
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
 		em.getTransaction().commit();
-		//create the needed roles
-		if(this.getRoles().isEmpty()) {
-		   Role doctor = new Role("doctor");
-		   Role patient = new Role("patient"); 
-		   Role director = new Role("director"); 
-		   this.createRole(patient);
-		   this.createRole(doctor);
-		   this.createRole(director);
+		
+		if( this.getRoles().isEmpty()) {
+			Role doctor = new Role("doctor");
+			Role patient = new Role("patient");
+			Role director = new Role("director");
+			this.createRole(doctor);
+			this.createRole(patient);
+			this.createRole(director);
+			
 		}
+		
+	}
+	
+	@Override
+	public void disconnect() {
+		// TODO Auto-generated method stub
+		em.close();
 	}
 	
 	public void close() {
@@ -94,5 +107,6 @@ public class JPAUserManager implements UserManager{
     	role.deleteUser(user);
     	em.getTransaction().commit();	
     }
+    
     
 }
