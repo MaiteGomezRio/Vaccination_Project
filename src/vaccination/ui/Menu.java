@@ -232,7 +232,7 @@ public class Menu {
 		System.out.println("Vaccine " + name + " registered");
 	}
 
-	public static void registerDirector() {
+	/*public static void registerDirector() {
 
 		try {
 			System.out.println("Introduce your id:");
@@ -254,7 +254,7 @@ public class Menu {
 			e.printStackTrace();
 		}
 
-	}
+	}*/
 
 	public static void selectVaccines() throws IOException {
 		List<Vaccine> listVaccines = vaccineMan.getAllVaccines();
@@ -344,7 +344,7 @@ public class Menu {
 	}
 
 	public static void checkVaccinesAPatientHasOn(int p_id) {
-		System.out.println("The vaccines you have have already put on are: ");
+		System.out.println("The vaccines you have already put on are: ");
 		List<Appointment> appointments = appointmentMan.searchAppointmentsByPatient(p_id);
 		Iterator<Appointment> it = appointments.iterator();
 		List<Vaccine> vaccines = new ArrayList<>();
@@ -667,7 +667,7 @@ public class Menu {
 	 	 	 try {
 	 	 	 	 System.out.println("Welcome patient!"); 
 	 	 	 	 System.out.println("What do you want to do? Choose an option: ");
-	 	 	 	 System.out.println("1. Check vaccines I have alreadyd put on");
+	 	 	 	 System.out.println("1. Check vaccines I have already put on");
 	 	 	 	 System.out.println("2. Check vaccines I still have to put");
 	 	 	 	 System.out.println("3. Check my appointments"); 
 	 	 	 	 System.out.println("4. Set an appointment"); 
@@ -714,7 +714,7 @@ public class Menu {
 			try {
 				System.out.println("Welcome doctor: ");
 				System.out.println("Choose an option.");
-				System.out.println("1. Check vaccines");
+				System.out.println("1. Check vaccine supplies (all vaccines in the data)");
 				System.out.println("2. Check vaccines of a patient.");
 				System.out.println("3. Check all my patients");
 				System.out.println("4. Check my appointments.");
