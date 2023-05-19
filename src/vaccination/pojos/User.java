@@ -30,6 +30,12 @@ public class User implements Serializable{
 		this.password = password;
 		this.email = email;
 	}
+	public User() {
+		super();
+		this.username="Fabio24";
+		this.password="CarmenGarci";
+		this.email="fabio24@gmail.com";
+	}
 	public Integer getId() {
 		return id;
 	}
