@@ -52,27 +52,20 @@ public class Menu {
 	 	 patientMan = new JDBCPatientManager(conMan.getConnection());
 	 	 vaccineMan = new JDBCVaccineManager(conMan.getConnection());
 	 	 userMan = new JPAUserManager();
+	 	 
 	 	 while (true) {
 	 	 	 try {
 	 	 	 	 System.out.println("Welcome to the Vaccination app!");
 	 	 	 	 System.out.println("What do you want to do? :");
-	 	 	 	 System.out.println("1. Register as a doctor");
-	 	 	 	 System.out.println("2. Register as a patient");
-	 	 	 	 System.out.println("3. Register as a director");
-	 	 	 	 System.out.println("4. Log in"); 
+	 	 	 	 System.out.println("1. Register");
+	 	 	 	 System.out.println("2. Log in"); 
 	 	 	 	 System.out.println("0. Exit");
 	 	 	 	 int choice = Integer.parseInt(r.readLine());
 	 	 	 	 switch (choice) {
 	 	 	 	 case 1: {
-	 	 	 	 	 registerDoctor(); 
+	 	 	 	 	 registerMenu();
 	 	 	 	 }
-	 	 	 	 case 2: {
-	 	 	 	 	 registerPatient(); 
-	 	 	 	 }
-	 	 	 	 case 3:{
-	 	 	 		 registerDirector();
-	 	 	 	 }
-	 	 	 	 case 4:{
+	 	 	 	 case 2:{
 	 	 	 	 	 login(); 
 	 	 	 	 }
 	 	 	 	 case 0: {
@@ -91,7 +84,35 @@ public class Menu {
 	 	 	 }
 	 	 }
 	}
-
+	
+	public static void registerMenu() {
+		System.out.println("1. Register as a doctor");
+ 	 	System.out.println("2. Register as a patient");
+ 	 	System.out.println("0. Exit");
+ 	 	int choice;
+		try {
+			choice = Integer.parseInt(r.readLine());
+			switch (choice) {
+	 	 	 case 1: {
+	 	 	 	 registerDoctor(); 
+	 	 	 	 break;
+	 	 	 }
+	 	 	 case 2: {
+	 	 	 	 registerPatient(); 
+	 	 	 	 break;
+	 	 	 }case 0:{
+	 	 		 return;
+	 	 	 }
+	 	 	}
+		} catch (NumberFormatException e) {
+	 	 	 System.out.println("You didn't type a number!");
+	 	 	 e.printStackTrace();
+	 	 } catch (IOException e) {
+	 	 	 System.out.println("I/O Exception.");
+	 	 	 e.printStackTrace();
+	 	 }
+ 	 	
+	}
 	public static void login() throws IOException {
 		while (true) {
 			System.out.println("Username: ");
