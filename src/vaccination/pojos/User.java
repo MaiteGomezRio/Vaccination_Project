@@ -35,6 +35,7 @@ public class User implements Serializable{
 		this.username="Fabio24";
 		this.password="CarmenGarci";
 		this.email="fabio24@gmail.com";
+		this.role=new Role("director");
 	}
 	public Integer getId() {
 		return id;
