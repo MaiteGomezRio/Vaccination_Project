@@ -52,7 +52,7 @@ public class Menu {
 	 	 patientMan = new JDBCPatientManager(conMan.getConnection());
 	 	 vaccineMan = new JDBCVaccineManager(conMan.getConnection());
 	 	 userMan = new JPAUserManager();
-	 	 directorMan=new JPAUserManager();
+	 	
 	 	 while (true) {
 	 	 	 try {
 	 	 	 	 System.out.println("Welcome to the Vaccination app!");
@@ -126,6 +126,7 @@ public class Menu {
 				} else if (user.getRole().getName().equals("patient")) {
 					patientMenu(user.getEmail());
 				} else if (user.getRole().getName().equals("director")) {
+					user= new User();
 					directorMenu(user.getEmail());
 				}
 			} else {
