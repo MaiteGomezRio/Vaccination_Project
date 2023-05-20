@@ -21,25 +21,7 @@ public class JDBCConditionManager implements ConditionManager{
 		this.c = c;
 
 	}
-	/*@Override
-	public List<Condition> checkConditionsOfAVaccine(int v_id) {
-		List<Condition> list = new ArrayList<Condition>();
-		try {
-			String sql = "SELECT condition_id FROM Patient_Condition_Vaccine WHERE vaccine_id = ?"; 
-			PreparedStatement p = c.prepareStatement(sql); 
-			p.setInt(1, v_id);   
-			ResultSet rs = p.executeQuery(); 
-			while(rs.next()) {
-				int id = rs.getInt("condition_id");
-				Condition condition = new Condition(id); 
-				list.add(condition); 
-			}
-		}catch(SQLException e) {
-			System.out.println("database error");
-			e.printStackTrace();
-		}
-		return list; 
-	}*/
+	
 	public Condition getCondition(String type){
 
 		try {

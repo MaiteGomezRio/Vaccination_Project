@@ -19,7 +19,6 @@ public class JPAUserManager implements UserManager{
 	}
 	
 	public void connect() {
-		// TODO Auto-generated method stub
 		
 		em = Persistence.createEntityManagerFactory("VaccinationProject-provider").createEntityManager();
 		em.getTransaction().begin();
@@ -40,7 +39,6 @@ public class JPAUserManager implements UserManager{
 	
 	@Override
 	public void disconnect() {
-		// TODO Auto-generated method stub
 		em.close();
 	}
 	
@@ -95,7 +93,7 @@ public class JPAUserManager implements UserManager{
     	Role r = (Role)q.getSingleResult();
     	return r; 
     }
-  //TODO check if it works
+ 
     @Override 
     public void deleteUser(String name,String password) {
     	Query q=em.createNativeQuery("SELECT* FROM users WHERE name LIKE ? AND password LIKE ?");
