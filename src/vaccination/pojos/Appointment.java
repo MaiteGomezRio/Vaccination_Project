@@ -23,7 +23,7 @@ public class Appointment implements Serializable{
 		super(); 
 		this.date = date; 
 	}
-	//TODO EL DOCTOR SE ASIGNA AUTOMATICAMENTE??
+	
 	public Appointment(Date date, Patient patient, Vaccine vaccine) {
 		super();
 	
