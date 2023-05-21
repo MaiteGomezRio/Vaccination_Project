@@ -135,14 +135,11 @@ public class Doctor implements Serializable {
 		Doctor other = (Doctor) obj; // If they are, cast the other object to this class
 		return Objects.equals(id, other.id); // Compare the appropriate attributes
 	}
-	// methods hashcode and equals are already implemented in classes such as
+	/* methods hashcode and equals are already implemented in classes such as
 	// Integer, String etc,
 	// but not in the classes we create such as Doctor, this is why we need to add
 	// those methods.
 	// These methods make sure that we are not adding to the list two objects that
-	// are the same.
+	are the same.*/
 
-	// TODO finish class
-	
-	
 }

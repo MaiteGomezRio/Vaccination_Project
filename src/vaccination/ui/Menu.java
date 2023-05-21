@@ -265,36 +265,7 @@ public class Menu {
 		List<Patient> listPatients = patientMan.searchPatientsByDoctor(d_id);
 		System.out.println(listPatients);
 	}
-	//TODO delete if not used
-	/*
-	 * public static void checkVaccinesOfPatientBeingADoctor()throws IOException {
-	 * try { System.out.println("Introduce the patient's name: "); String
-	 * patient_name=r.readLine(); List<Patient>
-	 * list=patientMan.searchPatientByName(patient_name); System.out.println(list);
-	 * System.out.println("Choose which one it is, type its ID: "); Integer id =
-	 * Integer.parseInt(r.readLine());
-	 * System.out.println("The vaccines of the patient are: "); List<Vaccine>
-	 * vaccines = vaccineMan.searchVaccinesByPatient(id);
-	 * System.out.println(vaccines); }catch(IOException e) {
-	 * System.out.println("I/O Exception"); e.printStackTrace(); } }
-	 */
-	/*
-	 * public static void checkVaccinesOfPatientBeingAPatient(int p_id) {
-	 * System.out.println("Your vaccines are:"); List<Vaccine> vaccines =
-	 * vaccineMan.searchVaccinesByPatient(p_id); System.out.println(vaccines); }
-	 */
-	/*
-	 * public static void checkVaccinesOfPatient() throws IOException{
-	 * System.out.println("Type the name of the disease you want to check vaccines
-	 * of: "); String d_name= r.readLine();
-	 * 
-	 * Disease disease=diseaseMan.getDisease(d_name); List<Vaccine>
-	 * list=vaccineMan.searchVaccinesByDisease(disease.getId());
-	 * System.out.println(list);
-	 * 
-	 * 
-	 * }
-	 */
+	
 	
 	public static void checkVaccinesOfDisease() throws IOException {
 		System.out.println("Type the name of the disease you want to check: ");
@@ -680,19 +651,25 @@ public class Menu {
 	 	 	 	 switch(option) {
 	 	 	 	 	 case 1:{
 	 	 	 	 	 	 checkVaccinesAPatientHasOn(patient.getId()); 
+	 	 	 	 	 	 break;
 	 	 	 	 	 }case 2:{
 	 	 	 	 	 	 checkVaccinesAPatientHasToPut(patient.getId());
+	 	 	 	 	 	 break;
 	 	 	 	 	 }
 	 	 	 	 	 case 3:{
 	 	 	 	 	 	 checkAppointmentsOfPatient(patient.getId()); 
+	 	 	 	 	 	 break;
 	 	 	 	 	 }
 	 	 	 	 	 case 4:{
 	 	 	 	 	 	 setAppointment(patient.getId());
+	 	 	 	 	 	 break;
 	 	 	 	 	 }
 	 	 	 	 	 case 5:{
 	 	 	 	 	 	 cancelAppointment(patient.getId());
+	 	 	 	 	 	 break;
 	 	 	 	 	 }case 6:{
 	 	 	 	 	 	 updateConditionsOfPatient(patient.getId());
+	 	 	 	 	 	 break;
 	 	 	 	 	 }
 	 	 	 	 	 case 0:{
 	 	 	 	 	 	 return; 
@@ -732,6 +709,7 @@ public class Menu {
 				}
 				case 3: {
 					selectPatients(doctor.getId());
+					break;
 				}
 				case 4: {
 					selectAppointments(doctor.getId());

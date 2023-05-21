@@ -82,13 +82,13 @@ public class JPAUserManager implements UserManager{
 	}
     @Override
     public List<Role> getRoles(){
-    	Query q = em.createNativeQuery("SELECT * FROM roles", Role.class); 
+    	Query q = em.createNativeQuery("SELECT * FROM role", Role.class); 
     	List<Role> roles = (List<Role>)q.getResultList(); 
     	return roles; 
     }
     @Override
     public Role getRole(String name) {
-    	Query q = em.createNativeQuery("SELECT * FROM roles WHERE name LIKE ?", Role.class);
+    	Query q = em.createNativeQuery("SELECT * FROM role WHERE name LIKE ?", Role.class);
     	q.setParameter(1, name);
     	Role r = (Role)q.getSingleResult();
     	return r; 
@@ -96,7 +96,7 @@ public class JPAUserManager implements UserManager{
  
     @Override 
     public void deleteUser(String name,String password) {
-    	Query q=em.createNativeQuery("SELECT* FROM users WHERE name LIKE ? AND password LIKE ?");
+    	Query q=em.createNativeQuery("SELECT* FROM users WHERE username LIKE ? AND password LIKE ?");
     	em.getTransaction().begin();
     	q.setParameter(1, name);
     	q.setParameter(2,password);
