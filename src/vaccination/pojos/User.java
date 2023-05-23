@@ -24,19 +24,11 @@ public class User implements Serializable{
       private Role role;
       
       
-	
 	public User(String username, String password,String email) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.email = email;
-	}
-	public User() {
-		super();
-		this.username="Fabio24";
-		this.password="CarmenGarci";
-		this.email="fabio24@gmail.com";
-		this.role=new Role("director");
 	}
 	public Integer getId() {
 		return id;

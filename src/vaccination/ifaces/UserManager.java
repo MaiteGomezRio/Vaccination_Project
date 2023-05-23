@@ -12,7 +12,7 @@ public interface UserManager {
       public void assignRole(User user, Role role);
       public Role getRole(String name);
       public User login(String name, String password);   //if user doesnt exit return null 
-      public void createRole(Role role); 
+     public void createRole(Role role); 
       public List<Role> getRoles(); 
       public void deleteUser(String name, String password);
 }

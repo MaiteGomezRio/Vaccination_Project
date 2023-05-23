@@ -53,6 +53,7 @@ public class Menu {
 	 	 vaccineMan = new JDBCVaccineManager(conMan.getConnection());
 	 	 userMan = new JPAUserManager();
 	 	 User user= new User();
+	 	 directorMan=new JDBCDirectorManager();
 	 	 while (true) {
 	 	 	 try {
 	 	 	 	 System.out.println("Welcome to the Vaccination app!");
@@ -117,8 +118,15 @@ public class Menu {
 	}
 	public static void login() throws IOException {
 		while (true) {
-			System.out.println("Username: (number of Id document with '0' and letter)");
+			System.out.println("Press 0 to go back to menu\n");
+				System.out.println("Username: (number of Id document with '0' and letter)");			
+			
+			System.out.println("Username: ");
 			String username = r.readLine();
+			if(username.equals("0")) {
+				System.out.println("\n");
+				break;
+			}
 			System.out.println("Password: ");
 			String password = r.readLine();
 			User user = userMan.login(username, password);
@@ -138,6 +146,7 @@ public class Menu {
 
 	public static void registerDoctor() throws IOException {
 		try {
+			
 			System.out.println("Please, input the doctor's data:");
 			System.out.println("Id_document:");
 			String id_document = r.readLine();
