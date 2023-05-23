@@ -52,7 +52,7 @@ public class Menu {
 	 	 patientMan = new JDBCPatientManager(conMan.getConnection());
 	 	 vaccineMan = new JDBCVaccineManager(conMan.getConnection());
 	 	 userMan = new JPAUserManager();
-	 	User user= new User();
+	 	
 	 	 
 	 	 
 	 	 while (true) {
@@ -119,9 +119,9 @@ public class Menu {
 	}
 	public static void login() throws IOException {
 		while (true) {
-				User user=null;
-				System.out.println("Username: (number of Id document with '0' and letter)");			
 			System.out.println("Press 0 to go back to menu\n");
+				System.out.println("Username: (number of Id document with '0' and letter)");			
+			
 			System.out.println("Username: ");
 			String username = r.readLine();
 			if(username.equals("0")) {
