@@ -21,6 +21,7 @@ import vaccination.ifaces.PatientManager;
 import vaccination.ifaces.UserManager;
 import vaccination.ifaces.VaccineManager;
 import vaccination.jdbc.ConnectionManager;
+import vaccination.jdbc.JDBCDirectorManager;
 import vaccination.jdbc.JDBCDoctorManager;
 import vaccination.jdbc.JDBCPatientManager;
 import vaccination.jdbc.JDBCVaccineManager;
@@ -53,6 +54,7 @@ public class Menu {
 	 	 vaccineMan = new JDBCVaccineManager(conMan.getConnection());
 	 	 userMan = new JPAUserManager();
 	 	 User user= new User();
+	 	 directorMan=new JDBCDirectorManager();
 	 	 while (true) {
 	 	 	 try {
 	 	 	 	 System.out.println("Welcome to the Vaccination app!");
