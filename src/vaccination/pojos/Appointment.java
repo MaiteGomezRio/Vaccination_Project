@@ -9,7 +9,7 @@ import java.util.List;
 public class Appointment implements Serializable{
 	
 	private static final long serialVersionUID = -8007500555158752133L;
-	private int id;
+	private int a_id;
 	private Date date;
 	private Doctor doctor;
 	private Patient patient; 
@@ -41,10 +41,10 @@ public class Appointment implements Serializable{
 
 	}
 	public int getId() {
-		return id;
+		return a_id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int a_id) {
+		this.a_id = a_id;
 	}
 	public Date getDate() {
 		return date;
@@ -56,7 +56,7 @@ public class Appointment implements Serializable{
 	public String toString() {
 
 
-		return "Puts [id=" + id + ", date=" + date + ", doctor=" + doctor + ", patient=" + patient + ", vaccine="+vaccine;
+		return "Puts [id=" + a_id + ", date=" + date + ", doctor=" + doctor + ", patient=" + patient + ", vaccine="+vaccine;
 
 
 	}
