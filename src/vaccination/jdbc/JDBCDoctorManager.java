@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import vaccination.ifaces.DoctorManager;
 import vaccination.pojos.Doctor; 
 
@@ -24,8 +23,8 @@ public class JDBCDoctorManager implements DoctorManager {
 
 		try {
 			Statement s = c.createStatement();
-			String sql = "INSERT INTO Doctor (id_document, name, surname) VALUES ('" + doctor.getId_document() + "', '"
-					+ doctor.getName() + "', '" + doctor.getSurname() + "')";
+			String sql = "INSERT INTO Doctor (id_document, name, surname, email) VALUES ('" + doctor.getId_document() + "', '"
+					+ doctor.getName() + "', '" + doctor.getSurname() + "','"+doctor.getEmail()+"')";
 			s.executeUpdate(sql);
 			s.close();
 		} catch (SQLException e) {
@@ -109,7 +108,7 @@ public class JDBCDoctorManager implements DoctorManager {
 		p.setString(1, email); 
 		ResultSet rs = p.executeQuery(); 
         rs.next();  
-        int id = rs.getInt("p_id"); 
+        Integer id = rs.getInt("id"); 
         String id_document=rs.getString("id_document");
         String name = rs.getString("name"); 
         String surname = rs.getString("surname"); 
@@ -124,6 +123,8 @@ public class JDBCDoctorManager implements DoctorManager {
 		}
 		return null; 
 	}
+	
+	
 	@Override
 	public int countNumberOfDoctors() {
 		try {

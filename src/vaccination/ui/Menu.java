@@ -64,9 +64,11 @@ public class Menu {
 	 	 	 	 switch (choice) {
 	 	 	 	 case 1: {
 	 	 	 	 	 registerMenu();
+	 	 	 	 	 break;
 	 	 	 	 }
 	 	 	 	 case 2:{
 	 	 	 	 	 login(); 
+	 	 	 	 	 break;
 	 	 	 	 }
 	 	 	 	 case 0: {
 	 	 	 	 	 conMan.closeConnection();
@@ -115,7 +117,7 @@ public class Menu {
 	}
 	public static void login() throws IOException {
 		while (true) {
-			System.out.println("Username: ");
+			System.out.println("Username: (number of Id document with '0' and letter)");
 			String username = r.readLine();
 			System.out.println("Password: ");
 			String password = r.readLine();
@@ -299,11 +301,19 @@ public class Menu {
 		try {
 			System.out.println("Introduce the name of the patient you want to check: ");
 			String name = r.readLine();
-			List<Patient> list = patientMan.searchPatientByName(name);
-			System.out.println(list);
-			System.out.println("Tell me which one it is, type it's Id");
-			int p_id = Integer.parseInt(r.readLine());
-			checkVaccinesAPatientHasToPut(p_id);
+			List<Patient> list=new ArrayList<>();
+			do {
+				list = patientMan.searchPatientByName(name);
+				System.out.println("You don't have any patients with that name. Please enter a valid name: ");
+				String vname=r.readLine();
+				System.out.println(list);
+				
+				System.out.println("Tell me which one it is, type it's Id");
+				int p_id = Integer.parseInt(r.readLine());
+				checkVaccinesAPatientHasToPut(p_id);
+			}while(list.isEmpty());
+			
+			
 		} catch (NumberFormatException e) {
 			System.out.println("I/O exception");
 			e.printStackTrace();

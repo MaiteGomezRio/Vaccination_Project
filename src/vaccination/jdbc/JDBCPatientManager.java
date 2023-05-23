@@ -29,8 +29,8 @@ public class JDBCPatientManager implements PatientManager {
 	public void insertPatient(Patient patient) {
 		try {
 			Statement s = c.createStatement(); 
-			String sql = "INSERT INTO Patient (id_document, name, surname) VALUES ('" + patient.getId_document() + "', '"
-					+ patient.getName() + "', '" + patient.getSurname() + "')";
+			String sql = "INSERT INTO Patient (id_document, name, surname, email) VALUES ('" + patient.getId_document() + "', '"
+					+ patient.getName() + "', '" + patient.getSurname() +"','"+patient.getEmail()+ "')";
 			s.execute(sql);
 			s.close(); 
 		}catch(SQLException e) {
