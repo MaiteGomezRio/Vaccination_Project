@@ -52,7 +52,7 @@ public class Menu {
 	 	 patientMan = new JDBCPatientManager(conMan.getConnection());
 	 	 vaccineMan = new JDBCVaccineManager(conMan.getConnection());
 	 	 userMan = new JPAUserManager();
-	 	 
+	 	User user= new User();
 	 	 
 	 	 
 	 	 while (true) {
@@ -120,6 +120,7 @@ public class Menu {
 	public static void login() throws IOException {
 		while (true) {
 				User user=null;
+				System.out.println("Username: (number of Id document with '0' and letter)");			
 			System.out.println("Press 0 to go back to menu\n");
 			System.out.println("Username: ");
 			String username = r.readLine();
@@ -129,16 +130,7 @@ public class Menu {
 			}
 			System.out.println("Password: ");
 			String password = r.readLine();
-			//
-			if (username.equals("Fabio24")&&password.equals("CarmenGarci")) {
-				
-				
-				directorMenu(user.getEmail());
-			} else {
-			//
-			
-		//	User user = userMan.login(username, password);
-			user = userMan.login(username, password);
+			User user = userMan.login(username, password);
 			if (user != null) {
 				if (user.getRole().getName().equals("doctor")) {
 					doctorMenu(user.getEmail());
@@ -148,10 +140,8 @@ public class Menu {
 					directorMenu(user.getEmail());
 				}
 			} else {
-				System.out.println("Wrong username/password combination\n");
+				System.out.println("Wrong username/password combination");
 			}
-		}
-			//
 		}
 	}
 
@@ -321,11 +311,19 @@ public class Menu {
 		try {
 			System.out.println("Introduce the name of the patient you want to check: ");
 			String name = r.readLine();
-			List<Patient> list = patientMan.searchPatientByName(name);
-			System.out.println(list);
-			System.out.println("Tell me which one it is, type it's Id");
-			int p_id = Integer.parseInt(r.readLine());
-			checkVaccinesAPatientHasToPut(p_id);
+			List<Patient> list=new ArrayList<>();
+			do {
+				list = patientMan.searchPatientByName(name);
+				System.out.println("You don't have any patients with that name. Please enter a valid name: ");
+				String vname=r.readLine();
+				System.out.println(list);
+				
+				System.out.println("Tell me which one it is, type it's Id");
+				int p_id = Integer.parseInt(r.readLine());
+				checkVaccinesAPatientHasToPut(p_id);
+			}while(list.isEmpty());
+			
+			
 		} catch (NumberFormatException e) {
 			System.out.println("I/O exception");
 			e.printStackTrace();
