@@ -43,7 +43,7 @@ public class JDBCDoctorManager implements DoctorManager {
 			ResultSet rs = p.executeQuery(); 
 			while(rs.next()) {
 				int id = rs.getInt("id");
-				String id_document=rs.getString("id_document");
+				String id_document = rs.getString("id_document");
 				String n = rs.getString("name"); 
 				String surname= rs.getString("surname");
 				Doctor doctor = new Doctor(id, id_document,n, surname); 
@@ -64,7 +64,7 @@ public class JDBCDoctorManager implements DoctorManager {
 		ResultSet rs = p.executeQuery(); 
         rs.next();  //since there is only one unique result.
         int id = rs.getInt("p_id"); 
-        String id_document=rs.getString("id_document");
+        String id_document = rs.getString("id_document");
         String name = rs.getString("name"); 
         String surname = rs.getString("surname"); 
         Doctor doctor = new Doctor(id, id_document,name, surname); 
@@ -85,7 +85,7 @@ public class JDBCDoctorManager implements DoctorManager {
 		p.setInt(1, id); 
 		ResultSet rs = p.executeQuery(); 
         rs.next();   
-        String id_document=rs.getString("id_document");
+        String id_document = rs.getString("id_document");
         String name = rs.getString("name"); 
         String surname = rs.getString("surname"); 
         String email = rs.getString("email");
