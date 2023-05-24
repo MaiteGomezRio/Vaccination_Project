@@ -22,6 +22,7 @@ public class ConnectionManager {
 			System.out.println("Database connection opened.");
 			createTables();
 			insertTables();
+			insertVaccines();
 		} catch (Exception e) {
 			System.out.println("Database access error");
 			e.printStackTrace();
@@ -101,7 +102,7 @@ public class ConnectionManager {
 		try {
 		Statement s = c.createStatement(); 
 		String insert_Disease= "INSERT INTO Disease (name)VALUES ('Haemophilus'),"
-				+ "('Pneumococcal'), ('SRP'),('Measles'),('Papilloma(HPV)'),('Poliomyelitis'),('Diphteria'),('HepatitisB'),"
+				+ "('Pneumococcal'), ('SRP'),('Measles'),('Papilloma(HPV)'),('Chickenpox'),('Diphteria'),"
 				+ "('Dtpa'),('Meningococcus'),('Covid-19')"; 
 		s.execute(insert_Disease);
 		
@@ -123,72 +124,152 @@ public class ConnectionManager {
 		String insert_Vaccine="INSERT INTO Vaccine(name, dose, disease_id) VALUES (?,?,?)";
 		PreparedStatement p = c.prepareStatement(select_Disease); 
 		PreparedStatement p2=c.prepareStatement(insert_Vaccine);
+		
 		p.setString(1, "Haemophilus"); 
 		ResultSet rs = p.executeQuery();
 		rs.next();
 		id=rs.getInt("id");
-		p2.setString(1, "Pfizer");
+		//VACCINE NAME VAXELIS FOR HAEMOPHILUS
+		p2.setString(1, "Vaxelis");
 		p2.setInt(2, 3);
 		p2.setInt(3,id);
+		p2.execute(insert_Vaccine);
 		
 		p.setString(1, "Pneumococcal"); 
 		rs=p.executeQuery();
 		rs.next();
 		id=rs.getInt("id");
+		//VACCINE NAME PV13 FOR PNEUMOCOCCAL
+		p2.setString(1, "PCV13");
+		p2.setInt(2, 1);
+		p2.setInt(3,id);
+		p2.execute(insert_Vaccine);
+		//VACCINE NAME PV15 FOR PNEUMOCOCCAL
+		p2.setString(1, "PCV15");
+		p2.setInt(2, 1);
+		p2.setInt(3,id);
+		p2.execute(insert_Vaccine);
 		
 		p.setString(1, "SRP"); 
 		rs=p.executeQuery();
 		rs.next();
 		id=rs.getInt("id");
+		//VACCINE NAME VAXXON SRP SALMONELLA FOR SRP
+		p2.setString(1, "Vaxxon SRP Salmonella");
+		p2.setInt(2, 2);
+		p2.setInt(3,id);
+		p2.execute(insert_Vaccine);
 		
 		p.setString(1, "Measles"); 
 		rs=p.executeQuery();
 		rs.next();
 		id=rs.getInt("id");
+		//VACCINE NAME MMR FOR MEASLES
+		p2.setString(1,"MMR");
+		p2.setInt(2, 2);
+		p2.setInt(3,id);
+		p2.execute(insert_Vaccine);
+		//VACCINE NAME MMRV FOR MEASLES
+		p2.setString(1,"MMRV");
+		p2.setInt(2, 2);
+		p2.setInt(3,id);
+		p2.execute(insert_Vaccine);
 		
 		p.setString(1, "Papilloma(HPV)"); 
 		rs=p.executeQuery();
 		rs.next();
 		id=rs.getInt("id");
+		//VACCINE NAME 9vHPV
+		p2.setString(1,"9vHPV");
+		p2.setInt(2, 1);
+		p2.setInt(3,id);
+		p2.execute(insert_Vaccine);
+		//VACCINE NAME 4vHPV
+		p2.setString(1,"4vHPV");
+		p2.setInt(2, 1);
+		p2.setInt(3,id);
+		p2.execute(insert_Vaccine);
+		//VACCINE NAME 2vHPV
+		p2.setString(1,"2vHPV");
+		p2.setInt(2, 1);
+		p2.setInt(3,id);
+		p2.execute(insert_Vaccine);
 		
-		p.setString(1, "Poliomyelitis"); 
+		
+		p.setString(1, "Chickenpox"); 
 		rs=p.executeQuery();
 		rs.next();
 		id=rs.getInt("id");
+		//VACCINE NAME VARIVAX FOR CHICKENPOX
+		p2.setString(1,"VariVax");
+		p2.setInt(2, 1);
+		p2.setInt(3,id);
+		p2.execute(insert_Vaccine);
+		//VACCINE NAME PROQUAD FOR CHICKENPOX
+		p2.setString(1,"ProQuad");
+		p2.setInt(2, 1);
+		p2.setInt(3,id);
+		p2.execute(insert_Vaccine);
+		
 		
 		p.setString(1, "Diphteria"); 
 		rs=p.executeQuery();
 		rs.next();
 		id=rs.getInt("id");
+		//VACCINE NAME DTPA
+		p2.setString(1, "DTPA");
+		p2.setInt(2, 5);
+		p2.setInt(3,id);
+		p.execute(insert_Vaccine);
 		
-		p.setString(1, "HepatitisB"); 
-		rs=p.executeQuery();
-		rs.next();
-		id=rs.getInt("id");
 		
 		p.setString(1, "Dtpa"); 
 		rs=p.executeQuery();
 		rs.next();
 		id=rs.getInt("id");
+		//VACCINE NAME DTPA FOR DTPA
+		p2.setString(1, "DTP");
+		p2.setInt(2, 3);
+		p2.setInt(3,id);
+		p.execute(insert_Vaccine);
 		
 		p.setString(1, "Meningococcus"); 
 		rs=p.executeQuery();
 		rs.next();
 		id=rs.getInt("id");
-		
-		
+		//NAME VACCINE MENB FOR MENINGOCOCCUS
+		p2.setString(1,"MenB");
+		p2.setInt(2, 1);
+		p2.setInt(3,id);
+		p.execute(insert_Vaccine);
+		//NAME VACCINE MENC FOR MENINGOCOCCUS
+		p2.setString(1,"MenC");
+		p2.setInt(2, 1);
+		p2.setInt(3,id);
+		p.execute(insert_Vaccine);
 		
 		p.setString(1, "Covid-19"); 
 		rs=p.executeQuery();
 		rs.next();
 		id=rs.getInt("id");
+		//VACCINE NAME PFIZER FOR COVID-19
 		p2.setString(1, "Pfizer");
 		p2.setInt(2, 3);
 		p2.setInt(3,id);
+		p.execute(insert_Vaccine);
+		//VACCINE NAME MODERNA FOR COVID-19
+		p2.setString(1, "Moderna");
+		p2.setInt(2, 2);
+		p2.setInt(3,id);
+		p.execute(insert_Vaccine);
+		//VACCINE NAME  FOR COVID-19
+		p2.setString(1, "Astrazeneca");
+		p2.setInt(2, 2);
+		p2.setInt(3,id);
+		p.execute(insert_Vaccine);
 		
-		
-		
-		
+		p.close();
+		p2.close();
 		}catch(SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
@@ -196,6 +277,12 @@ public class ConnectionManager {
 		
 	}
 	
+	public void assignConditionToDiseaseConnection() {
+		
+	}
+	public void assignConditionToVaccineConnection() {
+		
+	}
 
 	/*public void getDiseasesFromTables() {
 		try {
@@ -213,7 +300,7 @@ public class ConnectionManager {
 			e.printStackTrace();
 			}
 	}*/
-	public void assignDiseaseToVaccineConnection(int d_id,int v_id) {
+	/*public void assignDiseaseToVaccineConnection(int d_id,int v_id) {
 		try {
 		String sql = "INSERT into Disease_Vaccine(disease_id, vaccine_id) WHERE VALUES (?,?)"; // vaccine
 		PreparedStatement p = c.prepareStatement(sql);
@@ -225,9 +312,9 @@ public class ConnectionManager {
 		System.out.println("database error");
 		e.printStackTrace();
 		}
-	}
+	}*/
 	
-	public int associateDisease(String name) {
+	/*public int associateDisease(String name) {
 		try { 
 		String sql = "SELECT * FROM Disease WHERE name LIKE ?"; // vaccine
 		PreparedStatement p = c.prepareStatement(sql);
@@ -243,7 +330,7 @@ public class ConnectionManager {
 			e.printStackTrace();
 			return -1;
 		}
-	}
+	}*/
 		
 
 }
