@@ -21,6 +21,7 @@ import vaccination.ifaces.PatientManager;
 import vaccination.ifaces.UserManager;
 import vaccination.ifaces.VaccineManager;
 import vaccination.jdbc.ConnectionManager;
+import vaccination.jdbc.JDBCDirectorManager;
 import vaccination.jdbc.JDBCDoctorManager;
 import vaccination.jdbc.JDBCPatientManager;
 import vaccination.jdbc.JDBCVaccineManager;
@@ -52,7 +53,7 @@ public class Menu {
 	 	 patientMan = new JDBCPatientManager(conMan.getConnection());
 	 	 vaccineMan = new JDBCVaccineManager(conMan.getConnection());
 	 	 userMan = new JPAUserManager();
-	 	// User user= new User();
+	 	 //User user= new User();
 	 	 //directorMan=new JDBCDirectorManager();
 	 	 while (true) {
 	 	 	 try {

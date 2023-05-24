@@ -138,7 +138,7 @@ public class JDBCDoctorManager implements DoctorManager {
 			System.out.println("database error");
 			e.printStackTrace();
 		}
-		return -1;
+		return 0;
 	}
 }
 
