@@ -1,4 +1,4 @@
-package vaccination.jdbc;
+   package vaccination.jdbc;
 
 import java.sql.Connection; 
 import java.sql.DriverManager;
@@ -74,8 +74,8 @@ public class ConnectionManager {
 			         + "vaccine_id REFERENCES Vaccine(id))"; 
 			s.executeUpdate(table_Disease_Vaccine); 
 			
-			String table_Appointment = "CREATE TABLE Appointment(id INTEGER PRIMARY KEY AUTOINCREMENT Date Date NOT NULL"+"patient_id INTEGER NOT NULL REFERENCES Patient(id),"+" vaccine_id INTEGER NOT NULL REFERENCES Vaccine(id))" +
-					                   "doctor_id INTEGER NOT NULL REFERENCES Doctor()id";
+			String table_Appointment = "CREATE TABLE Appointment(id INTEGER PRIMARY KEY AUTOINCREMENT, Date Date NOT NULL, "+"patient_id INTEGER NOT NULL REFERENCES Patient(id),"+" vaccine_id INTEGER NOT NULL REFERENCES Vaccine(id)," +
+					                   " doctor_id INTEGER NOT NULL REFERENCES Doctor(id))";
 			s.executeUpdate(table_Appointment);
 			
 			String table_Is_Immune="CREATE TABLE Is_Immune(patient_id INTEGER NOT NULL REFERENCES Patient(id),"+"disease_id INTEGER NOT NULL REFERENCES"
@@ -85,6 +85,8 @@ public class ConnectionManager {
 			String table_Vaccine_Condition= "CREATE TABLE Vaccine_Condition (vaccine_id INTEGER NOT NULL REFERENCES Vaccine(id),"+"condition_id INTEGER NOT NULL REFERENCES Condition(id)";
 			s.executeUpdate(table_Vaccine_Condition);
 
+			String sqlSeq = "INSERT INTO sqlite_sequence (name, seq) VALUES ('doctor', 1)";
+			s.executeUpdate(sqlSeq);
 			s.close();
 		} catch (SQLException e) {
 			
