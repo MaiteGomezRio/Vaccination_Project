@@ -14,13 +14,14 @@ import vaccination.pojos.User;
 public class JPAUserManager implements UserManager{
 	
 	private EntityManager em; 
+	
 	public JPAUserManager() {
 		this.connect();
 	}
 	
 	public void connect() {
 		
-		em = Persistence.createEntityManagerFactory("VaccinationProject-provider").createEntityManager();
+		em = Persistence.createEntityManagerFactory("Vaccination_Project-provider").createEntityManager();
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
 		em.getTransaction().commit();
@@ -37,7 +38,6 @@ public class JPAUserManager implements UserManager{
 		}
 		
 	}
-	
 	@Override
 	public void disconnect() {
 		em.close();
