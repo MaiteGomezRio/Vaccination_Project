@@ -21,14 +21,24 @@ public class ConnectionManager {
 			c.createStatement().execute("PRAGMA foreign_keys=ON");
 			System.out.println("Database connection opened.");
 			createTables();
-			//registerDirector();
-			insertTables();
+			//insertTables();
 			insertVaccines();
 		} catch (Exception e) {
 			System.out.println("Database access error");
 			e.printStackTrace();
 		}
 
+	}
+	public Connection getConnection() {
+		return c;
+	}
+	public void closeConnection() {
+		try {
+			c.close();
+		} catch (SQLException e) {
+			System.out.println("Database error.");
+			e.printStackTrace();
+		}
 	}
 	private void createTables() {
 		try {
@@ -85,17 +95,7 @@ public class ConnectionManager {
 			e.printStackTrace();
 		}
 	}
-	public Connection getConnection() {
-		return c;
-	}
-	public void closeConnection() {
-		try {
-			c.close();
-		} catch (SQLException e) {
-			System.out.println("Database error.");
-			e.printStackTrace();
-		}
-	}
+	
 	
 	public void registerDirector() {
 		
@@ -120,8 +120,9 @@ public class ConnectionManager {
         		String insert_Condition="INSERT INTO Condition(name)VALUES ('Pregnant'),('Allergies'),('HIV'),('Stroke')"
         				+ "('Ictus'),('Epilepsy'),('Pneumonia'),('Special medical condition')";
         		s.execute(insert_Condition);
+        		s.close(); 
             }
-            s.close(); 
+            
 		}catch(SQLException e) {
 		System.out.println("database error");
 		e.printStackTrace();
