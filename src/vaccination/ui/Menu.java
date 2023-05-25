@@ -350,7 +350,6 @@ public class Menu {
 		System.out.println(vaccines);
 	}
 
-	//TODO checkDiseasesOfPatient con immunity
 
 	public static void checkConditionsOfPatient(int p_id) throws IOException {
 		System.out.println("Your conditions are: ");

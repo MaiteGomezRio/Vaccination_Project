@@ -23,6 +23,11 @@ public class User implements Serializable{
       @JoinColumn(name = "roleId")
       private Role role;
       
+    public User() {
+    	this.username="Fabio24";
+    	this.password="carmenGarci";
+    	this.role=new Role("director");
+    }
       
 	public User(String username, String password,String email) {
 		super();

@@ -26,12 +26,13 @@ public class JPAUserManager implements UserManager{
 		em.getTransaction().commit();
 		
 		if( this.getRoles().isEmpty()) {
+			User director=new User();//para que se genere siempre un user que el director si todavía no está en la database
 			Role doctor = new Role("doctor");
 			Role patient = new Role("patient");
-			Role director = new Role("director");
+			Role dir = new Role("director");
 			this.createRole(doctor);
 			this.createRole(patient);
-			this.createRole(director);
+			this.createRole(dir);
 			
 		}
 		
