@@ -48,6 +48,7 @@ public class Menu {
 	private static AppointmentManager appointmentMan;
 
 	public static void main(String[] args) {
+
 	 	 ConnectionManager conMan = new ConnectionManager();
 	 	 doctorMan = new JDBCDoctorManager(conMan.getConnection());
 	 	 patientMan = new JDBCPatientManager(conMan.getConnection());

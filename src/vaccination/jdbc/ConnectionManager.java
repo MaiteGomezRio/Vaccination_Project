@@ -21,7 +21,7 @@ public class ConnectionManager {
 			c.createStatement().execute("PRAGMA foreign_keys=ON");
 			System.out.println("Database connection opened.");
 			createTables();
-			//insertTables();
+			insertTables();
 			insertVaccines();
 		} catch (Exception e) {
 			System.out.println("Database access error");
@@ -52,7 +52,7 @@ public class ConnectionManager {
 			s.executeUpdate(table_Patient);
 			
 			String table_Vaccine = "CREATE TABLE Vaccine (id INTEGER PRIMARY KEY AUTOINCREMENT," + " name TEXT NOT NULL,"
-					+ " dose INTEGER"+ "Disease TEXT NOT NULL REFERENCES Disease(id))";
+					+ " dose INTEGER, "+ "Disease_id INTEGER NOT NULL REFERENCES Disease(id))";
 			s.executeUpdate(table_Vaccine);
 			
 			String table_Disease = "CREATE TABLE Disease (id INTEGER PRIMARY KEY AUTOINCREMENT," + "name TEXT NOT NULL)";
@@ -78,11 +78,11 @@ public class ConnectionManager {
 					                   " doctor_id INTEGER NOT NULL REFERENCES Doctor(id))";
 			s.executeUpdate(table_Appointment);
 			
-			String table_Is_Immune="CREATE TABLE Is_Immune(patient_id INTEGER NOT NULL REFERENCES Patient(id),"+"disease_id INTEGER NOT NULL REFERENCES"
+			String table_Is_Immune="CREATE TABLE Is_Immune(patient_id INTEGER NOT NULL REFERENCES Patient(id),"+"disease_id INTEGER NOT NULL REFERENCES "
 					+ "Disease(id))";
 			s.executeUpdate(table_Is_Immune);
 
-			String table_Vaccine_Condition= "CREATE TABLE Vaccine_Condition (vaccine_id INTEGER NOT NULL REFERENCES Vaccine(id),"+"condition_id INTEGER NOT NULL REFERENCES Condition(id)";
+			String table_Vaccine_Condition= "CREATE TABLE Vaccine_Condition (vaccine_id INTEGER NOT NULL REFERENCES Vaccine(id),"+" condition_id INTEGER NOT NULL REFERENCES Condition(id))";
 			s.executeUpdate(table_Vaccine_Condition);
 
 			String sqlSeq = "INSERT INTO sqlite_sequence (name, seq) VALUES ('doctor', 1)";
@@ -106,20 +106,21 @@ public class ConnectionManager {
 	public void insertTables() { 
 		try {
 			Statement s = c.createStatement(); 
+			Statement s2 = c.createStatement(); 
 			ResultSet rs = s.executeQuery("SELECT COUNT(*) FROM Disease");
-			ResultSet rs2=s.executeQuery("SELECT COUNT(*) FROM Condition");
+			ResultSet rs2=s2.executeQuery("SELECT COUNT(*) FROM Condition");
             rs.next();
             int rowCount = rs.getInt(1);
             rs2.next();
             int rowCount2=rs2.getInt(1);
             // Insertar datos solo si las tablas están vacías
             if (rowCount == 0 && rowCount2==0) {
-            	String insert_Disease= "INSERT INTO Disease (name)VALUES ('Haemophilus'),"
+            	String insert_Disease= "INSERT INTO Disease (name) VALUES ('Haemophilus'),"
         				+ "('Pneumococcal'), ('SRP'),('Measles'),('Papilloma(HPV)'),('Chickenpox'),('Diphteria'),"
         				+ "('Dtpa'),('Meningococcus'),('Covid-19')"; 
         		s.execute(insert_Disease);
         		
-        		String insert_Condition="INSERT INTO Condition(name)VALUES ('Pregnant'),('Allergies'),('HIV'),('Stroke')"
+        		String insert_Condition="INSERT INTO Condition (name)VALUES ('Pregnant'),('Allergies'),('HIV'),('Stroke')"
         				+ "('Ictus'),('Epilepsy'),('Pneumonia'),('Special medical condition')";
         		s.execute(insert_Condition);
         		s.close(); 
