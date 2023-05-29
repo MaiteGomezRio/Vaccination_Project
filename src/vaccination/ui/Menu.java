@@ -54,7 +54,7 @@ public class Menu {
 	 	 patientMan = new JDBCPatientManager(conMan.getConnection());
 	 	 vaccineMan = new JDBCVaccineManager(conMan.getConnection());
 	 	 userMan = new JPAUserManager();
-	 	 //User user= new User();
+	 	 
 	 	 //directorMan=new JDBCDirectorManager();
 	 	 while (true) {
 	 	 	 try {

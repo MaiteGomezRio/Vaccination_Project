@@ -25,7 +25,7 @@ public class JDBCConditionManager implements ConditionManager{
 	public Condition getCondition(String type){
 
 		try {
-			String sql = "SELECT * FROM Condition WHERE type LIKE ?";
+			String sql = "SELECT * FROM Condition WHERE name LIKE ?";
 			PreparedStatement p = c.prepareStatement(sql); 
 			p.setString(1, type); 
 			ResultSet rs = p.executeQuery();

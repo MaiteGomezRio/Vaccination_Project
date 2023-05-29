@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import vaccination.pojos.Condition;
+import vaccination.pojos.Disease;
 
 
 public class ConnectionManager {
@@ -44,21 +45,21 @@ public class ConnectionManager {
 		try {
 			Statement s = c.createStatement();
 			String table_Doctor = "CREATE TABLE Doctor (id INTEGER PRIMARY KEY AUTOINCREMENT,"+ " id_document TEXT NOT NULL," + " name TEXT NOT NULL,"
-					+ " surname TEXT NOT NULL)";
+					+ " surname TEXT NOT NULL, "+ " email TEXT NOT NULL)";
 			s.executeUpdate(table_Doctor);
 			
 			String table_Patient = "CREATE TABLE Patient (id INTEGER PRIMARY KEY AUTOINCREMENT,"+ " id_document TEXT NOT NULL," + " name TEXT NOT NULL,"
-					+ " surname TEXT NOT NULL,"+ "doctor TEXT REFERENCES Doctor(id))";
+					+ " surname TEXT NOT NULL,"+ " email TEXT NOT NULL,"+ " doctor_id INTEGER REFERENCES Doctor(id))";
 			s.executeUpdate(table_Patient);
 			
 			String table_Vaccine = "CREATE TABLE Vaccine (id INTEGER PRIMARY KEY AUTOINCREMENT," + " name TEXT NOT NULL,"
-					+ " dose INTEGER, "+ "Disease_id INTEGER NOT NULL REFERENCES Disease(id))";
+					+ " dose INTEGER, "+ "disease_id INTEGER NOT NULL REFERENCES Disease(id))";
 			s.executeUpdate(table_Vaccine);
 			
 			String table_Disease = "CREATE TABLE Disease (id INTEGER PRIMARY KEY AUTOINCREMENT," + "name TEXT NOT NULL)";
 			s.executeUpdate(table_Disease);
 			
-			String table_Condition = "CREATE TABLE Condition (identifier INTEGER PRIMARY KEY AUTOINCREMENT," + "name TEXT NOT NULL)";
+			String table_Condition = "CREATE TABLE Condition (id INTEGER PRIMARY KEY AUTOINCREMENT," + "name TEXT NOT NULL)";
 			s.executeUpdate(table_Condition); 
 			
 			String table_Patient_Vaccine = "CREATE TABLE Patient_Vaccine(patient_id INTEGER REFERENCES Patient(id)," + "vaccine_id INTEGER REFERENCES Vaccine(id))";
@@ -70,23 +71,15 @@ public class ConnectionManager {
 			String table_Patient_Condition = "CREATE TABLE Patient_Condition (patient_id INTEGER REFERENCES Patient(id)," + "condition_id INTEGER REFERENCES Condition(id))"; 
 			s.executeUpdate(table_Patient_Condition);  
 			
-			String table_Disease_Vaccine = "CREATE TABLE Disease_Vaccine (disease_id INTEGER REFERENCES Disease(identifier)," 
-			         + "vaccine_id REFERENCES Vaccine(id))"; 
-			s.executeUpdate(table_Disease_Vaccine); 
-			
-			String table_Appointment = "CREATE TABLE Appointment(id INTEGER PRIMARY KEY AUTOINCREMENT, Date Date NOT NULL, "+"patient_id INTEGER NOT NULL REFERENCES Patient(id),"+" vaccine_id INTEGER NOT NULL REFERENCES Vaccine(id)," +
+			String table_Appointment = "CREATE TABLE Appointment(id INTEGER PRIMARY KEY AUTOINCREMENT, Date date NOT NULL, "+"patient_id INTEGER NOT NULL REFERENCES Patient(id),"+" vaccine_id INTEGER NOT NULL REFERENCES Vaccine(id)," +
 					                   " doctor_id INTEGER NOT NULL REFERENCES Doctor(id))";
 			s.executeUpdate(table_Appointment);
-			
-			String table_Is_Immune="CREATE TABLE Is_Immune(patient_id INTEGER NOT NULL REFERENCES Patient(id),"+"disease_id INTEGER NOT NULL REFERENCES "
-					+ "Disease(id))";
-			s.executeUpdate(table_Is_Immune);
 
 			String table_Vaccine_Condition= "CREATE TABLE Vaccine_Condition (vaccine_id INTEGER NOT NULL REFERENCES Vaccine(id),"+" condition_id INTEGER NOT NULL REFERENCES Condition(id))";
 			s.executeUpdate(table_Vaccine_Condition);
-
-			String sqlSeq = "INSERT INTO sqlite_sequence (name, seq) VALUES ('doctor', 1)";
-			s.executeUpdate(sqlSeq);
+			
+			String table_Disease_Condition= "CREATE TABLE Disease_Condition (disease_id INTEGER NOT NULL REFERENCES Disease(id),"+" condition_id INTEGER NOT NULL REFERENCES Condition(id))";
+			s.executeUpdate(table_Disease_Condition);
 			s.close();
 		} catch (SQLException e) {
 			
@@ -98,7 +91,7 @@ public class ConnectionManager {
 		}
 	}
 	
-	
+	//TODO registerDirector
 	public void registerDirector() {
 		
 	}
@@ -113,17 +106,48 @@ public class ConnectionManager {
             int rowCount = rs.getInt(1);
             rs2.next();
             int rowCount2=rs2.getInt(1);
-            // Insertar datos solo si las tablas están vacías
+            // Insert data when tables are empty
             if (rowCount == 0 && rowCount2==0) {
-            	String insert_Disease= "INSERT INTO Disease (name) VALUES ('Haemophilus'),"
-        				+ "('Pneumococcal'), ('SRP'),('Measles'),('Papilloma(HPV)'),('Chickenpox'),('Diphteria'),"
-        				+ "('Dtpa'),('Meningococcus'),('Covid-19')"; 
+            	//DISEASES
+        		String insert_Disease= "INSERT INTO Disease (name)VALUES ('Haemophilus')"; 
         		s.execute(insert_Disease);
+        		insert_Disease="INSERT INTO Disease(name)VALUES ('Pneumococcal')";
+        		s.execute(insert_Disease);
+        		insert_Disease="INSERT INTO Disease(name)VALUES ('SRP')";
+        		s.execute(insert_Disease);
+        		insert_Disease="INSERT INTO Disease(name)VALUES ('Measles')";
+        		s.execute(insert_Disease);
+        		insert_Disease="INSERT INTO Disease(name)VALUES ('Papilloma(HPV')";
+        		s.execute(insert_Disease);
+        		insert_Disease="INSERT INTO Disease(name)VALUES ('ChickenPox')";
+        		s.execute(insert_Disease);
+        		insert_Disease="INSERT INTO Disease(name)VALUES ('Diphteria')";
+        		s.execute(insert_Disease);
+        		insert_Disease="INSERT INTO Disease(name)VALUES ('Dtpa')";
+        		s.execute(insert_Disease);
+        		insert_Disease="INSERT INTO Disease(name)VALUES ('Meningococcus')";
+        		s.execute(insert_Disease);
+        		insert_Disease="INSERT INTO Disease(name)VALUES ('Covid-19')";
+        		s.execute(insert_Disease); 
         		
-        		String insert_Condition="INSERT INTO Condition (name)VALUES ('Pregnant'),('Allergies'),('HIV'),('Stroke')"
-        				+ "('Ictus'),('Epilepsy'),('Pneumonia'),('Special medical condition')";
-        		s.execute(insert_Condition);
+        		//CONDITIONS
+        		String insert_Condition="INSERT INTO Condition(name)VALUES ('Pregnant')";
+        		s2.execute(insert_Condition); 
+        		insert_Condition="INSERT INTO Condition(name)VALUES ('Allergies')";
+        		s2.execute(insert_Condition); 
+        		insert_Condition="INSERT INTO Condition(name)VALUES ('HIV')";
+        		s2.execute(insert_Condition);
+        		insert_Condition="INSERT INTO Condition(name)VALUES ('Stroke')";
+        		s2.execute(insert_Condition);
+        		insert_Condition="INSERT INTO Condition(name)VALUES ('Ictus')";
+        		s2.execute(insert_Condition);
+        		insert_Condition="INSERT INTO Condition(name)VALUES ('Epilepsy')";
+        		s2.execute(insert_Condition);
+        		insert_Condition="INSERT INTO Condition(name)VALUES ('Pneumonia')";
+        		s2.execute(insert_Condition);
+        		insert_Condition="INSERT INTO Condition(name)VALUES ('Special medical condition')";
         		s.close(); 
+        		s2.close();
             }
             
 		}catch(SQLException e) {
@@ -141,6 +165,7 @@ public class ConnectionManager {
     		rs.next();
             int rowCount = rs.getInt(1);
         	if(rowCount==0) {
+        		
             	String select_Disease="SELECT id FROM Disease WHERE name=?";
         		String insert_Vaccine="INSERT INTO Vaccine(name, dose, disease_id) VALUES (?,?,?)";
         		PreparedStatement p = c.prepareStatement(select_Disease); 
@@ -290,6 +315,10 @@ public class ConnectionManager {
         		p.execute(insert_Vaccine);
         		p.close();
         		p2.close();
+        		//so it assigns each time the conditions to the vaccines 
+        		assignConditionToVaccineConnection();
+        		//and the conditions to the diseases 
+        		assignConditionToDiseaseConnection();
         	}
     		
     	}catch(SQLException e) {
@@ -301,59 +330,161 @@ public class ConnectionManager {
 	}
 	
 	public void assignConditionToDiseaseConnection() {
+		//TODO this method
 		
 	}
 	public void assignConditionToVaccineConnection() {
 		
-	}
-
-	/*public void getDiseasesFromTables() {
 		try {
-			String sql="SELECT id FROM Disease WHERE name=?";
-			PreparedStatement p = c.prepareStatement(sql); 
-			p.setString(1, ""); 
-			ResultSet rs = p.executeQuery();
-			rs.next();
-		    int c_id=rs.getInt("id");
-	        Condition condition=new Condition(c_id,type);
-	        rs.close();
-	        p.close();
-		}catch(SQLException e) {
+			String assign_ConditionVaccine="INSERT INTO Vaccine_Condition VALUES (?,?)";
+			PreparedStatement p_assign=c.prepareStatement(assign_ConditionVaccine);
+			
+			Integer vaccine_id;
+			Integer condition_id;
+			String v_name;
+			String c_name;
+			
+			
+			v_name="Vaxelis";
+			vaccine_id=getVaccineId(v_name);
+			c_name="Allergies";
+			condition_id=getConditionId(c_name);
+			p_assign.setInt(1, vaccine_id);//Assigns allergies to Vaxelis 
+			p_assign.setInt(2, condition_id);
+			p_assign.executeUpdate();
+			
+			v_name="Pfizer";
+			p_assign.setInt(1, vaccine_id);//Assigns allergies to Pfizer 
+			p_assign.setInt(2, condition_id);
+			p_assign.executeUpdate();
+			
+			c_name="HIV";
+			condition_id=getConditionId(c_name);
+			p_assign.setInt(1, vaccine_id);//assigns HIV to Pfizer
+			p_assign.setInt(2, condition_id);
+			p_assign.executeUpdate();
+			
+			v_name="ProQuad";
+			vaccine_id=getVaccineId(v_name);
+			p_assign.setInt(1, vaccine_id);//assigns HIV to ProQuad
+			p_assign.setInt(2, condition_id);
+			p_assign.executeUpdate();
+			
+			v_name="MMR";
+			vaccine_id=getVaccineId(v_name);
+			c_name="Special medical condition";
+			condition_id=getConditionId(c_name);
+			p_assign.setInt(1, vaccine_id);//assigns Special med to MMR
+			p_assign.setInt(2, condition_id);
+			p_assign.executeUpdate();
+			v_name="MMRV";
+			vaccine_id=getVaccineId(v_name);
+			p_assign.setInt(1, vaccine_id);//assigns Special med to MMRV
+			p_assign.setInt(2, condition_id);
+			p_assign.executeUpdate();
+			
+			v_name="DTP";
+			vaccine_id=getVaccineId(v_name);
+			c_name="Stroke";
+			condition_id=getConditionId(c_name);
+			p_assign.setInt(1, vaccine_id);//assigns stroke to DTP
+			p_assign.setInt(2, condition_id);
+			c_name="Pregnant";
+			condition_id=getConditionId(c_name);
+			p_assign.setInt(1, vaccine_id);//assigns pregnant to DTP
+			p_assign.setInt(2, condition_id);
+			p_assign.executeUpdate();
+			
+			
+			v_name="DTPa";
+			vaccine_id=getVaccineId(v_name);
+			p_assign.setInt(1, vaccine_id);//assigns pregnant to DTPa
+			p_assign.setInt(2, condition_id);
+			p_assign.executeUpdate();
+			
+			c_name="Ictus";
+			condition_id=getConditionId(c_name);
+			p_assign.setInt(1, vaccine_id);//assigns ictus to DTPa
+			p_assign.setInt(2, condition_id);
+			p_assign.executeUpdate();
+			
+			v_name="MenB";
+			vaccine_id=getVaccineId(v_name);
+			p_assign.setInt(1, vaccine_id);//assigns ictus to MenB
+			p_assign.setInt(2, condition_id);
+			p_assign.executeUpdate();
+			
+			v_name="MenC";
+			vaccine_id=getVaccineId(v_name);
+			p_assign.setInt(1, vaccine_id);//assigns ictus to MenC
+			p_assign.setInt(2, condition_id);
+			p_assign.executeUpdate();
+			
+			v_name="Moderna";
+			vaccine_id=getVaccineId(v_name);
+			c_name="Epilepsy";
+			condition_id=getConditionId(c_name);
+			p_assign.setInt(1, vaccine_id);//assigns epilepsy to Moderna
+			p_assign.setInt(2, condition_id);
+			p_assign.executeUpdate();
+			
+			v_name="VariVax";
+			vaccine_id=getVaccineId(v_name);
+			c_name="Pneumonia";
+			condition_id=getConditionId(c_name);
+			p_assign.setInt(1, vaccine_id);//assigns pneumonia to Varivax
+			p_assign.setInt(2, condition_id);
+			p_assign.executeUpdate();
+			
+			p_assign.close();
+			
+
+		} catch (SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
-			}
-	}*/
-	/*public void assignDiseaseToVaccineConnection(int d_id,int v_id) {
-		try {
-		String sql = "INSERT into Disease_Vaccine(disease_id, vaccine_id) WHERE VALUES (?,?)"; // vaccine
-		PreparedStatement p = c.prepareStatement(sql);
-		p.setInt(1, d_id);
-		p.setInt(2, v_id);
-		p.executeUpdate();
-		p.close();
-		} catch (SQLException e) {
-		System.out.println("database error");
-		e.printStackTrace();
+			
 		}
-	}*/
+		
+		
+	}
 	
-	/*public int associateDisease(String name) {
-		try { 
-		String sql = "SELECT * FROM Disease WHERE name LIKE ?"; // vaccine
-		PreparedStatement p = c.prepareStatement(sql);
-		p.setString(1, name);
-		ResultSet rs = p.executeQuery();
-		rs.next(); 
-		int disease_id = rs.getInt("id");
-		p.close();
-		return disease_id ;
-		
+	public int getVaccineId(String v_name) {
+		int vaccine_id = 0;
+		try {
+			String rs_vaccine ="SELECT id FROM Vaccine WHERE name LIKE";
+			PreparedStatement p;
+			p = c.prepareStatement(rs_vaccine);
+			ResultSet rs=p.executeQuery();
+			p.setString(1,v_name);
+			rs.next();
+			vaccine_id = rs.getInt("id");	
+			
 		} catch (SQLException e) {
-		System.out.println("database error");
+			System.out.println("database error");
 			e.printStackTrace();
-			return -1;
-		}
-	}*/
-		
+			
+		} 
+		return vaccine_id;
+	}
+	
+	public int getConditionId(String c_name) {
+		int condition_id = 0;
+		try {
+			String rs_condition ="SELECT id FROM Condition WHERE name LIKE";
+			PreparedStatement p;
+			p = c.prepareStatement(rs_condition);
+			ResultSet rs=p.executeQuery();
+			p.setString(1,c_name);
+			rs.next();
+			condition_id = rs.getInt("id");	
+			
+		} catch (SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+			
+		} 
+		return condition_id;
+	}
+	
 
 }
