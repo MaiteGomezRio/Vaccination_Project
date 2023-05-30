@@ -6,7 +6,6 @@ import vaccination.pojos.*;
 
 public interface UserManager {
 	  
-	  public void connect();
 	  public void disconnect();
       public void register(User user);   
       public void assignRole(User user, Role role);

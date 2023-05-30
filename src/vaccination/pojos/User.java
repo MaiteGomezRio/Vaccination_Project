@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users")
 public class User implements Serializable{
+	
       private static final long serialVersionUID = -7022171013544748813L;
       
       @Id
@@ -22,8 +23,10 @@ public class User implements Serializable{
       @ManyToOne(fetch = FetchType.EAGER)
       @JoinColumn(name = "roleId")
       private Role role;
+     
       
     public User() {
+    	super();
     	this.username="director";
     	this.password="director";
     	this.role=new Role("director");

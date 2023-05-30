@@ -17,10 +17,6 @@ public class JPAUserManager implements UserManager{
 	private EntityManager em; 
 	
 	public JPAUserManager() {
-		this.connect();
-	}
-	
-	public void connect() {
 		
 		em = Persistence.createEntityManagerFactory("VaccinationProject-provider").createEntityManager();
 		em.getTransaction().begin();
@@ -28,18 +24,17 @@ public class JPAUserManager implements UserManager{
 		em.getTransaction().commit();
 		
 		if( this.getRoles().isEmpty()) {
-			User director=new User();//para que se genere siempre un user que el director si todavía no está en la database
-			this.register(director);
 			Role doctor = new Role("doctor");
 			Role patient = new Role("patient");
 			Role dir = new Role("director");
 			this.createRole(doctor);
 			this.createRole(patient);
 			this.createRole(dir);
-			
+			User director=new User();//para que se genere siempre un user que el director si todavía no está en la database
+			this.register(director);
 		}
-		
 	}
+	
 	@Override
 	public void disconnect() {
 		em.close();
@@ -99,7 +94,7 @@ public class JPAUserManager implements UserManager{
  
     @Override 
     public void deleteUser(String name,String password) {
-    	Query q=em.createNativeQuery(" SELECT * FROM users WHERE name LIKE ? AND password LIKE ?");
+    	Query q=em.createNativeQuery("SELECT * FROM users WHERE name LIKE ? AND password LIKE ?");
     	em.getTransaction().begin();
     	q.setParameter(1, name);
     	q.setParameter(2,password);
@@ -111,10 +106,10 @@ public class JPAUserManager implements UserManager{
     
     @Override
 	public void updatePassword(User user, String new_password) {
-		Query q=em.createNativeQuery(" UPDATE users SET " + " name = ?, " + " password = ?, " + " WHERE id = ?");
+		Query q=em.createNativeQuery("UPDATE users SET " + " password = ? " + " WHERE id = ?");
 		em.getTransaction().begin();
-		q.setParameter(1, user.getUsername());
-		q.setParameter(2, new_password);
+		q.setParameter(1, new_password);
+		q.setParameter(2,user.getId());
 		em.getTransaction().commit();
 	}
     
