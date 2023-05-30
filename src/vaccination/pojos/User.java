@@ -24,8 +24,8 @@ public class User implements Serializable{
       private Role role;
       
     public User() {
-    	this.username="Fabio24";
-    	this.password="carmenGarci";
+    	this.username="director";
+    	this.password="director";
     	this.role=new Role("director");
     }
       

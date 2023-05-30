@@ -53,9 +53,9 @@ public class Menu {
 	 	 doctorMan = new JDBCDoctorManager(conMan.getConnection());
 	 	 patientMan = new JDBCPatientManager(conMan.getConnection());
 	 	 vaccineMan = new JDBCVaccineManager(conMan.getConnection());
-	 	 //userMan = new JPAUserManager();
+	 	 userMan = new JPAUserManager(); 	 
+	 	 directorMan = new JDBCDirectorManager(conMan.getConnection());
 	 	 
-	 	 //directorMan=new JDBCDirectorManager();
 	 	 while (true) {
 	 	 	 try {
 	 	 	 	 System.out.println("Welcome to the Vaccination app!");

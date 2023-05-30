@@ -18,9 +18,7 @@ public class JDBCDirectorManager implements DirectorManager{
 	public JDBCDirectorManager(Connection c) {
 		this.c = c;
 
-	}
-	
-	
+	}	
 	
 	@Override
 	public void insertVaccine(Vaccine vaccine) {
