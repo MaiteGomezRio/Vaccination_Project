@@ -234,7 +234,11 @@ public class ConnectionManager {
         		p_insert.setString(1,"VariVax");
         		p_insert.setInt(2, 1);
         		p_insert.setInt(3,d_id);
+<<<<<<< HEAD
         		p_insert.executeUpdate();
+=======
+        		p_insert.execute(insert_Vaccine);
+>>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
         		//VACCINE NAME PROQUAD FOR CHICKENPOX
         		p_insert.setString(1,"ProQuad");
         		p_insert.setInt(2, 1);
@@ -436,13 +440,21 @@ public class ConnectionManager {
 			p.setString(1,d_name);
 			rs.next();
 			disease_id = rs.getInt("id");	
+<<<<<<< HEAD
 			return disease_id;
+=======
+			
+>>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 		} catch (SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
 			
 		} 
+<<<<<<< HEAD
 		return -1;
+=======
+		return disease_id;
+>>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 	}
 	
 	
