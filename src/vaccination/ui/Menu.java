@@ -49,7 +49,7 @@ public class Menu {
 
 	public static void main(String[] args) {
 		
-	 	 userMan = new JPAUserManager();
+	 	 //userMan = new JPAUserManager();
 	 	 ConnectionManager conMan = new ConnectionManager();
 	 	 doctorMan = new JDBCDoctorManager(conMan.getConnection());
 	 	 patientMan = new JDBCPatientManager(conMan.getConnection());
