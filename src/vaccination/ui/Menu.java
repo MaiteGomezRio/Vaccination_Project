@@ -245,29 +245,7 @@ public class Menu {
 		System.out.println("Vaccine " + name + " registered");
 	}
 
-	/*public static void registerDirector() {
-
-		try {
-			System.out.println("Introduce your id:");
-			String id_document = r.readLine();
-			System.out.println("Password:");
-			String password = r.readLine();
-			System.out.println("Email:");
-			String email = r.readLine();
-			String username = id_document;
-			User user = new User(username, password, email);
-			userMan.register(user);
-			Role role = userMan.getRole("director");
-			userMan.assignRole(user, role);
-
-			System.out.println("You have registered as a director!");
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-
-	}*/
+	
 
 	public static void selectVaccines() throws IOException {
 		List<Vaccine> listVaccines = vaccineMan.getAllVaccines();
@@ -377,7 +355,7 @@ public class Menu {
 	public static void updateConditionsOfPatient(int p_id) {
 
 	 	 System.out.println("1. Add new conditions");
-	 	 System.out.println("2. Delete existing conditions");
+	 	 System.out.println("2. Delete existing condition");
 	 	 int option;
 	 	 try {
 	 	 	 option = Integer.parseInt(r.readLine());

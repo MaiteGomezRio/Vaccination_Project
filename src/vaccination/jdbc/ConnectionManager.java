@@ -431,65 +431,62 @@ public class ConnectionManager {
 		
 	}
 	public int getDiseaseId(String d_name) {
-		int disease_id = 0;
+		int disease_id = -1;
 		try {
 			String rs_vaccine ="SELECT id FROM Disease WHERE name LIKE ?";
-			PreparedStatement p;
-			p = c.prepareStatement(rs_vaccine);
-			ResultSet rs=p.executeQuery();
+			PreparedStatement p = c.prepareStatement(rs_vaccine);
 			p.setString(1,d_name);
-			rs.next();
-			disease_id = rs.getInt("id");	
-			return disease_id;
+			ResultSet rs=p.executeQuery();
+			if(rs.next()) {
+				disease_id = rs.getInt("id");
+			}
 			
+			rs.close();
 		} catch (SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
-			return -1;
 		} 
-		
+		return disease_id;
 	}
 	
 	public int getVaccineId(String v_name) {
-		int vaccine_id = 0;
+		int vaccine_id = -1;
 		try {
 			String rs_vaccine ="SELECT id FROM Vaccine WHERE name LIKE ?";
-			PreparedStatement p;
-			p = c.prepareStatement(rs_vaccine);
+			PreparedStatement p = c.prepareStatement(rs_vaccine);
 			ResultSet rs=p.executeQuery();
 			p.setString(1,v_name);
-			rs.next();
-			vaccine_id = rs.getInt("id");	
-			return vaccine_id;
-			
+			if(rs.next()) {
+				vaccine_id = rs.getInt("id");
+			}
+			rs.close();	
 		} catch (SQLException e) {
 			System.out.println("database error");
-			e.printStackTrace();
-			return -1;
-			
+			e.printStackTrace();	
 		} 
-		
+		return vaccine_id;
 	}
 	
 	public int getConditionId(String c_name) {
-		int condition_id = 0;
+		int condition_id = -1;
 		try {
 			String rs_condition ="SELECT id FROM Condition WHERE name LIKE ?";
 			PreparedStatement p;
 			p = c.prepareStatement(rs_condition);
 			ResultSet rs=p.executeQuery();
 			p.setString(1,c_name);
-			rs.next();
-			condition_id = rs.getInt("id");	
-			return condition_id;
-			
+			if(rs.next()) {
+				condition_id = rs.getInt("id");	
+			}
+			rs.close();
+
 		} catch (SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
 			return -1;
 			
 		} 
-		
+		return condition_id;
 	}
 	
 
