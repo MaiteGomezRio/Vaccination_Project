@@ -19,6 +19,7 @@ public class ConnectionManager {
 			createTables();
 			insertTables();
 			insertVaccines();
+
 		} catch (Exception e) {
 			System.out.println("Database access error");
 			e.printStackTrace();
@@ -76,9 +77,8 @@ public class ConnectionManager {
 			String table_Vaccine_Condition = "CREATE TABLE Vaccine_Condition (vaccine_id INTEGER REFERENCES Vaccine(id),"
 					+ " condition_id INTEGER REFERENCES Condition(id))";
 			s.executeUpdate(table_Vaccine_Condition);
-			String table_Disease_Condition = "CREATE TABLE Disease_Condition (disease_id INTEGER NOT NULL REFERENCES Disease(id),"
-					+ " condition_id INTEGER NOT NULL REFERENCES Condition(id))";
-			s.executeUpdate(table_Disease_Condition);
+			
+			
 			s.close();
 		} catch (SQLException e) {
 			if (e.getMessage().contains("already exist")) {
