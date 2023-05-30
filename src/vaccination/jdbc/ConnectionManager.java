@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import vaccination.pojos.Condition;
+import vaccination.pojos.Disease;
 
 
 public class ConnectionManager {
@@ -234,11 +236,7 @@ public class ConnectionManager {
         		p_insert.setString(1,"VariVax");
         		p_insert.setInt(2, 1);
         		p_insert.setInt(3,d_id);
-<<<<<<< HEAD
         		p_insert.executeUpdate();
-=======
-        		p_insert.execute(insert_Vaccine);
->>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
         		//VACCINE NAME PROQUAD FOR CHICKENPOX
         		p_insert.setString(1,"ProQuad");
         		p_insert.setInt(2, 1);
@@ -299,9 +297,10 @@ public class ConnectionManager {
         		rs.close();
         		p_insert.close();
         		//so it assigns each time the conditions to the vaccines 
-        		assignConditionToVaccineConnection();
+        		assignConditionToVaccineConnection(); //TODO no funciona
         		//and the conditions to the diseases 
         		assignConditionToDiseaseConnection();
+        		
         	}
     		
     	}catch(SQLException e) {
@@ -317,6 +316,7 @@ public class ConnectionManager {
 		
 	}
 	public void assignConditionToVaccineConnection() {
+		
 		
 		try {
 			String assign_ConditionVaccine="INSERT INTO Vaccine_Condition VALUES (?,?)";
@@ -440,23 +440,15 @@ public class ConnectionManager {
 			p.setString(1,d_name);
 			rs.next();
 			disease_id = rs.getInt("id");	
-<<<<<<< HEAD
 			return disease_id;
-=======
 			
->>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 		} catch (SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
-			
+			return -1;
 		} 
-<<<<<<< HEAD
-		return -1;
-=======
-		return disease_id;
->>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
+		
 	}
-	
 	
 	public int getVaccineId(String v_name) {
 		int vaccine_id = 0;
@@ -468,13 +460,15 @@ public class ConnectionManager {
 			p.setString(1,v_name);
 			rs.next();
 			vaccine_id = rs.getInt("id");	
+			return vaccine_id;
 			
 		} catch (SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
+			return -1;
 			
 		} 
-		return vaccine_id;
+		
 	}
 	
 	public int getConditionId(String c_name) {
@@ -487,13 +481,15 @@ public class ConnectionManager {
 			p.setString(1,c_name);
 			rs.next();
 			condition_id = rs.getInt("id");	
+			return condition_id;
 			
 		} catch (SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
+			return -1;
 			
 		} 
-		return condition_id;
+		
 	}
 	
 
