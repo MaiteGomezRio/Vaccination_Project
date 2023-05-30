@@ -48,12 +48,12 @@ public class Menu {
 	private static AppointmentManager appointmentMan;
 
 	public static void main(String[] args) {
-
+		
+	 	 userMan = new JPAUserManager();
 	 	 ConnectionManager conMan = new ConnectionManager();
 	 	 doctorMan = new JDBCDoctorManager(conMan.getConnection());
 	 	 patientMan = new JDBCPatientManager(conMan.getConnection());
-	 	 vaccineMan = new JDBCVaccineManager(conMan.getConnection());
-	 	 userMan = new JPAUserManager(); 	 
+	 	 vaccineMan = new JDBCVaccineManager(conMan.getConnection()); 	 
 	 	 directorMan = new JDBCDirectorManager(conMan.getConnection());
 	 	 
 	 	 while (true) {
