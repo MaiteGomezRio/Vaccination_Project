@@ -1,5 +1,6 @@
 package vaccination.jpa;
 
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -28,6 +29,7 @@ public class JPAUserManager implements UserManager{
 		
 		if( this.getRoles().isEmpty()) {
 			User director=new User();//para que se genere siempre un user que el director si todavía no está en la database
+			this.register(director);
 			Role doctor = new Role("doctor");
 			Role patient = new Role("patient");
 			Role dir = new Role("director");
@@ -106,6 +108,15 @@ public class JPAUserManager implements UserManager{
     	role.deleteUser(user);
     	em.getTransaction().commit();	
     }
+    
+    @Override
+	public void updatePassword(User user, String new_password) {
+		Query q=em.createNativeQuery("UPDATE users SET" + " name = ?, " + " password = ?, " + " WHERE id = ?");
+		em.getTransaction().begin();
+		q.setParameter(1, user.getUsername());
+		q.setParameter(2, new_password);
+		em.getTransaction().commit();
+	}
     
     
 }
