@@ -22,7 +22,7 @@ public class JPAUserManager implements UserManager{
 	
 	public void connect() {
 		
-		em = Persistence.createEntityManagerFactory("Vaccination_Project-provider").createEntityManager();
+		em = Persistence.createEntityManagerFactory("VaccinationProject-provider").createEntityManager();
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
 		em.getTransaction().commit();
@@ -99,7 +99,7 @@ public class JPAUserManager implements UserManager{
  
     @Override 
     public void deleteUser(String name,String password) {
-    	Query q=em.createNativeQuery("SELECT* FROM users WHERE name LIKE ? AND password LIKE ?");
+    	Query q=em.createNativeQuery(" SELECT * FROM users WHERE name LIKE ? AND password LIKE ?");
     	em.getTransaction().begin();
     	q.setParameter(1, name);
     	q.setParameter(2,password);
@@ -111,7 +111,7 @@ public class JPAUserManager implements UserManager{
     
     @Override
 	public void updatePassword(User user, String new_password) {
-		Query q=em.createNativeQuery("UPDATE users SET" + " name = ?, " + " password = ?, " + " WHERE id = ?");
+		Query q=em.createNativeQuery(" UPDATE users SET " + " name = ?, " + " password = ?, " + " WHERE id = ?");
 		em.getTransaction().begin();
 		q.setParameter(1, user.getUsername());
 		q.setParameter(2, new_password);
