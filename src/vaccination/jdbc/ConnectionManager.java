@@ -91,7 +91,11 @@ public class ConnectionManager {
 		}
 	}
 	
-	
+	//TODO registerDirector
+	public void registerDirector() {
+		
+	}
+		
 	public void insertTables() { 
 		try {
 			Statement s = c.createStatement(); 
