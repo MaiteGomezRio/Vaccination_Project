@@ -138,7 +138,7 @@ public class ConnectionManager {
 				s2.execute(insert_Condition);
 				insert_Condition = "INSERT INTO Condition(name)VALUES ('Pneumonia')";
 				s2.execute(insert_Condition);
-				insert_Condition = "INSERT INTO Condition(name)VALUES ('Special medical condition')";
+				insert_Condition = "INSERT INTO Condition(name)VALUES ('SpecialMedCon')";
 				
 				s.close();
 				s2.close();
@@ -245,7 +245,7 @@ public class ConnectionManager {
 				p_insert.setInt(2, 1);
 				p_insert.setInt(3, d_id);
 				p_insert.executeUpdate();
-				// insert_Vaccine="INSERT INTO Vaccine (name, dose, disease_id) VALUES (?, ?, ?)";
+				
 				
 				disease_name = "Diphteria";
 				d_id = getDiseaseId(disease_name);
@@ -264,6 +264,7 @@ public class ConnectionManager {
 				p_insert.setInt(3, d_id);
 				p_insert.executeUpdate();
 				
+				
 				disease_name = "Meningococcus";
 				d_id = getDiseaseId(disease_name);
 				
@@ -277,29 +278,33 @@ public class ConnectionManager {
 				p_insert.setInt(2, 1);
 				p_insert.setInt(3, d_id);
 				p_insert.executeUpdate();
+				
+				
 				disease_name = "Covid-19";
 				d_id = getDiseaseId(disease_name);
+				
 				//VACCINE NAME PFIZER FOR COVID-19
 				p_insert.setString(1, "Pfizer");
 				p_insert.setInt(2, 3);
 				p_insert.setInt(3, d_id);
 				p_insert.executeUpdate();
+				
 				//VACCINE NAME MODERNA FOR COVID-19
 				p_insert.setString(1, "Moderna");
 				p_insert.setInt(2, 2);
 				p_insert.setInt(3, d_id);
 				p_insert.executeUpdate();
+				
 				//VACCINE NAME FOR COVID-19
 				p_insert.setString(1, "Astrazeneca");
 				p_insert.setInt(2, 2);
 				p_insert.setInt(3, d_id);
 				p_insert.executeUpdate();
+				
 				rs.close();
 				p_insert.close();
 				//so it assigns each time the conditions to the vaccines 
-				assignConditionToVaccineConnection(); // TODO no funciona
-				//and the conditions to the diseases 
-				//assignConditionToDiseaseConnection();
+				assignConditionToVaccineConnection(); 
 			}
 		} catch (SQLException e) {
 			System.out.println("database error");
@@ -322,44 +327,50 @@ public class ConnectionManager {
 				String v_name;
 				String c_name;
 				
-				//v_name="Vaxelis";
-				vaccine_id = getVaccineId("Vaxelis");
+				v_name="Vaxelis";
+				vaccine_id = getVaccineId(v_name);
 				
 				c_name = "Allergies";
-				condition_id = getConditionId("Allergies");
+				condition_id = getConditionId(c_name);
 				p_assign.setInt(1, vaccine_id);// Assigns allergies to Vaxelis
 				p_assign.setInt(2, condition_id);
 				p_assign.executeUpdate();
 				
-				//v_name="Pfizer";
-				vaccine_id = getVaccineId("Pfizer");
+				v_name="Pfizer";
+				vaccine_id = getVaccineId(v_name);
 				condition_id = getConditionId("Allergies");
 				p_assign.setInt(1, vaccine_id);// Assigns allergies to Pfizer
 				p_assign.setInt(2, condition_id);
 				p_assign.executeUpdate();
 				
-				//c_name="HIV";
-				condition_id = getConditionId("HIV");
+				c_name="HIV";
+				condition_id = getConditionId(c_name);
 				p_assign.setInt(1, vaccine_id);// assigns HIV to Pfizer
 				p_assign.setInt(2, condition_id);
 				p_assign.executeUpdate();
 				
-				//v_name="ProQuad";
-				condition_id = getConditionId("HIV");
-				vaccine_id = getVaccineId("ProQuad");
+				v_name="ProQuad";
+				condition_id = getConditionId(c_name);
+				vaccine_id = getVaccineId(v_name);
 				p_assign.setInt(1, vaccine_id);// assigns HIV to ProQuad
 				p_assign.setInt(2, condition_id);
 				p_assign.executeUpdate();
-				/*
-				 * //v_name="MMR"; vaccine_id=getVaccineId("MMR");
-				 * //c_name="Special medical condition";
-				 * condition_id=getConditionId("Special medical condition"); p_assign.setInt(1,
-				 * vaccine_id);//assigns Special med to MMR p_assign.setInt(2, condition_id);
-				 * p_assign.executeUpdate(); //v_name="MMRV"; vaccine_id=getVaccineId("MMRV");
-				 * condition_id=getConditionId("Special medical condition"); p_assign.setInt(1,
-				 * vaccine_id);//assigns Special med to MMRV p_assign.setInt(2, condition_id);
-				 * p_assign.executeUpdate();
-				 */
+				
+				/*v_name="MMR"; 
+				vaccine_id=getVaccineId(v_name);
+				c_name="SpecialMedCon";
+				condition_id=getConditionId(c_name); 
+				p_assign.setInt(1,vaccine_id);//assigns Special Medical Condition to MMR 
+				p_assign.setInt(2, condition_id);
+				p_assign.executeUpdate(); 
+				
+				v_name="MMRV"; 
+				vaccine_id=getVaccineId(v_name);
+				condition_id=getConditionId(c_name);
+				p_assign.setInt(1,vaccine_id);//assigns Special Medical Condition to MMRV 
+				p_assign.setInt(2, condition_id);
+				p_assign.executeUpdate();*/
+				
 				v_name = "DTP";
 				vaccine_id = getVaccineId("DTP");
 				c_name = "Stroke";
