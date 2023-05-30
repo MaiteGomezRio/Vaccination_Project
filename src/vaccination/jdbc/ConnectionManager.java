@@ -300,9 +300,10 @@ public class ConnectionManager {
         		rs.close();
         		p_insert.close();
         		//so it assigns each time the conditions to the vaccines 
-        		assignConditionToVaccineConnection();
+        		assignConditionToVaccineConnection(); //TODO no funciona
         		//and the conditions to the diseases 
         		assignConditionToDiseaseConnection();
+        		
         	}
     		
     	}catch(SQLException e) {
@@ -318,6 +319,7 @@ public class ConnectionManager {
 		
 	}
 	public void assignConditionToVaccineConnection() {
+		
 		
 		try {
 			String assign_ConditionVaccine="INSERT INTO Vaccine_Condition VALUES (?,?)";
