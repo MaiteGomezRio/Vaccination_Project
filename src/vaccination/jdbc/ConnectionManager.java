@@ -240,7 +240,10 @@ public class ConnectionManager {
         		p_insert.setString(1,"VariVax");
         		p_insert.setInt(2, 1);
         		p_insert.setInt(3,d_id);
-        		p_insert.execute(insert_Vaccine);
+        		//p_insert.execute(insert_Vaccine);
+        		p_insert.executeUpdate();
+        		
+        		
         		//VACCINE NAME PROQUAD FOR CHICKENPOX
         		p_insert.setString(1,"ProQuad");
         		p_insert.setInt(2, 1);
@@ -442,13 +445,15 @@ public class ConnectionManager {
 			p.setString(1,d_name);
 			rs.next();
 			disease_id = rs.getInt("id");	
+			return disease_id;
 			
 		} catch (SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
+			return -1;
 			
 		} 
-		return disease_id;
+		
 	}
 	
 	
