@@ -24,7 +24,6 @@ public class ConnectionManager {
 			createTables();
 			insertTables();
 			insertVaccines();
-			assignConditionToVaccineConnection();
 		} catch (Exception e) {
 			System.out.println("Database access error");
 			e.printStackTrace();
@@ -298,9 +297,9 @@ public class ConnectionManager {
         		rs.close();
         		p_insert.close();
         		//so it assigns each time the conditions to the vaccines 
-        		//assignConditionToVaccineConnection(); //TODO no funciona
+        		assignConditionToVaccineConnection(); //TODO no funciona
         		//and the conditions to the diseases 
-        		//assignConditionToDiseaseConnection();
+        		assignConditionToDiseaseConnection();
         		
         	}
     		
@@ -337,34 +336,23 @@ public class ConnectionManager {
 			p_assign.setInt(2, condition_id);
 			p_assign.executeUpdate();
 			
-			assign_ConditionVaccine="INSERT INTO Vaccine_Condition VALUES (?,?)";
 			v_name="Pfizer";
-			vaccine_id=getVaccineId(v_name);
-			c_name="Allergies";
-			condition_id=getConditionId(c_name);
 			p_assign.setInt(1, vaccine_id);//Assigns allergies to Pfizer 
 			p_assign.setInt(2, condition_id);
 			p_assign.executeUpdate();
 			
-			assign_ConditionVaccine="INSERT INTO Vaccine_Condition VALUES (?,?)";
-			v_name="Pfizer";
-			vaccine_id=getVaccineId(v_name);
 			c_name="HIV";
 			condition_id=getConditionId(c_name);
 			p_assign.setInt(1, vaccine_id);//assigns HIV to Pfizer
 			p_assign.setInt(2, condition_id);
 			p_assign.executeUpdate();
 			
-			assign_ConditionVaccine="INSERT INTO Vaccine_Condition VALUES (?,?)";
 			v_name="ProQuad";
 			vaccine_id=getVaccineId(v_name);
-			c_name="HIV";
-			condition_id=getConditionId(c_name);
 			p_assign.setInt(1, vaccine_id);//assigns HIV to ProQuad
 			p_assign.setInt(2, condition_id);
 			p_assign.executeUpdate();
 			
-			assign_ConditionVaccine="INSERT INTO Vaccine_Condition VALUES (?,?)";
 			v_name="MMR";
 			vaccine_id=getVaccineId(v_name);
 			c_name="Special medical condition";
@@ -372,72 +360,49 @@ public class ConnectionManager {
 			p_assign.setInt(1, vaccine_id);//assigns Special med to MMR
 			p_assign.setInt(2, condition_id);
 			p_assign.executeUpdate();
-			
-			assign_ConditionVaccine="INSERT INTO Vaccine_Condition VALUES (?,?)";
 			v_name="MMRV";
 			vaccine_id=getVaccineId(v_name);
-			c_name="Special medical condition";
-			condition_id=getConditionId(c_name);
 			p_assign.setInt(1, vaccine_id);//assigns Special med to MMRV
 			p_assign.setInt(2, condition_id);
 			p_assign.executeUpdate();
 			
-			assign_ConditionVaccine="INSERT INTO Vaccine_Condition VALUES (?,?)";
 			v_name="DTP";
 			vaccine_id=getVaccineId(v_name);
 			c_name="Stroke";
 			condition_id=getConditionId(c_name);
 			p_assign.setInt(1, vaccine_id);//assigns stroke to DTP
 			p_assign.setInt(2, condition_id);
-			p_assign.executeUpdate();
-			
-			
-			assign_ConditionVaccine="INSERT INTO Vaccine_Condition VALUES (?,?)";	
-			v_name="DTP";
-			vaccine_id=getVaccineId(v_name);
 			c_name="Pregnant";
 			condition_id=getConditionId(c_name);
 			p_assign.setInt(1, vaccine_id);//assigns pregnant to DTP
 			p_assign.setInt(2, condition_id);
 			p_assign.executeUpdate();
 			
-			assign_ConditionVaccine="INSERT INTO Vaccine_Condition VALUES (?,?)";
+			
 			v_name="DTPa";
 			vaccine_id=getVaccineId(v_name);
-			c_name="Pregnant";
-			condition_id=getConditionId(c_name);
 			p_assign.setInt(1, vaccine_id);//assigns pregnant to DTPa
 			p_assign.setInt(2, condition_id);
 			p_assign.executeUpdate();
 			
-			assign_ConditionVaccine="INSERT INTO Vaccine_Condition VALUES (?,?)";
-			v_name="DTPa";
-			vaccine_id=getVaccineId(v_name);
 			c_name="Ictus";
 			condition_id=getConditionId(c_name);
 			p_assign.setInt(1, vaccine_id);//assigns ictus to DTPa
 			p_assign.setInt(2, condition_id);
 			p_assign.executeUpdate();
 			
-			assign_ConditionVaccine="INSERT INTO Vaccine_Condition VALUES (?,?)";
 			v_name="MenB";
 			vaccine_id=getVaccineId(v_name);
-			c_name="Ictus";
-			condition_id=getConditionId(c_name);
 			p_assign.setInt(1, vaccine_id);//assigns ictus to MenB
 			p_assign.setInt(2, condition_id);
 			p_assign.executeUpdate();
 			
-			assign_ConditionVaccine="INSERT INTO Vaccine_Condition VALUES (?,?)";
 			v_name="MenC";
 			vaccine_id=getVaccineId(v_name);
-			c_name="Ictus";
-			condition_id=getConditionId(c_name);
 			p_assign.setInt(1, vaccine_id);//assigns ictus to MenC
 			p_assign.setInt(2, condition_id);
 			p_assign.executeUpdate();
 			
-			assign_ConditionVaccine="INSERT INTO Vaccine_Condition VALUES (?,?)";
 			v_name="Moderna";
 			vaccine_id=getVaccineId(v_name);
 			c_name="Epilepsy";
@@ -446,7 +411,6 @@ public class ConnectionManager {
 			p_assign.setInt(2, condition_id);
 			p_assign.executeUpdate();
 			
-			assign_ConditionVaccine="INSERT INTO Vaccine_Condition VALUES (?,?)";
 			v_name="VariVax";
 			vaccine_id=getVaccineId(v_name);
 			c_name="Pneumonia";
@@ -467,76 +431,62 @@ public class ConnectionManager {
 		
 	}
 	public int getDiseaseId(String d_name) {
-		int disease_id = 0;
+		int disease_id = -1;
 		try {
 			String rs_vaccine ="SELECT id FROM Disease WHERE name LIKE ?";
-			PreparedStatement p;
-			p = c.prepareStatement(rs_vaccine);
-			ResultSet rs=p.executeQuery();
+			PreparedStatement p = c.prepareStatement(rs_vaccine);
 			p.setString(1,d_name);
-			rs.next();
-			disease_id = rs.getInt("id");
+			ResultSet rs=p.executeQuery();
 			if(rs.next()) {
 				disease_id = rs.getInt("id");
 			}
-			return disease_id;
 			
+			rs.close();
 		} catch (SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
-			return -1;
 		} 
-		
+		return disease_id;
 	}
 	
-	
 	public int getVaccineId(String v_name) {
-		int vaccine_id = 0;
+		int vaccine_id = -1;
 		try {
 			String rs_vaccine ="SELECT id FROM Vaccine WHERE name LIKE ?";
-			PreparedStatement p;
-			p = c.prepareStatement(rs_vaccine);
+			PreparedStatement p = c.prepareStatement(rs_vaccine);
 			ResultSet rs=p.executeQuery();
 			p.setString(1,v_name);
-			rs.next();
-			vaccine_id = rs.getInt("id");	
 			if(rs.next()) {
 				vaccine_id = rs.getInt("id");
 			}
-			
-			
+			rs.close();	
 		} catch (SQLException e) {
 			System.out.println("database error");
-			e.printStackTrace();
-			
-			
+			e.printStackTrace();	
 		} 
 		return vaccine_id;
-		
 	}
 	
 	public int getConditionId(String c_name) {
-		int condition_id = 0;
+		int condition_id = -1;
 		try {
 			String rs_condition ="SELECT id FROM Condition WHERE name LIKE ?";
 			PreparedStatement p;
 			p = c.prepareStatement(rs_condition);
 			ResultSet rs=p.executeQuery();
 			p.setString(1,c_name);
-			rs.next();
-				
 			if(rs.next()) {
-				condition_id = rs.getInt("id");
+				condition_id = rs.getInt("id");	
 			}
-			
+			rs.close();
+
 		} catch (SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
-			
+			return -1;
 			
 		} 
 		return condition_id;
-		
 	}
 	
 
