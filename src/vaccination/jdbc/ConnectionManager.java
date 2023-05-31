@@ -19,8 +19,7 @@ public class ConnectionManager {
 			createTables();
 			insertTables();
 			insertVaccines();
-			assignConditionToVaccineConnection();
-			
+
 		} catch (Exception e) {
 			System.out.println("Database access error");
 			e.printStackTrace();
@@ -43,40 +42,84 @@ public class ConnectionManager {
 	private void createTables() {
 		try {
 			Statement s = c.createStatement();
-			String table_Doctor = "CREATE TABLE Doctor (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ " id_document TEXT NOT NULL," + " name TEXT NOT NULL," + " surname TEXT NOT NULL, "
+			
+			String table_Doctor = "CREATE TABLE Doctor ("
+					+ "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ " id_document TEXT NOT NULL,"
+					+ " name TEXT NOT NULL,"
+					+ " surname TEXT NOT NULL,"
 					+ " email TEXT NOT NULL)";
 			s.executeUpdate(table_Doctor);
-			String table_Patient = "CREATE TABLE Patient (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ " id_document TEXT NOT NULL," + " name TEXT NOT NULL," + " surname TEXT NOT NULL,"
-					+ " email TEXT NOT NULL," + " doctor_id INTEGER REFERENCES Doctor(id))";
+			
+			String table_Patient = "CREATE TABLE Patient ("
+					+ " id INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ " id_document TEXT NOT NULL,"
+					+ " name TEXT NOT NULL,"
+					+ " surname TEXT NOT NULL,"
+					+ " email TEXT NOT NULL,"
+					+ " doctor_id INTEGER,"
+					+ " FOREIGN KEY (doctor_id) REFERENCES Doctor(id) ON DELETE SET NULL);";
 			s.executeUpdate(table_Patient);
-			String table_Vaccine = "CREATE TABLE Vaccine (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ " name TEXT NOT NULL," + " dose INTEGER,"
-					+ " disease_id INTEGER REFERENCES Disease(id))";
+			
+			String table_Vaccine = "CREATE TABLE Vaccine ("
+					+ " id INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ " name TEXT NOT NULL,"
+					+ " dose INTEGER,"
+					+ " disease_id INTEGER NOT NULL,"
+					+ " FOREIGN KEY (disease_id) REFERENCES Disease(id) ON DELETE CASCADE);";
 			s.executeUpdate(table_Vaccine);
-			String table_Disease = "CREATE TABLE Disease (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "name TEXT NOT NULL)";
+			
+			String table_Disease = "CREATE TABLE Disease ("
+					+ " id INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ " name TEXT NOT NULL);";
 			s.executeUpdate(table_Disease);
-			String table_Condition = "CREATE TABLE Condition (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "name TEXT NOT NULL)";
+			
+			String table_Condition = "CREATE TABLE Condition ("
+					+ " id INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ " name TEXT NOT NULL);";
 			s.executeUpdate(table_Condition);
-			String table_Patient_Vaccine = "CREATE TABLE Patient_Vaccine(patient_id INTEGER REFERENCES Patient(id),"
-					+ "vaccine_id INTEGER REFERENCES Vaccine(id))";
+			
+			String table_Patient_Vaccine = "CREATE TABLE Patient_Vaccine("
+					+ " patient_id INTEGER,"
+					+ " vaccine_id INTEGER,"
+					+ " FOREIGN KEY (patient_id) REFERENCES Patient(id) ON DELETE SET NULL,"
+					+ " FOREIGN KEY (vaccine_id) REFERENCES Vaccine(id) ON DELETE SET NULL,"
+					+ " PRIMARY KEY (patient_id, vaccine_id));";
 			s.executeUpdate(table_Patient_Vaccine);
-			String table_Patient_Disease = "CREATE TABLE Patient_Disease (patient_id INTEGER REFERENCES Patient(id),"
-					+ "disease_id INTEGER REFERENCES Disease(id))";
+			
+			String table_Patient_Disease = "CREATE TABLE Patient_Disease("
+					+ " patient_id INTEGER,"
+					+ " disease_id INTEGER,"
+					+ " FOREIGN KEY (patient_id) REFERENCES Patient(id) ON DELETE CASCADE,"
+					+ " FOREIGN KEY (disease_id) REFERENCES Disease(id) ON DELETE CASCADE,"
+					+ " PRIMARY KEY (patient_id, disease_id));";
 			s.executeUpdate(table_Patient_Disease);
-			String table_Patient_Condition = "CREATE TABLE Patient_Condition (patient_id INTEGER REFERENCES Patient(id),"
-					+ "condition_id INTEGER REFERENCES Condition(id))";
+			
+			String table_Patient_Condition = "CREATE TABLE Patient_Condition ("
+					+ " patient_id INTEGER,"
+					+ " condition_id INTEGER,"
+					+ " FOREIGN KEY (patient_id) REFERENCES Patient(id) ON DELETE CASCADE,"
+					+ " FOREIGN KEY (condition_id) REFERENCES Condition(id) ON DELETE CASCADE,"
+					+ " PRIMARY KEY (patient_id, condition_id));";
 			s.executeUpdate(table_Patient_Condition);
-			String table_Appointment = "CREATE TABLE Appointment(id INTEGER PRIMARY KEY AUTOINCREMENT, Date date NOT NULL, "
-					+ "patient_id INTEGER NOT NULL REFERENCES Patient(id),"
-					+ " vaccine_id INTEGER NOT NULL REFERENCES Vaccine(id),"
-					+ " doctor_id INTEGER NOT NULL REFERENCES Doctor(id))";
+			
+			String table_Appointment = "CREATE TABLE Appointment("
+					+ " id INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ " Date date NOT NULL,"
+					+ " patient_id INTEGER NOT NULL,"
+					+ " vaccine_id INTEGER NOT NULL,"
+					+ " doctor_id INTEGER NOT NULL,"
+					+ " FOREIGN KEY(patient_id) REFERENCES Patient(id) ON DELETE CASCADE,"
+					+ " FOREIGN KEY(vaccine_id) REFERENCES Vaccine(id) ON DELETE CASCADE,"
+					+ " FOREIGN KEY(doctor_id) REFERENCES Doctor(id) ON DELETE CASCADE);";
 			s.executeUpdate(table_Appointment);
-			String table_Vaccine_Condition = "CREATE TABLE Vaccine_Condition (vaccine_id INTEGER REFERENCES Vaccine(id),"
-					+ " condition_id INTEGER REFERENCES Condition(id))";
+			
+			String table_Vaccine_Condition = "CREATE TABLE Vaccine_Condition ("
+					+ " vaccine_id INTEGER,"
+					+ " condition_id INTEGER,"
+					+ " FOREIGN KEY(vaccine_id) REFERENCES Vaccine(id) ON DELETE CASCADE,"
+					+ " FOREIGN KEY(condition_id) REFERENCES Condition(id) ON DELETE CASCADE,"
+					+ " PRIMARY KEY (vaccine_id, condition_id));";
 			s.executeUpdate(table_Vaccine_Condition);
 			
 			
@@ -307,7 +350,8 @@ public class ConnectionManager {
 				p_insert.executeUpdate();
 				
 				p_insert.close();
-				//so it assigns each time the conditions to the vaccines  
+				//so it assigns each time the conditions to the vaccines 
+				assignConditionToVaccineConnection(); 
 			}
 			rs.close();
 			s.close();

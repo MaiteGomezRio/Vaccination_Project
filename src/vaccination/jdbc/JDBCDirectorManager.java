@@ -115,7 +115,7 @@ public class JDBCDirectorManager implements DirectorManager{
 	@Override
 	public void assignConditionToVaccine(int c_id, int v_id) {
 		try {
-			String sql="INSERT INTO Vaccine_Condition (vaccine_id, condition_id)" + "VALUES (?,?)";
+			String sql="INSERT INTO Vaccine_Condition (vaccine_id, condition_id) VALUES (?,?)";
 			PreparedStatement p=c.prepareStatement(sql);	
 			p.setInt(1, v_id);
 			p.setInt(2, c_id);
