@@ -29,7 +29,7 @@ public class Patient implements Serializable{
 	}
 	public Patient(int id) {
 		this.id = id; 	
-		vaccines = new ArrayList<Vaccine>();  //ALWAYS INITIALIZE THE LISTS  
+		vaccines = new ArrayList<Vaccine>();   
 		diseases= new ArrayList<Disease>();
 		conditions= new ArrayList<Condition>();
 	}
