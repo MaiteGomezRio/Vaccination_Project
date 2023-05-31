@@ -10,7 +10,7 @@ import vaccination.pojos.Patient;
 
 public interface PatientManager {
 
-	public void insertPatient(Patient patient);
+	public void insertPatient(Patient patient, int d_id);
 	public List<Patient> searchPatientsByDoctor(int d_id);
 	public Patient getPatient(int p_id);
 	public List<Patient> searchPatientByName(String name);
