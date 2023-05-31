@@ -57,9 +57,9 @@ public class Menu {
 	 	 patientMan = new JDBCPatientManager(conMan.getConnection());
 	 	 vaccineMan = new JDBCVaccineManager(conMan.getConnection()); 	 
 	 	 directorMan = new JDBCDirectorManager(conMan.getConnection());
-	 	diseaseMan= new JDBCDiseaseManager(conMan.getConnection());
-	 	 userMan = new JPAUserManager();
+	 	 diseaseMan= new JDBCDiseaseManager(conMan.getConnection());
 	 	 condMan = new JDBCConditionManager(conMan.getConnection()); 
+	 	 userMan = new JPAUserManager();
 	 	 
 	 	 while (true) {
 	 	 	 try {
