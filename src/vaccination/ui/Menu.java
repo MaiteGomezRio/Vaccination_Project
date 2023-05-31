@@ -125,7 +125,6 @@ public class Menu {
 	public static void login() throws IOException {
 		while (true) {
 			System.out.println("Press 0 to go back to menu\n");
-				System.out.println("Username: (number of Id document with '0' and letter)");			
 			
 			System.out.println("Username: ");
 			String username = r.readLine();
@@ -165,6 +164,7 @@ public class Menu {
 			String username = id_document;
 			System.out.println("Password:");
 			String password = r.readLine();
+			System.out.println("Your username is: "+id_document);
 			Doctor doctor = new Doctor(id_document, name, surname, email);
 			doctorMan.insertDoctor(doctor);
 			User user = new User(username, password, email);
@@ -219,7 +219,7 @@ public class Menu {
 		String password = r.readLine();
 		String username = id_document;
 		Patient patient = new Patient(id_document, name, surname, email);
-
+		System.out.println("Your username is: "+id_document);
 		int bound = doctorMan.countNumberOfDoctors();
 		int doc_id = generateRandomInt(bound);
 		Doctor doctor = doctorMan.getDoctorById(doc_id);
