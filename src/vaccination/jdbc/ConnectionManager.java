@@ -48,10 +48,10 @@ public class ConnectionManager {
 			s.executeUpdate(table_Doctor);
 			String table_Patient = "CREATE TABLE Patient (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ " id_document TEXT NOT NULL," + " name TEXT NOT NULL," + " surname TEXT NOT NULL,"
-					+ " email TEXT NOT NULL," + " doctor_id INTEGER REFERENCES Doctor(id))";
+					+ " email TEXT NOT NULL," + " doctor_id INTEGER REFERENCES Doctor(id) ON DELETE SET NULL)";
 			s.executeUpdate(table_Patient);
 			String table_Vaccine = "CREATE TABLE Vaccine (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ " name TEXT NOT NULL," + " dose INTEGER, "
+					+ "name TEXT NOT NULL," + " dose INTEGER,"
 					+ "disease_id INTEGER NOT NULL REFERENCES Disease(id))";
 			s.executeUpdate(table_Vaccine);
 			String table_Disease = "CREATE TABLE Disease (id INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -103,7 +103,7 @@ public class ConnectionManager {
 			int rowCount2 = rs2.getInt(1);
 			rs2.close();
 			s2.close();
-					// Insert data when tables are empty
+			// Insert data when tables are empty
 			if (rowCount == 0 && rowCount2 == 0) {
 				Statement s = c.createStatement();
 				//DISEASES
@@ -450,6 +450,7 @@ public class ConnectionManager {
 			if (rs.next()) {
 				disease_id = rs.getInt("id");
 			}
+			p.close();
 			rs.close();
 		} catch (SQLException e) {
 			System.out.println("database error");
@@ -468,6 +469,7 @@ public class ConnectionManager {
 			if (rs.next()) {
 				vaccine_id = rs.getInt("id");
 			}
+			p.close();
 			rs.close();
 		} catch (SQLException e) {
 			System.out.println("database error");
@@ -487,6 +489,7 @@ public class ConnectionManager {
 			if (rs.next()) {
 				condition_id = rs.getInt("id");
 			}
+			p.close();
 			rs.close();
 		} catch (SQLException e) {
 			System.out.println("database error");

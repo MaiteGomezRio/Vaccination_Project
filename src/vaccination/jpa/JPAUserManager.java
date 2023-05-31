@@ -30,11 +30,8 @@ public class JPAUserManager implements UserManager{
 			this.createRole(doctor);
 			this.createRole(patient);
 			this.createRole(dir);
-			User director=new User();//para que se genere siempre un user que el director si todavía no está en la database
-			director.setUsername("director");
-	    	director.setPassword("director");
-	    	this.register(director);
-	    	this.assignRole(director, dir);
+			registerDirector(dir);
+			
 		}
 	}
 	
@@ -43,15 +40,20 @@ public class JPAUserManager implements UserManager{
 		em.close();
 	}
 	
-	public void close() {
-		em.close(); 
-	}
-
 	@Override
 	public void register(User user) {
 		em.getTransaction().begin();
 		em.persist(user);
 		em.getTransaction().commit(); 
+		disconnect();
+	}
+	@Override 
+	public void registerDirector(Role dir) {
+		User director=new User();
+		director.setUsername("director");
+    	director.setPassword("director");
+    	this.register(director);
+    	this.assignRole(director, dir);
 	}
 
 	@Override
@@ -62,6 +64,7 @@ public class JPAUserManager implements UserManager{
 		    q.setParameter(2, password); 
 		    User user = (User)q.getSingleResult();
 		    return user;
+		 
 		}catch(NoResultException e){
 			return null;
 		}

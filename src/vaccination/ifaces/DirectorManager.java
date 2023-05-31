@@ -13,6 +13,5 @@ public interface DirectorManager {
 	public void removeDoctor(int d_id);
 	public void removeVaccine(String v_name);
 	public void assignConditionToVaccine(int c_id, int v_id);	
-	public void assignDoctorToPatient(int d_id, int p_id);
 	public void assignDiseaseToVaccine(int d_id, int v_id); 
 }

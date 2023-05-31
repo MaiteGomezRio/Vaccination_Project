@@ -60,7 +60,7 @@ public class Doctor implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Doctor [id_document:" + id_document + ", name: " + name + ", surname: " + surname + ", patients: " + patients + "]";
+		return "Doctor [id:" + id + ", id_document:" + id_document + ", name: " + name + ", surname: " + surname + ", patients: " + patients + "]";
 	}
 
 	public List<Patient> getPatients() {

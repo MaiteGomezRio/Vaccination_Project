@@ -26,11 +26,11 @@ public class JDBCPatientManager implements PatientManager {
 	}
 
 	@Override
-	public void insertPatient(Patient patient) {
+	public void insertPatient(Patient patient, Doctor doctor) {
 		try {
 			Statement s = c.createStatement(); 
-			String sql = "INSERT INTO Patient (id_document, name, surname, email) VALUES ('" + patient.getId_document() + "', '"
-					+ patient.getName() + "', '" + patient.getSurname() +"','"+patient.getEmail()+ "')";
+			String sql = "INSERT INTO Patient (id_document, name, surname, email, doctor_id) VALUES ('" + patient.getId_document() + "', '"
+					+ patient.getName() + "', '" + patient.getSurname() +"', '"+patient.getEmail()+ "', '"+doctor.getId()+"')";
 			s.execute(sql);
 			s.close(); 
 		}catch(SQLException e) {
@@ -91,21 +91,7 @@ public class JDBCPatientManager implements PatientManager {
 		return null; 
 	}
 
-	//TODO hacer antes del día 2
-	/*public void assignDiseaseToPatient(int p_id, int d_id) {
-		try {
-			String sql = "INSERT INTO Patient_Disease (patient_id, disease_id) VALUES (?,?)";
-			PreparedStatement p = c.prepareStatement(sql);
-			p.setInt(1, p_id);
-			p.setInt(2, d_id);
-			p.executeUpdate();
-			p.close();
-		} catch (SQLException e) {
-			System.out.println("Database error.");
-			e.printStackTrace();
-		}
-		
-	}*/
+	
 	@Override
 	public List<Patient> searchPatientByName(String name){
 		List<Patient> list = new ArrayList<Patient>(); 
