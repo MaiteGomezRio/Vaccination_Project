@@ -122,7 +122,7 @@ public class JDBCDirectorManager implements DirectorManager{
 			p.executeUpdate();
 			p.close();
 		}catch(SQLException sqx) {
-			System.out.println("database error");
+			System.out.println("You have already assigned this.");
 			sqx.printStackTrace();
 			
 		}		
