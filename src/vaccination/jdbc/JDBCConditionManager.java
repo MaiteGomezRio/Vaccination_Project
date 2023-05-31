@@ -51,6 +51,7 @@ public class JDBCConditionManager implements ConditionManager{
 			p.setInt(1, c_id);
 			p.setInt(2, p_id);
 			s.execute(sql); 
+			p.close();
 			s.close(); 			
 		}catch(SQLException e) {
 			System.out.println("database error");
@@ -92,6 +93,8 @@ public class JDBCConditionManager implements ConditionManager{
 			rs.next(); 
 		    int id = rs.getInt("vaccine_id"); 
 		    Vaccine vaccine = new Vaccine(id);
+		    rs.close();
+		    p.close();
 		    return vaccine; 
 		}catch(SQLException e) {
 			System.out.println("database error");

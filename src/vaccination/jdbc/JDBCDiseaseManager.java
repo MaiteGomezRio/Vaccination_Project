@@ -86,6 +86,8 @@ public class JDBCDiseaseManager implements DiseaseManager{
 			p.setInt(1, dis_id); 
 			ResultSet rs = p.executeQuery();
 			String name=rs.getString("name");
+			rs.close();
+		    p.close();
 			return name;
 		} catch (SQLException e) {
 			System.out.println("database error");
