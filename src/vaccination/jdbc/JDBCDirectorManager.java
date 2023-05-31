@@ -21,7 +21,7 @@ public class JDBCDirectorManager implements DirectorManager{
 	}	
 	
 	@Override
-	public void insertVaccine(Vaccine vaccine) {
+	public void insertVaccine(Vaccine vaccine) {    //TODO there is a problem here
 		try {	
 			String sql = "INSERT INTO Vaccine (name, dose, disease_id)" + "VALUES (?,?,?)";
 			PreparedStatement p = c.prepareStatement(sql);
