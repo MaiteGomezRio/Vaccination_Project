@@ -51,8 +51,8 @@ public class ConnectionManager {
 					+ " email TEXT NOT NULL," + " doctor_id INTEGER REFERENCES Doctor(id) ON DELETE SET NULL)";
 			s.executeUpdate(table_Patient);
 			String table_Vaccine = "CREATE TABLE Vaccine (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ " name TEXT NOT NULL," + " dose INTEGER, "
-					+ "disease_id INTEGER NOT NULL REFERENCES Disease(id) ON DELETE CASCADE)";
+					+ "name TEXT NOT NULL," + " dose INTEGER,"
+					+ "disease_id INTEGER NOT NULL REFERENCES Disease(id))";
 			s.executeUpdate(table_Vaccine);
 			String table_Disease = "CREATE TABLE Disease (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "name TEXT NOT NULL)";

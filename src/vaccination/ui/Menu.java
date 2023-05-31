@@ -578,9 +578,9 @@ public class Menu {
 					break; 
 				}
 				case 2: {
-					System.out.println("1.Remove doctor");
+					System.out.println("1.Remove doctor");   //TODO mirar lo de on cascade. 
 					System.out.println("2.Remove vaccine"); 
-					System.out.println("3.Remove patient");
+					System.out.println("3.Remove patient");  
 					System.out.println("0.Exit");
 
 					int choice = Integer.parseInt(r.readLine());
