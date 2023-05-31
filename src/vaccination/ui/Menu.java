@@ -107,7 +107,12 @@ public class Menu {
 	 	 	 	 break;
 	 	 	 }
 	 	 	 case 2: {
-	 	 	 	 registerPatient(); 
+	 	 		 if(doctorMan.countNumberOfDoctors()==0) {
+	 	 			 System.out.println("There are no doctors available. Come back later!\n");
+	 	 		 }else {
+	 	 			registerPatient();
+	 	 		 }
+	 	 	 	  
 	 	 	 	 break;
 	 	 	 }case 0:{
 	 	 		 return;
@@ -124,7 +129,7 @@ public class Menu {
 	}
 	public static void login() throws IOException {
 		while (true) {
-			System.out.println("Press 0 to go back to menu\n");
+			System.out.println("\n Press 0 to go back to menu\n");
 			
 			System.out.println("Username: ");
 			String username = r.readLine();
@@ -218,21 +223,18 @@ public class Menu {
 		System.out.println("password: ");
 		String password = r.readLine();
 		String username = id_document;
-		Patient patient = new Patient(id_document, name, surname, email);
 		System.out.println("Your username is: "+id_document);
 		int bound = doctorMan.countNumberOfDoctors();
 		int doc_id = generateRandomInt(bound);
 		Doctor doctor = doctorMan.getDoctorById(doc_id);
-		directorMan.assignDoctorToPatient(doc_id, patient.getId());
-		patient.setDoctor(doctor);
-		patientMan.insertPatient(patient);
-		
+		Patient patient = new Patient(id_document, name, surname, email, doctor);
+		patientMan.insertPatient(patient, doc_id);
 		User user = new User(username, password, email);
 		userMan.register(user);
 		Role role = userMan.getRole("patient");
 		userMan.assignRole(user, role);
 
-		System.out.println("You have registered as a patient!");
+		System.out.println("You have registered as a patient!\n");
 	}
 
 	public static void registerVaccine() throws IOException {

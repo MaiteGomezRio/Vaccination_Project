@@ -43,12 +43,14 @@ public class Patient implements Serializable{
 
 	}
 	
-	public Patient(String id_document, String name, String surname, String email) {
+	public Patient(String id_document, String name, String surname, String email,Doctor doctor) {
 		
 		super();
 		this.id_document = id_document; 
 		this.name = name; 
 		this.surname = surname;
+		this.email=email;
+		this.doctor=doctor;
 		vaccines = new ArrayList<Vaccine>();
 		diseases= new ArrayList<Disease>();
 		conditions= new ArrayList<Condition>();
