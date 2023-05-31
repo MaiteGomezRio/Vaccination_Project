@@ -21,7 +21,7 @@ public class JDBCDirectorManager implements DirectorManager{
 	}	
 	
 	@Override
-	public void insertVaccine(Vaccine vaccine) {    //TODO there is a problem here
+	public void insertVaccine(Vaccine vaccine) {    
 		try {	
 			String sql = "INSERT INTO Vaccine (name, dose, disease_id)" + "VALUES (?,?,?)";
 			PreparedStatement p;
@@ -121,13 +121,11 @@ public class JDBCDirectorManager implements DirectorManager{
 			p.setInt(2, c_id);
 			p.executeUpdate();
 			p.close();
-		}
-		catch(SQLException sqx) {
+		}catch(SQLException sqx) {
 			System.out.println("database error");
 			sqx.printStackTrace();
 			
-		}
-		
+		}		
 	}
 	@Override 
 	public void assignDiseaseToVaccine(int d_id,int v_id) {
@@ -144,7 +142,6 @@ public class JDBCDirectorManager implements DirectorManager{
 		}
 		
 	}
-	
 	
 	
 

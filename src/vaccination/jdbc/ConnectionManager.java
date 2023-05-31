@@ -19,7 +19,8 @@ public class ConnectionManager {
 			createTables();
 			insertTables();
 			insertVaccines();
-
+			assignConditionToVaccineConnection();
+			
 		} catch (Exception e) {
 			System.out.println("Database access error");
 			e.printStackTrace();
@@ -306,8 +307,7 @@ public class ConnectionManager {
 				p_insert.executeUpdate();
 				
 				p_insert.close();
-				//so it assigns each time the conditions to the vaccines 
-				assignConditionToVaccineConnection(); 
+				//so it assigns each time the conditions to the vaccines  
 			}
 			rs.close();
 			s.close();
