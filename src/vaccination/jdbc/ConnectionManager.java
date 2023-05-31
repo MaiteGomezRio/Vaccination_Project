@@ -44,39 +44,49 @@ public class ConnectionManager {
 		try {
 			Statement s = c.createStatement();
 			String table_Doctor = "CREATE TABLE Doctor (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ " id_document TEXT NOT NULL," + " name TEXT NOT NULL," + " surname TEXT NOT NULL, "
+					+ " id_document TEXT NOT NULL," + " name TEXT NOT NULL," + " surname TEXT NOT NULL,"
 					+ " email TEXT NOT NULL)";
 			s.executeUpdate(table_Doctor);
+			
 			String table_Patient = "CREATE TABLE Patient (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ " id_document TEXT NOT NULL," + " name TEXT NOT NULL," + " surname TEXT NOT NULL,"
-					+ " email TEXT NOT NULL," + " doctor_id INTEGER REFERENCES Doctor(id))";
+					+ " email TEXT NOT NULL," + " doctor_id INTEGER," + "FOREIGN KEY (doctor_id) REFERENCES Doctor(id))";
 			s.executeUpdate(table_Patient);
+			
 			String table_Vaccine = "CREATE TABLE Vaccine (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ " name TEXT NOT NULL," + " dose INTEGER,"
-					+ " disease_id INTEGER REFERENCES Disease(id))";
+					+ " disease_id INTEGER," + "FOREIGN KEY (disease_id) REFERENCES Disease(id))";
 			s.executeUpdate(table_Vaccine);
+			
 			String table_Disease = "CREATE TABLE Disease (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "name TEXT NOT NULL)";
 			s.executeUpdate(table_Disease);
+			
 			String table_Condition = "CREATE TABLE Condition (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "name TEXT NOT NULL)";
 			s.executeUpdate(table_Condition);
-			String table_Patient_Vaccine = "CREATE TABLE Patient_Vaccine(patient_id INTEGER REFERENCES Patient(id),"
-					+ "vaccine_id INTEGER REFERENCES Vaccine(id))";
+			
+			String table_Patient_Vaccine = "CREATE TABLE Patient_Vaccine (patient_id INTEGER," + "vaccine_id INTEGER,"
+					+ "FOREIGN KEY (patient_id) REFERENCES Patient(id)," + "FOREIGN KEY (vaccine_id) REFERENCES Vaccine(id))";
 			s.executeUpdate(table_Patient_Vaccine);
-			String table_Patient_Disease = "CREATE TABLE Patient_Disease (patient_id INTEGER REFERENCES Patient(id),"
-					+ "disease_id INTEGER REFERENCES Disease(id))";
+			
+			String table_Patient_Disease = "CREATE TABLE Patient_Disease (patient_id INTEGER," + "disease_id INTEGER,"
+					+ "FOREIGN KEY (patient_id) REFERENCES Patient(id)," + "FOREIGN KEY (disease_id) REFERENCES Disease(id))";
 			s.executeUpdate(table_Patient_Disease);
-			String table_Patient_Condition = "CREATE TABLE Patient_Condition (patient_id INTEGER REFERENCES Patient(id),"
-					+ "condition_id INTEGER REFERENCES Condition(id))";
+			
+			String table_Patient_Condition = "CREATE TABLE Patient_Condition (patient_id INTEGER," + "condition_id INTEGER,"
+										+ "FOREIGN KEY (patient_id) REFERENCES Patient(id)," + "FOREIGN KEY (condition_id) REFERENCES Condition(id))";
 			s.executeUpdate(table_Patient_Condition);
+			
 			String table_Appointment = "CREATE TABLE Appointment(id INTEGER PRIMARY KEY AUTOINCREMENT, Date date NOT NULL, "
-					+ "patient_id INTEGER NOT NULL REFERENCES Patient(id),"
-					+ " vaccine_id INTEGER NOT NULL REFERENCES Vaccine(id),"
-					+ " doctor_id INTEGER NOT NULL REFERENCES Doctor(id))";
+					+ "patient_id INTEGER," + "vaccine_id INTEGER," + "doctor_id INTEGER,"
+					+ "FOREIGN KEY (patient_id) REFERENCES Patient(id),"
+					+ "FOREIGN KEY (vaccine_id) REFERENCES Vaccine(id),"
+					+ "FOREIGN KEY (doctor_id) REFERENCES Doctor(id))";
 			s.executeUpdate(table_Appointment);
-			String table_Vaccine_Condition = "CREATE TABLE Vaccine_Condition (vaccine_id INTEGER REFERENCES Vaccine(id),"
-					+ " condition_id INTEGER REFERENCES Condition(id))";
+			
+			String table_Vaccine_Condition = "CREATE TABLE Vaccine_Condition (vaccine_id INTEGER," + "condition_id INTEGER,"
+					+ "FOREIGN KEY (vaccine_id) REFERENCES Vaccine(id)," + "FOREIGN KEY (condition_id) REFERENCES Condition(id))";
 			s.executeUpdate(table_Vaccine_Condition);
 			
 			
