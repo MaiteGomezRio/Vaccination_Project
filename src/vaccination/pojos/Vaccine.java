@@ -47,6 +47,7 @@ public class Vaccine implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+		
 	
 	 public Disease getDisease() {
 			return disease;
@@ -54,6 +55,10 @@ public class Vaccine implements Serializable{
 		public void setDisease(Disease disease) {
 			this.disease = disease;
 		}
+ public int getDiseaseId() {
+	 return disease.getId();
+ }
+ 
 	public Integer getDose() {
 		return dose;
 	}
@@ -61,4 +66,9 @@ public class Vaccine implements Serializable{
 		this.dose = dose;
 	}
 	
+	@Override
+	public String toString(){
+		String text ="Vaccine "+name+": "+ "Number of dose/s: ["+dose+ "] "+"Disease id:"+getDiseaseId(); 
+		return text;
+	}
 }

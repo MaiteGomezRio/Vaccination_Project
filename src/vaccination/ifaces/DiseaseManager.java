@@ -11,4 +11,5 @@ public interface DiseaseManager {
 	public List<Disease> searchDiseaseByName(String d_name);
 	public void assignDiseaseToPatient(int p_id, int d_id);
 	public Disease getDisease(String name);
+	public String searchDiseaseById(int d_id);
 }

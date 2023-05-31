@@ -16,6 +16,10 @@ public class Disease implements Serializable{
 		super();
 		this.name = name;
 	}
+	public Disease(int d_id) {
+		super();
+		this.d_id = d_id;
+	}
 	public Disease(int d_id,String name) {
 		super();
 		this.d_id=d_id;

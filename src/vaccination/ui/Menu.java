@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+
+import javax.sound.midi.Soundbank;
+
 import java.time.*;
 import vaccination.ifaces.AppointmentManager;
 import vaccination.ifaces.ConditionManager;
@@ -22,6 +25,7 @@ import vaccination.ifaces.UserManager;
 import vaccination.ifaces.VaccineManager;
 import vaccination.jdbc.ConnectionManager;
 import vaccination.jdbc.JDBCDirectorManager;
+import vaccination.jdbc.JDBCDiseaseManager;
 import vaccination.jdbc.JDBCDoctorManager;
 import vaccination.jdbc.JDBCPatientManager;
 import vaccination.jdbc.JDBCVaccineManager;
@@ -57,6 +61,7 @@ public class Menu {
 	 	 patientMan = new JDBCPatientManager(conMan.getConnection());
 	 	 vaccineMan = new JDBCVaccineManager(conMan.getConnection()); 	 
 	 	 directorMan = new JDBCDirectorManager(conMan.getConnection());
+	 	diseaseMan= new JDBCDiseaseManager(conMan.getConnection());
 	 	 userMan = new JPAUserManager();
 
 	 	 
@@ -83,6 +88,8 @@ public class Menu {
 	 	 	 	 	 userMan.disconnect();
 	 	 	 	 	 return;
 	 	 	 	 }
+	 	 	 	 default:
+	 	 	 		 break;
 	 	 	 	 }
 	 	 	 } catch (NumberFormatException e) {
 	 	 	 	 System.out.println("You didn't type a number!");
@@ -173,7 +180,7 @@ public class Menu {
 			userMan.assignRole(user, role);
 
 			System.out.println("You have registered as a doctor!");
-
+			doctorMenu(user.getEmail());
 		} catch (IOException e) {
 			System.out.println("Exception");
 			e.printStackTrace();
@@ -232,7 +239,9 @@ public class Menu {
 		Role role = userMan.getRole("patient");
 		userMan.assignRole(user, role);
 
-		System.out.println("You have registered as a patient!");
+		System.out.println("You have registered as a patient!\n");
+		patientMenu(user.getEmail());
+		
 	}
 
 	public static void registerVaccine() throws IOException {
@@ -253,12 +262,26 @@ public class Menu {
 
 	public static void selectVaccines() throws IOException {
 		List<Vaccine> listVaccines = vaccineMan.getAllVaccines();
-		System.out.println(listVaccines);
+		if (listVaccines.isEmpty()) {
+			System.out.println("There is no vaccines registered in the database yet");
+		}else {
+		for(Vaccine vaccine: listVaccines) {
+			System.out.print(vaccine);						
+			System.out.println(", "+diseaseMan.searchDiseaseById(vaccine.getDiseaseId()));
+		}
+		}
+		
 	}
 
 	public static void selectPatients(int d_id) throws IOException {
 		List<Patient> listPatients = patientMan.searchPatientsByDoctor(d_id);
+		if (listPatients.isEmpty()) {
+			System.out.println("There is no patients registered in the database yet");
+		}else {
+	 for(Patient patient: listPatients) {
 		System.out.println(listPatients);
+	}
+		}
 	}
 	
 	
@@ -268,7 +291,15 @@ public class Menu {
 
 		Disease disease = new Disease(d_name);
 		List<Vaccine> list = vaccineMan.searchVaccinesByDisease(disease.getId());
+		
+		if (list.isEmpty()) {
+			System.out.println("There is no vaccines registered in the database yet");
+		}else {
+	 for(Vaccine vaccine: list) {
 		System.out.println(list);
+	}
+		}
+		
 
 	}
 
@@ -572,7 +603,9 @@ public class Menu {
 						break;
 					}
 					case 0: {
+						
 						return;
+						
 					}
 					}
 
@@ -691,7 +724,7 @@ public class Menu {
 		Doctor doctor = doctorMan.getDoctorByEmail(email);
 		while (true) {
 			try {
-				System.out.println("Welcome doctor: ");
+				System.out.println("\nWelcome doctor: ");
 				System.out.println("Choose an option.");
 				System.out.println("1. Check vaccine supplies (all vaccines in the data)");
 				System.out.println("2. Check vaccines of a patient.");

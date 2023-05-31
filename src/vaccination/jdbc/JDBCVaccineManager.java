@@ -110,7 +110,9 @@ public class JDBCVaccineManager implements VaccineManager {
 			while (rs.next()) {
 				String name = rs.getString("name");
 				Integer dose = rs.getInt("dose");
-				Vaccine v = new Vaccine(name, dose);
+				Integer disId= rs.getInt("disease_id");
+				Disease disease= new Disease(disId);
+				Vaccine v = new Vaccine(name, dose, disease);
 				list.add(v);
 			}
 		   
