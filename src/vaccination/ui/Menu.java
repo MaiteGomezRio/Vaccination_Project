@@ -168,7 +168,7 @@ public class Menu {
 			String username = id_document;
 			System.out.println("Password:");
 			String password = r.readLine();
-			System.out.println("Your username is: "+id_document);
+			System.out.println("Your username is: "+id_document+"\n");
 			Doctor doctor = new Doctor(id_document, name, surname, email);
 			doctorMan.insertDoctor(doctor);
 			User user = new User(username, password, email);
@@ -222,12 +222,17 @@ public class Menu {
 		System.out.println("password: ");
 		String password = r.readLine();
 		String username = id_document;
-		System.out.println("Your username is: "+id_document);
+		System.out.println("Your username is: "+id_document+"\n");
+		
 		int bound = doctorMan.countNumberOfDoctors();
+		System.out.println(bound);
 		int doc_id = generateRandomInt(bound);
+		System.out.println("doc id "+doc_id);
 		Doctor doctor = doctorMan.getDoctorById(doc_id);
+		System.out.println("doctor: "+doctor.toString());
 		Patient patient = new Patient(id_document, name, surname, email, doctor);
-		patientMan.insertPatient(patient, doc_id);
+		
+		patientMan.insertPatient(patient, doctor);
 		User user = new User(username, password, email);
 		userMan.register(user);
 		Role role = userMan.getRole("patient");
@@ -453,22 +458,7 @@ public class Menu {
 		}
 	}
 
-	/*public static void assignDiseaseToVaccine() {
-		try {
-			System.out.println("Tell me the name of the disease: ");
-			String d_name = r.readLine();
-			Disease disease = diseaseMan.getDisease(d_name);
-			int d_id = disease.getId();
-			System.out.println("Tell me the name of the vaccine: ");
-			String v_name = r.readLine();
-			Vaccine vaccine = vaccineMan.getVaccine(v_name);
-			int v_id = vaccine.getId();
-			directorMan.assignDiseaseToVaccine(d_id, v_id);
-		} catch (IOException e) {
-			System.out.println("I/O Excepption");
-			e.printStackTrace();
-		}
-	}*/
+	
 
 	public static void assignVaccineToPatient() throws IOException {
 		System.out.println("Tell me the name of the patient.");
