@@ -259,6 +259,15 @@ public class Menu {
 		//int d_id = disease.getId();
 		Vaccine vaccine = new Vaccine(name, dose, disease);
 		directorMan.insertVaccine(vaccine);
+		/*String c_name;
+		int v_id = vaccine.getId();
+	    do{
+	    	System.out.println("Tell me the name of the condition, if there are no more conditions press 0");
+	    	c_name=r.readLine();
+	    	Condition condition = condMan.getCondition(c_name);
+	    	int c_id = condition.getId();
+	    	directorMan.assignConditionToVaccine(c_id, v_id);
+	    }while(Integer.parseInt(c_name)!=0); */
 		System.out.println("Vaccine " + name + " registered");
 	}
 
@@ -593,9 +602,9 @@ public class Menu {
 					break; 
 				}
 				case 2: {
-					System.out.println("1.Remove doctor");   //TODO mirar lo de on cascade. 
-					System.out.println("2.Remove vaccine");  //funciona
-					System.out.println("3.Remove patient");  
+					System.out.println("1.Remove doctor");   //TODO see the on cascade thing.  
+					System.out.println("2.Remove vaccine");  //works
+					System.out.println("3.Remove patient");  //TODO see if it works.
 					System.out.println("0.Exit");
 
 					int choice = Integer.parseInt(r.readLine());
@@ -619,7 +628,7 @@ public class Menu {
 					break;
 				}
 				case 3: {
-					System.out.println("1.Assign condition to vaccine");
+					System.out.println("1.Assign condition to vaccine"); //TODO it doesnt work 
 					//System.out.println("2.Assign disease to vaccine");
 					System.out.println("0.Exit");
 					int choice = Integer.parseInt(r.readLine());
