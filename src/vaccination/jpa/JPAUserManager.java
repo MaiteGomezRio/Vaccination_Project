@@ -45,7 +45,7 @@ public class JPAUserManager implements UserManager{
 		em.getTransaction().begin();
 		em.persist(user);
 		em.getTransaction().commit(); 
-		disconnect();
+		
 	}
 	@Override 
 	public void registerDirector(Role dir) {
