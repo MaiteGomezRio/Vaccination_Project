@@ -27,9 +27,6 @@ public class User implements Serializable{
       
     public User() {
     	super();
-    	this.username="director";
-    	this.password="director";
-    	this.role=new Role("director");
     }
       
 	public User(String username, String password,String email) {

@@ -91,16 +91,21 @@ public class ConnectionManager {
 
 	public void insertTables() {
 		try {
-			Statement s = c.createStatement();
-			Statement s2 = c.createStatement();
-			ResultSet rs = s.executeQuery("SELECT COUNT(*) FROM Disease");
-			ResultSet rs2 = s2.executeQuery("SELECT COUNT(*) FROM Condition");
+			Statement s1 = c.createStatement();
+			ResultSet rs = s1.executeQuery("SELECT COUNT(*) FROM Disease");
 			rs.next();
 			int rowCount = rs.getInt(1);
+			rs.close();
+			s1.close();
+			Statement s2 = c.createStatement();
+			ResultSet rs2 = s2.executeQuery("SELECT COUNT(*) FROM Condition");
 			rs2.next();
 			int rowCount2 = rs2.getInt(1);
+			rs2.close();
+			s2.close();
 					// Insert data when tables are empty
 			if (rowCount == 0 && rowCount2 == 0) {
+				Statement s = c.createStatement();
 				//DISEASES
 				String insert_Disease = "INSERT INTO Disease (name)VALUES ('Haemophilus')";
 				s.execute(insert_Disease);
@@ -125,23 +130,22 @@ public class ConnectionManager {
 				
 				//CONDITIONS
 				String insert_Condition = "INSERT INTO Condition(name)VALUES ('Pregnant')";
-				s2.execute(insert_Condition);
+				s.execute(insert_Condition);
 				insert_Condition = "INSERT INTO Condition(name)VALUES ('Allergies')";
-				s2.execute(insert_Condition);
+				s.execute(insert_Condition);
 				insert_Condition = "INSERT INTO Condition(name)VALUES ('HIV')";
-				s2.execute(insert_Condition);
+				s.execute(insert_Condition);
 				insert_Condition = "INSERT INTO Condition(name)VALUES ('Stroke')";
-				s2.execute(insert_Condition);
+				s.execute(insert_Condition);
 				insert_Condition = "INSERT INTO Condition(name)VALUES ('Ictus')";
-				s2.execute(insert_Condition);
+				s.execute(insert_Condition);
 				insert_Condition = "INSERT INTO Condition(name)VALUES ('Epilepsy')";
-				s2.execute(insert_Condition);
+				s.execute(insert_Condition);
 				insert_Condition = "INSERT INTO Condition(name)VALUES ('Pneumonia')";
-				s2.execute(insert_Condition);
+				s.execute(insert_Condition);
 				insert_Condition = "INSERT INTO Condition(name)VALUES ('SpecialMedCon')";
 				
 				s.close();
-				s2.close();
 			}
 		} catch (SQLException e) {
 			System.out.println("database error");
@@ -301,11 +305,12 @@ public class ConnectionManager {
 				p_insert.setInt(3, d_id);
 				p_insert.executeUpdate();
 				
-				rs.close();
 				p_insert.close();
 				//so it assigns each time the conditions to the vaccines 
 				assignConditionToVaccineConnection(); 
 			}
+			rs.close();
+			s.close();
 		} catch (SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
@@ -427,7 +432,8 @@ public class ConnectionManager {
 				p_assign.executeUpdate();
 				p_assign.close();
 			}
-			
+			rs.close();
+			s.close();
 		} catch (SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();

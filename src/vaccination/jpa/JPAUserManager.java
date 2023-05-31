@@ -31,7 +31,10 @@ public class JPAUserManager implements UserManager{
 			this.createRole(patient);
 			this.createRole(dir);
 			User director=new User();//para que se genere siempre un user que el director si todavía no está en la database
-			this.register(director);
+			director.setUsername("director");
+	    	director.setPassword("director");
+	    	this.register(director);
+	    	this.assignRole(director, dir);
 		}
 	}
 	
