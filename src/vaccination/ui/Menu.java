@@ -552,9 +552,9 @@ public class Menu {
 				switch (choice3) {
 
 				case 1: {
-					System.out.println("1.Insert condition");
+					System.out.println("1.Insert condition"); //funciona
 					System.out.println("2.Insert vaccine");   //TODO doesnt work
-					System.out.println("3.Insert disease");
+					System.out.println("3.Insert disease");   //funciona
 					System.out.println("0.Exit");
 
 					int choice = Integer.parseInt(r.readLine());
@@ -579,7 +579,7 @@ public class Menu {
 				}
 				case 2: {
 					System.out.println("1.Remove doctor");   //TODO mirar lo de on cascade. 
-					System.out.println("2.Remove vaccine"); 
+					System.out.println("2.Remove vaccine");  //funciona
 					System.out.println("3.Remove patient");  
 					System.out.println("0.Exit");
 
