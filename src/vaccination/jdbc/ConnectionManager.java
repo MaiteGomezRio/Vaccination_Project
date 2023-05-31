@@ -48,11 +48,11 @@ public class ConnectionManager {
 			s.executeUpdate(table_Doctor);
 			String table_Patient = "CREATE TABLE Patient (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ " id_document TEXT NOT NULL," + " name TEXT NOT NULL," + " surname TEXT NOT NULL,"
-					+ " email TEXT NOT NULL," + " doctor_id INTEGER REFERENCES Doctor(id) ON DELETE SET NULL)";
+					+ " email TEXT NOT NULL," + " doctor_id INTEGER REFERENCES Doctor(id))";
 			s.executeUpdate(table_Patient);
 			String table_Vaccine = "CREATE TABLE Vaccine (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "name TEXT NOT NULL," + " dose INTEGER,"
-					+ "disease_id INTEGER NOT NULL REFERENCES Disease(id))";
+					+ " name TEXT NOT NULL," + " dose INTEGER,"
+					+ " disease_id INTEGER REFERENCES Disease(id))";
 			s.executeUpdate(table_Vaccine);
 			String table_Disease = "CREATE TABLE Disease (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "name TEXT NOT NULL)";

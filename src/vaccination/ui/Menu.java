@@ -255,7 +255,7 @@ public class Menu {
 		Integer dose = Integer.parseInt(r.readLine());
 		System.out.println("disease: ");
 		String dis_name = r.readLine();
-		Disease disease = new Disease(dis_name);
+		Disease disease = diseaseMan.getDisease(dis_name);
 		//int d_id = disease.getId();
 		Vaccine vaccine = new Vaccine(name, dose, disease);
 		directorMan.insertVaccine(vaccine);
@@ -571,9 +571,9 @@ public class Menu {
 				switch (choice3) {
 
 				case 1: {
-					System.out.println("1.Insert condition"); //funciona
-					System.out.println("2.Insert vaccine");   //TODO doesnt work
-					System.out.println("3.Insert disease");   //funciona
+					System.out.println("1.Insert condition"); //works
+					System.out.println("2.Insert vaccine");   //works
+					System.out.println("3.Insert disease");   //wprks
 					System.out.println("0.Exit");
 
 					int choice = Integer.parseInt(r.readLine());

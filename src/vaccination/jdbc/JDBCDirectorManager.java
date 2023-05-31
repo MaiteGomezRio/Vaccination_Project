@@ -24,10 +24,11 @@ public class JDBCDirectorManager implements DirectorManager{
 	public void insertVaccine(Vaccine vaccine) {    //TODO there is a problem here
 		try {	
 			String sql = "INSERT INTO Vaccine (name, dose, disease_id)" + "VALUES (?,?,?)";
-			PreparedStatement p = c.prepareStatement(sql);
+			PreparedStatement p;
+			p=c.prepareStatement(sql);
 			p.setString(1,vaccine.getName());
 			p.setInt(2, vaccine.getDose());	
-			p.setInt(3, vaccine.getDisease().getId());
+			p.setInt(3, vaccine.getDiseaseId());
 			p.executeUpdate();
 			p.close();
 		} catch (SQLException e) {
