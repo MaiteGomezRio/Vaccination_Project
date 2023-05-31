@@ -25,6 +25,20 @@ public class JDBCPatientManager implements PatientManager {
 
 	}
 
+	/*@Override
+	public void insertPatient(Patient patient, Doctor doctor) {
+		try {
+			Statement s = c.createStatement(); 
+			String sql = "INSERT INTO Patient (id_document, name, surname, email, doctor_id) VALUES ('" + patient.getId_document() + "', '"
+					+ patient.getName() + "', '" + patient.getSurname() +"', '"+patient.getEmail()+ "', '"+doctor.getId()+"')";
+			s.execute(sql);
+			s.close(); 
+		}catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		
+	}*/
 	@Override
 	public void insertPatient(Patient patient, Doctor doctor) {
 		try {
@@ -39,9 +53,32 @@ public class JDBCPatientManager implements PatientManager {
 		}
 		
 	}
-	 
 	
 	
+	/*@Override
+	public List<Patient> searchPatientsByDoctor(int d_id) {
+		
+		List<Patient> patients_list=new LinkedList<>();
+		try {
+			String sql = "SELECT * FROM Patient WHERE doctor_id LIKE ?"; 
+			PreparedStatement p = c.prepareStatement(sql); 
+			p.setString(1, "%"+d_id+"%");   // the percentages are so it looks for every name that contains that word. Ex: if you type dri it looks for rodrigo too. 
+			ResultSet rs = p.executeQuery(); 
+			while(rs.next()) {
+				Integer id=rs.getInt("id");
+				String id_document=rs.getString("id_document");
+				String name = rs.getString("surname");
+				String surname = rs.getString("surname");
+				Patient patient = new Patient(id,id_document, name, surname); 
+				
+				patients_list.add(patient);
+			}	
+		}catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		return patients_list; 
+	}*/
 	@Override
 	public List<Patient> searchPatientsByDoctor(int d_id) {
 		
@@ -67,7 +104,28 @@ public class JDBCPatientManager implements PatientManager {
 		return patients_list; 
 	}
 	
-	
+	/*@Override
+	public Patient getPatient(int p_id) {
+		try {
+		String sql = "SELECT * FROM Patient WHERE id LIKE ?";
+		PreparedStatement p = c.prepareStatement(sql); 
+		p.setInt(1, p_id); 
+		ResultSet rs = p.executeQuery(); 
+        rs.next();  //since there is only one unique result.
+        String id_document=rs.getString("id_document");
+        String name = rs.getString("name"); 
+        String surname = rs.getString("surname"); 
+        Integer doctor_id = rs.getInt("doctor_id");
+        Doctor doctor = new Doctor(doctor_id); 
+        Patient patient = new Patient(p_id,id_document,name, surname, doctor);
+        return patient; 
+        
+		}catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		return null; 
+	}*/
 	@Override
 	public Patient getPatient(int p_id) {
 		try {
@@ -90,8 +148,30 @@ public class JDBCPatientManager implements PatientManager {
 		}
 		return null; 
 	}
-
 	
+	/*@Override
+	public List<Patient> searchPatientByName(String name){
+		List<Patient> list = new ArrayList<Patient>(); 
+		try {
+			String sql = "SELECT * FROM Patient WHERE name LIKE ?"; 
+			PreparedStatement p = c.prepareStatement(sql); 
+			p.setString(1, "%"+name+"%");   // the percentages are so it looks for every name that contains that word. Ex: if you type dri it looks for rodrigo too. 
+			ResultSet rs = p.executeQuery(); 
+			while(rs.next()) {
+				Integer id = rs.getInt("id");
+				String id_document=rs.getString("id_document");
+				String n = rs.getString("name"); 
+				String surname= rs.getString("surname");
+				String email = rs.getString("email"); 
+				Patient patient = new Patient(id, id_document,n, surname, email); 
+				list.add(patient); 
+			}
+		}catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		return list; 
+	}*/
 	@Override
 	public List<Patient> searchPatientByName(String name){
 		List<Patient> list = new ArrayList<Patient>(); 
@@ -115,7 +195,7 @@ public class JDBCPatientManager implements PatientManager {
 		}
 		return list; 
 	}
-	@Override
+	/*@Override
 	public Patient getPatientByEmail(String email) {
 		try {
 		String sql = "SELECT * FROM Patient WHERE email LIKE ?";
@@ -124,6 +204,29 @@ public class JDBCPatientManager implements PatientManager {
 		ResultSet rs = p.executeQuery(); 
         rs.next();  
         int id = rs.getInt("p_id"); 
+        String id_document=rs.getString("id_document");
+        String name = rs.getString("name"); 
+        String surname = rs.getString("surname"); 
+        Patient patient = new Patient(id, id_document,name, surname, email); 
+        rs.close();
+        p.close(); 
+        return patient; 
+        
+		}catch(SQLException e) {
+			System.out.println("database error");
+			e.printStackTrace();
+		}
+		return null; 
+	}*/
+	@Override
+	public Patient getPatientByEmail(String email) {
+		try {
+		String sql = "SELECT * FROM Patient WHERE email LIKE ?";
+		PreparedStatement p = c.prepareStatement(sql); 
+		p.setString(1, email); 
+		ResultSet rs = p.executeQuery(); 
+        rs.next();  
+        int id = rs.getInt("id"); 
         String id_document=rs.getString("id_document");
         String name = rs.getString("name"); 
         String surname = rs.getString("surname"); 

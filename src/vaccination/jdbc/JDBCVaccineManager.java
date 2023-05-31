@@ -29,10 +29,8 @@ public class JDBCVaccineManager implements VaccineManager {
 			PreparedStatement p = c.prepareStatement(sql);
 			p.setInt(1, p_id);
 			ResultSet rs = p.executeQuery();
-			while (rs.next()) {
-				String name = rs.getString("name");
-				Integer dose = rs.getInt("dose");				
-				Vaccine v = new Vaccine(name, dose);
+			while (rs.next()) {				
+				Vaccine v = new Vaccine(rs.getString("name"), rs.getInt("dose"), rs.getInt("id"));
 				list.add(v);
 			}
 		} catch (SQLException e) {
@@ -50,10 +48,8 @@ public class JDBCVaccineManager implements VaccineManager {
 			PreparedStatement p=c.prepareStatement(sql);
 			p.setInt(1, d_id);
 			ResultSet rs = p.executeQuery();
-			while (rs.next()) {
-				String name = rs.getString("name");
-				Integer dose = rs.getInt("dose");				
-				Vaccine v = new Vaccine(name, dose);
+			while (rs.next()) {			
+				Vaccine v = new Vaccine(rs.getString("name"), rs.getInt("dose"), rs.getInt("id"));
 				list.add(v);
 			}
 		} catch (SQLException e) {
