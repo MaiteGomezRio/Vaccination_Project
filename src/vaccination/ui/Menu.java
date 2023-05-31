@@ -63,7 +63,7 @@ public class Menu {
 	 	 
 	 	 while (true) {
 	 	 	 try {
-	 	 	 	 System.out.println("Welcome to the Vaccination app!");
+	 	 	 	 System.out.println("\nWelcome to the Vaccination app!");
 	 	 	 	 System.out.println("What do you want to do? :");
 	 	 	 	 System.out.println("1. Register");
 	 	 	 	 System.out.println("2. Log in"); 
@@ -297,16 +297,13 @@ public class Menu {
 		if (list.isEmpty()) {
 			System.out.println("There is no vaccines registered in the database yet");
 		}else {
-	 for(Vaccine vaccine: list) {
-		System.out.println(list);
-		//coment
-	}
-		}
 		
-
+		for(Vaccine vaccine: list) {
+			System.out.println(list);
+		}
+		}
 	}
 
-	
 	public static void checkVaccinesAPatientHasToPut(int p_id) {
 		System.out.println("The vaccines you have have to put on are: ");
 		List<Appointment> appointments = appointmentMan.searchAppointmentsByPatient(p_id);
@@ -367,7 +364,6 @@ public class Menu {
 		}
 		System.out.println(vaccines);
 	}
-
 
 	public static void checkConditionsOfPatient(int p_id) throws IOException {
 		System.out.println("Your conditions are: ");
@@ -487,8 +483,6 @@ public class Menu {
 		}
 	}
 
-	
-
 	public static void assignVaccineToPatient() throws IOException {
 		System.out.println("Tell me the name of the patient.");
 		String name = r.readLine();
@@ -504,7 +498,7 @@ public class Menu {
 
 	public static int generateRandomInt(int bound) {
 		Random random = new Random();
-		return random.nextInt(bound);
+		return random.nextInt(bound)+1;
 	}
 
 	public static void selectAppointments(int d_id) throws IOException {
