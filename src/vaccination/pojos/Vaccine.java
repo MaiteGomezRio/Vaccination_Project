@@ -26,29 +26,12 @@ public class Vaccine implements Serializable{
     	this.dose = dose; 
     	this.disease=disease;
     }
-    public Vaccine(String name, Integer dose) {
+    public Vaccine(String name, Integer dose, int id) {
     	this.name = name; 
     	this.dose = dose;
+    	this.id = id;
     }
-    
-    public Vaccine(String name, Integer dose, Integer id) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.dose = dose;
-	}
-    
-	public Vaccine(int id, String name, Integer dose, List<Patient> patients, Disease disease,
-			List<Condition> conditions) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.dose = dose;
-		this.patients = patients;
-		this.disease = disease;
-		this.conditions = conditions;
-	}
-	public Vaccine(String name) {
+    public Vaccine(String name) {
     	this.name=name;
     }
     
@@ -90,3 +73,4 @@ public class Vaccine implements Serializable{
 		return text;
 	}
 }
+
