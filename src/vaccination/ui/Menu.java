@@ -546,7 +546,7 @@ public class Menu {
 	 	 	 Appointment appointment = new Appointment(doaDate, patient.getDoctor(), patient, vaccine); 
 	 	 	 //we need to turn it into a Date in order to store it into the db. When i create the puts it whould pass the Date. 
 	 	 	 appointmentMan.insertAppointment(appointment);
-			
+	 	 	 System.out.println(" Great! Remember your appointment date: "+appointment.toString());
 
 	 	 }catch(IOException e) {
 	 	 	 System.out.println("I/O Exception");
