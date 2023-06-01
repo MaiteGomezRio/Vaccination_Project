@@ -86,17 +86,19 @@ public class JDBCPatientManager implements PatientManager {
 		try {
 			String sql = "SELECT * FROM Patient WHERE doctor_id LIKE ?"; 
 			PreparedStatement p = c.prepareStatement(sql); 
-			p.setString(1, "%"+d_id+"%");   // the percentages are so it looks for every name that contains that word. Ex: if you type dri it looks for rodrigo too. 
+			p.setInt(1, d_id);   // the percentages are so it looks for every name that contains that word. Ex: if you type dri it looks for rodrigo too. 
 			ResultSet rs = p.executeQuery(); 
 			while(rs.next()) {
 				Integer id=rs.getInt("id");
 				String id_document=rs.getString("id_document");
-				String name = rs.getString("surname");
+				String name = rs.getString("name");
 				String surname = rs.getString("surname");
 				Patient patient = new Patient(id,id_document, name, surname); 
 				
 				patients_list.add(patient);
 			}	
+			
+			p.close();
 		}catch(SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();

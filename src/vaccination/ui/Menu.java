@@ -333,11 +333,18 @@ public class Menu {
 		System.out.println(vaccines);
 	}
 
-	public static void checkVaccinesPatientHasToPut() {//for doctor
+	public static void checkVaccinesPatientHasToPut(int d_id) {//for doctor
 		try {
+			List<Patient> listPatients = patientMan.searchPatientsByDoctor(d_id);
+			if (listPatients.isEmpty()) {
+				System.out.println("There is no patients registered in the database yet");
+			}else {
+				
+			
 			System.out.println("Introduce the name of the patient you want to check: ");
 			String name = r.readLine();
 			List<Patient> list=new ArrayList<>();
+			
 			do {
 				list = patientMan.searchPatientByName(name);
 				System.out.println("You don't have any patients with that name. Please enter a valid name: ");
@@ -349,7 +356,7 @@ public class Menu {
 				checkVaccinesAPatientHasToPut(p_id);
 			}while(list.isEmpty());
 			
-			
+			}
 		} catch (NumberFormatException e) {
 			System.out.println("I/O exception");
 			e.printStackTrace();
@@ -393,7 +400,7 @@ public class Menu {
 	public static void checkDosesOfVaccine() throws IOException {
 		System.out.println("Type the name of the vaccine you want to check: ");
 		String v_name = r.readLine();
-		Vaccine vaccine = vaccineMan.getVaccine(v_name);
+		Vaccine vaccine = vaccineMan.getVaccine(v_name);		
 		System.out.println(v_name + " has the total of: " + vaccine.getDose() + " dosis");
 
 	}
@@ -741,7 +748,7 @@ public class Menu {
 					break;
 				}
 				case 2: {
-					checkVaccinesPatientHasToPut();
+					checkVaccinesPatientHasToPut(doctor.getId());					
 					break;
 				}
 				case 3: {
