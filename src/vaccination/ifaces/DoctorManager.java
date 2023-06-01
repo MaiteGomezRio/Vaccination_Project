@@ -11,4 +11,5 @@ public interface DoctorManager {
 	public Doctor getDoctorByEmail(String email);
 	public int countNumberOfDoctors();
 	Doctor getDoctorById(int id);
+	int getRandomId();
 }

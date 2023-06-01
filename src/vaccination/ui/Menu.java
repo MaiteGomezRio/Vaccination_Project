@@ -542,8 +542,13 @@ public class Menu {
 	 	 	 String doa = r.readLine();
 	 	 	 LocalDate doaLocalDate = LocalDate.parse(doa, formatter); 
 	 	 	 Date doaDate = Date.valueOf(doaLocalDate);//we should not show the date as the amount of seconds that... so that is why we use Localdate.	 	 	 	 	 	 	 	 	 	 	 
-
-	 	 	 Appointment appointment = new Appointment(doaDate, patient.getDoctor(), patient, vaccine); 
+	 	 	 
+	 	 	 if(patient.getDoctor()==null) {
+		 	 	 int doc_id = doctorMan.getRandomId();
+		 	 	 Doctor doctor = doctorMan.getDoctorById(doc_id); 
+		 	 	 Appointment appointment = new Appointment(doaDate, doctor, patient, vaccine);
+	 	 	 }
+	 	 	 Appointment appointment = new Appointment(doaDate,patient.getDoctor(), patient, vaccine); 
 	 	 	 //we need to turn it into a Date in order to store it into the db. When i create the puts it whould pass the Date. 
 	 	 	 appointmentMan.insertAppointment(appointment);
 	 	 	 System.out.println(" Great! Remember your appointment date: "+appointment.toString());
