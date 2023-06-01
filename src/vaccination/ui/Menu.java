@@ -333,23 +333,26 @@ public class Menu {
 		System.out.println(vaccines);
 	}
 
-	public static void checkVaccinesPatientHasToPut() {//for doctor
+	public static void checkVaccinesPatientHasToPut(int d_id) {//for doctor
+		List<Patient> list=new ArrayList<>();
+		List<Patient> listPatients = new ArrayList<>();
 		try {
-			System.out.println("Introduce the name of the patient you want to check: ");
-			String name = r.readLine();
-			List<Patient> list=new ArrayList<>();
-			do {
+			listPatients = patientMan.searchPatientsByDoctor(d_id);
+			if (listPatients.isEmpty()) {
+				System.out.println("You don't have any patients!");
+			}else {
+				System.out.println("Introduce the name of the patient you want to check: ");
+				String name = r.readLine();
 				list = patientMan.searchPatientByName(name);
-				System.out.println("You don't have any patients with that name. Please enter a valid name: ");
-				String vname=r.readLine();
-				System.out.println(list);
-				
-				System.out.println("Tell me which one it is, type it's Id");
-				int p_id = Integer.parseInt(r.readLine());
-				checkVaccinesAPatientHasToPut(p_id);
-			}while(list.isEmpty());
-			
-			
+				if(list.isEmpty()) {
+					System.out.println("You don't have any patients with that name. Please enter a valid name: ");
+					System.out.println(list);
+				}else{
+					System.out.println("Tell me which one it is, type it's Id");
+					int p_id = Integer.parseInt(r.readLine());
+					checkVaccinesAPatientHasToPut(p_id);
+				}
+			}	
 		} catch (NumberFormatException e) {
 			System.out.println("I/O exception");
 			e.printStackTrace();
@@ -387,7 +390,9 @@ public class Menu {
 	public static void checkAppointmentsOfPatient(int p_id) {
 		System.out.println("Your appointments are: ");
 		List<Appointment> list = appointmentMan.searchAppointmentsByPatient(p_id);
-		System.out.println(list);
+	 	 for(Appointment ap : list) {
+	 		System.out.println(ap); 
+	 	 }
 	}
 
 	public static void checkDosesOfVaccine() throws IOException {
@@ -521,8 +526,10 @@ public class Menu {
 			System.out.println("There are no medical appointments for the moment");
 			
 		}else {
-		System.out.println(listAppointments);
-	}
+	 	 for(Appointment ap : listAppointments) {
+	 		System.out.println(ap); 
+	 	 }
+		}
 	}
 
 	public static void setAppointment(int p_id) {
@@ -535,7 +542,7 @@ public class Menu {
 
 	 	 	 Disease disease = diseaseMan.getDisease(d_name); 
 	 	 	 int d_id = disease.getId();
-	 	 	 Vaccine vaccine=condMan.getVaccineDependingOnCondition(d_id, p_id);
+	 	 	 Vaccine vaccine = condMan.getVaccineDependingOnCondition(d_id, p_id);
 			
 
 	 	 	 System.out.println("Please, tell me the date at which you want to set the appointment. (yyyy-MM-dd)");
@@ -545,13 +552,16 @@ public class Menu {
 	 	 	 
 	 	 	 if(patient.getDoctor()==null) {
 		 	 	 int doc_id = doctorMan.getRandomId();
-		 	 	 Doctor doctor = doctorMan.getDoctorById(doc_id); 
-		 	 	 Appointment appointment = new Appointment(doaDate, doctor, patient, vaccine);
+		 	 	patient.setDoctor(doctorMan.getDoctorById(doc_id)); 
+		 	 	 Appointment appointment = new Appointment(doaDate, patient.getDoctor(), patient, vaccine);
 	 	 	 }
 	 	 	 Appointment appointment = new Appointment(doaDate,patient.getDoctor(), patient, vaccine); 
 	 	 	 //we need to turn it into a Date in order to store it into the db. When i create the puts it whould pass the Date. 
 	 	 	 appointmentMan.insertAppointment(appointment);
-	 	 	 System.out.println(" Great! Remember your appointment date: "+appointment.toString());
+	 	 	System.out.println(" Great! Remember your appointment details:");
+	 	 	System.out.println(" Appointment date: " + doaDate);
+	 	 	System.out.println(" Doctor:" + patient.getDoctor());
+	 	 	System.out.println(" Vaccine:" + vaccine);
 
 	 	 }catch(IOException e) {
 	 	 	 System.out.println("I/O Exception");
@@ -563,7 +573,10 @@ public class Menu {
 	 	 try {
 	 	 	 System.out.println("These are the list of your appointments: ");
 	 	 	 List<Appointment> appointments = appointmentMan.searchAppointmentsByPatient(p_id);
-	 	 	 System.out.println(appointments); 
+	 	 	 for(Appointment ap : appointments) {
+	 	 		System.out.println(ap); 
+	 	 	 }
+	 	 	 
 	 	 	 System.out.println("Please, tell me the id of the appointment you want to remove: ");
 	 	 	 int id = Integer.parseInt(r.readLine());
 	 	 	 appointmentMan.removeAppointment(id);
@@ -746,7 +759,7 @@ public class Menu {
 					break;
 				}
 				case 2: {
-					checkVaccinesPatientHasToPut();
+					checkVaccinesPatientHasToPut(doctor.getId());
 					break;
 				}
 				case 3: {

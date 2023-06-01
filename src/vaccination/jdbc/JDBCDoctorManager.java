@@ -169,11 +169,7 @@ public class JDBCDoctorManager implements DoctorManager {
 		p.setInt(1, id); 
 		ResultSet rs = p.executeQuery(); 
         rs.next();   
-        String id_document = rs.getString("id_document");
-        String name = rs.getString("name"); 
-        String surname = rs.getString("surname"); 
-        String email = rs.getString("email");
-        Doctor doctor = new Doctor(id, id_document,name, surname, email); 
+        Doctor doctor = new Doctor(id, rs.getString("id_document"),rs.getString("name"), rs.getString("surname"), rs.getString("email")); 
         rs.close();
         p.close(); 
         return doctor; 

@@ -91,7 +91,7 @@ public class JDBCPatientManager implements PatientManager {
 			while(rs.next()) {
 				Integer id=rs.getInt("id");
 				String id_document=rs.getString("id_document");
-				String name = rs.getString("surname");
+				String name = rs.getString("name");
 				String surname = rs.getString("surname");
 				Patient patient = new Patient(id,id_document, name, surname); 
 				
@@ -138,8 +138,21 @@ public class JDBCPatientManager implements PatientManager {
         String name = rs.getString("name"); 
         String surname = rs.getString("surname"); 
         Integer doctor_id = rs.getInt("doctor_id");
-        Doctor doctor = new Doctor(doctor_id); 
-        Patient patient = new Patient(p_id,id_document,name, surname, doctor);
+        Patient patient = new Patient(p_id,id_document,name, surname, new Doctor());
+        rs.close();
+        p.close();
+        
+		String sql2 = "SELECT * FROM Doctor WHERE id LIKE ?";
+		PreparedStatement p2 = c.prepareStatement(sql2); 
+		p2.setInt(1, doctor_id); 
+		ResultSet rs2 = p2.executeQuery(); 
+        rs2.next();   
+        Doctor doctor = new Doctor(doctor_id, rs2.getString("id_document"),rs2.getString("name"), rs2.getString("surname"), rs2.getString("email"));
+        patient.setDoctor(doctor);
+        rs2.close();
+        p2.close(); 
+        
+        
         return patient; 
         
 		}catch(SQLException e) {

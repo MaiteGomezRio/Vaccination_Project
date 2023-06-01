@@ -10,6 +10,7 @@ import java.util.List;
 
 import vaccination.ifaces.ConditionManager;
 import vaccination.pojos.Condition;
+import vaccination.pojos.Disease;
 import vaccination.pojos.Doctor;
 import vaccination.pojos.Vaccine;
 
@@ -94,16 +95,17 @@ public class JDBCConditionManager implements ConditionManager{
 	
 	public Vaccine getVaccineDependingOnCondition(int d_id, int p_id) {
 		try {
-			String sql = "SELECT v.name, v.id"
-					+" FROM Vaccine v"
-					+" JOIN Vaccine_Condition vc ON v.id = vc.vaccine_id"
-					+" LEFT JOIN Patient_Condition pc ON vc.condition_id = pc.condition_id"
-					+" WHERE v.disease_id <> ? AND pc.patient_id IS NULL";
+			String sql = "SELECT v.id, v.name, v.dose, v.disease_id FROM Vaccine v LEFT JOIN Vaccine_Condition vc ON v.id = vc.vaccine_id "
+					+ "WHERE v.disease_id = ? AND (vc.condition_id NOT IN (SELECT pc.condition_id FROM Patient p INNER JOIN Patient_Condition pc ON p.id = pc.patient_id WHERE p.id = ?) OR vc.condition_id IS NULL)"
+					+ " GROUP BY v.id";
 			PreparedStatement p = c.prepareStatement(sql); 
-			p.setInt(1, d_id); 
+			p.setInt(1, d_id);
+			p.setInt(2, p_id); 
 			ResultSet rs = p.executeQuery(); 
 			rs.next(); 
-		    Vaccine vaccine = new Vaccine(rs.getInt("id"), rs.getString("name"));
+			Disease disease = new Disease(rs.getInt("disease_id"));
+			
+		    Vaccine vaccine = new Vaccine(rs.getInt("id"), rs.getString("name"), rs.getInt("dose"), disease);
 		    rs.close();
 		    p.close();
 		    return vaccine; 
