@@ -334,16 +334,34 @@ public class Menu {
 	}
 
 	public static void checkVaccinesPatientHasToPut(int d_id) {//for doctor
+<<<<<<< HEAD
 		List<Patient> list=new ArrayList<>();
 		List<Patient> listPatients = new ArrayList<>();
+=======
+>>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 		try {
+<<<<<<< HEAD
 			listPatients = patientMan.searchPatientsByDoctor(d_id);
 			if (listPatients.isEmpty()) {
 				System.out.println("You don't have any patients!");
 			}else {
 				System.out.println("Introduce the name of the patient you want to check: ");
 				String name = r.readLine();
+=======
+			List<Patient> listPatients = patientMan.searchPatientsByDoctor(d_id);
+			if (listPatients.isEmpty()) {
+				System.out.println("There is no patients registered in the database yet");
+			}else {
+				
+			
+			System.out.println("Introduce the name of the patient you want to check: ");
+			String name = r.readLine();
+			List<Patient> list=new ArrayList<>();
+			
+			do {
+>>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 				list = patientMan.searchPatientByName(name);
+<<<<<<< HEAD
 				if(list.isEmpty()) {
 					System.out.println("You don't have any patients with that name. Please enter a valid name: ");
 					System.out.println(list);
@@ -353,6 +371,18 @@ public class Menu {
 					checkVaccinesAPatientHasToPut(p_id);
 				}
 			}	
+=======
+				System.out.println("You don't have any patients with that name. Please enter a valid name: ");
+				String vname=r.readLine();
+				System.out.println(list);
+				
+				System.out.println("Tell me which one it is, type it's Id");
+				int p_id = Integer.parseInt(r.readLine());
+				checkVaccinesAPatientHasToPut(p_id);
+			}while(list.isEmpty());
+			
+			}
+>>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 		} catch (NumberFormatException e) {
 			System.out.println("I/O exception");
 			e.printStackTrace();
@@ -398,7 +428,7 @@ public class Menu {
 	public static void checkDosesOfVaccine() throws IOException {
 		System.out.println("Type the name of the vaccine you want to check: ");
 		String v_name = r.readLine();
-		Vaccine vaccine = vaccineMan.getVaccine(v_name);
+		Vaccine vaccine = vaccineMan.getVaccine(v_name);		
 		System.out.println(v_name + " has the total of: " + vaccine.getDose() + " dosis");
 
 	}
@@ -759,7 +789,11 @@ public class Menu {
 					break;
 				}
 				case 2: {
+<<<<<<< HEAD
 					checkVaccinesPatientHasToPut(doctor.getId());
+=======
+					checkVaccinesPatientHasToPut(doctor.getId());					
+>>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 					break;
 				}
 				case 3: {
