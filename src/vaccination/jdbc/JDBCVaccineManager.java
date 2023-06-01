@@ -69,9 +69,7 @@ public class JDBCVaccineManager implements VaccineManager {
 			p.setString(1, v_name);
 			ResultSet rs = p.executeQuery();
 			rs.next();
-			String name = rs.getString("name");
-			Integer dose = rs.getInt("dose");
-			Vaccine v = new Vaccine(name, dose);
+			Vaccine v = new Vaccine(rs.getString("name"), rs.getInt("dose"), rs.getInt("id"));
 			rs.close();
 		    p.close();
 			return v;

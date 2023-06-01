@@ -94,12 +94,21 @@ public class JDBCConditionManager implements ConditionManager{
 	
 	public Vaccine getVaccineDependingOnCondition(int d_id, int p_id) {
 		try {
+<<<<<<< HEAD
 			String sql = "SELECT v.name"
 					+" FROM Vaccine v"
 					+" JOIN Vaccine_Condition vc ON v.id = vc.vaccine_id"
 					+" LEFT JOIN Patient_Condition pc ON vc.condition_id = pc.condition_id"
 					+" WHERE v.disease_id <> ? AND pc.patient_id IS NULL";
 			
+=======
+			String sql = "SELECT v.name AS vaccine_name"
+					+ "FROM Vaccine AS v"
+					+ "JOIN Vaccine_Condition vc ON v.id = vc.vaccine_id"
+					+ "LEFT JOIN Patient_Condition pc ON vc.condition_id = pc.condition_id"
+					+ "WHERE v.disease_id <>disease_id"
+					+ "  AND pc.patient_id IS NULL;";
+>>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 			PreparedStatement p = c.prepareStatement(sql); 
 			p.setInt(1, d_id); 
 			ResultSet rs = p.executeQuery(); 

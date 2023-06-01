@@ -61,6 +61,7 @@ public class Menu {
 	 	 diseaseMan= new JDBCDiseaseManager(conMan.getConnection());
 	 	 condMan = new JDBCConditionManager(conMan.getConnection()); 
 	 	 appointmentMan=new JDBCAppointmentManager(conMan.getConnection());
+	 	
 	 	 userMan = new JPAUserManager();
 	 	 
 	 	 while (true) {
@@ -292,7 +293,7 @@ public class Menu {
 			System.out.println("There is no patients registered in the database yet");
 		}else {
 	 for(Patient patient: listPatients) {
-		System.out.println(listPatients);
+		System.out.println(patient);
 	}
 		}
 	}
@@ -310,7 +311,7 @@ public class Menu {
 		}else {
 		
 		for(Vaccine vaccine: list) {
-			System.out.println(list);
+			System.out.println(vaccine);
 		}
 		}
 	}
@@ -513,8 +514,15 @@ public class Menu {
 	}
 
 	public static void selectAppointments(int d_id) throws IOException {
+		
 		List<Appointment> listAppointments = appointmentMan.searchAppointmentsByDoctor(d_id);
+		
+		if (listAppointments.isEmpty()) {
+			System.out.println("There are no medical appointments for the moment");
+			
+		}else {
 		System.out.println(listAppointments);
+	}
 	}
 
 	public static void setAppointment(int p_id) {
@@ -716,6 +724,7 @@ public class Menu {
 	private static void doctorMenu(String email) {
 		Doctor doctor = doctorMan.getDoctorByEmail(email);
 		while (true) {
+			
 			try {
 				System.out.println("\nWelcome doctor: ");
 				System.out.println("Choose an option.");
@@ -743,10 +752,14 @@ public class Menu {
 					selectAppointments(doctor.getId());
 					break;
 				}
-				case 0: {
-					return;
+				case 0: {	
+					
+					break;
+					
 				}
 				}
+				
+				
 			} catch (IOException e) {
 				System.out.println("I/O exception");
 				e.printStackTrace();
