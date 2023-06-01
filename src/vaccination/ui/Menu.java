@@ -409,10 +409,10 @@ public class Menu {
 	 	 	 case 1:{
 	 	 	 	 System.out.println("How many new conditions do you have? Introduce a number ");
 	 	 	 	 int number = Integer.parseInt(r.readLine());
-	 	 	 	 for(int i=0; i<number; i++) {
+	 	 	 	 for(int i=0; i < number; i++) {
 	 	 	 	 	 System.out.println("Introduce condition name:");
 	 	 	 	 	 String c_type=r.readLine();
-	 	 	 	 	 Condition condition=new Condition(c_type);
+	 	 	 	 	 Condition condition = condMan.getCondition(c_type);
 	 	 	 	 	 int c_id = condition.getId();
 	 	 	 	 	 condMan.updateConditionsOfPatient(p_id, c_id);
 	 	 	 	 }
@@ -754,7 +754,7 @@ public class Menu {
 				}
 				case 0: {	
 					
-					break;
+					return;
 					
 				}
 				}

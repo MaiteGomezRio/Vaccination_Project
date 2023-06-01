@@ -45,10 +45,10 @@ public class JDBCConditionManager implements ConditionManager{
 	@Override
 	public void updateConditionsOfPatient(int p_id, int c_id) {
 		try {
-			String sql = "UPDATE Patient_Condition SET condition_id = ? WHERE patient_id = ? ";
+			String sql = "INSERT INTO Patient_Condition (patient_id, condition_id) VALUES (?, ?) ";
 			PreparedStatement p = c.prepareStatement(sql); 
-			p.setInt(1, c_id);
-			p.setInt(2, p_id);
+			p.setInt(1, p_id);
+			p.setInt(2, c_id);
 			p.executeUpdate();
 			p.close();		
 		}catch(SQLException e) {
@@ -94,27 +94,16 @@ public class JDBCConditionManager implements ConditionManager{
 	
 	public Vaccine getVaccineDependingOnCondition(int d_id, int p_id) {
 		try {
-<<<<<<< HEAD
-			String sql = "SELECT v.name"
+			String sql = "SELECT v.name, v.id"
 					+" FROM Vaccine v"
 					+" JOIN Vaccine_Condition vc ON v.id = vc.vaccine_id"
 					+" LEFT JOIN Patient_Condition pc ON vc.condition_id = pc.condition_id"
 					+" WHERE v.disease_id <> ? AND pc.patient_id IS NULL";
-			
-=======
-			String sql = "SELECT v.name AS vaccine_name"
-					+ "FROM Vaccine AS v"
-					+ "JOIN Vaccine_Condition vc ON v.id = vc.vaccine_id"
-					+ "LEFT JOIN Patient_Condition pc ON vc.condition_id = pc.condition_id"
-					+ "WHERE v.disease_id <>disease_id"
-					+ "  AND pc.patient_id IS NULL;";
->>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 			PreparedStatement p = c.prepareStatement(sql); 
 			p.setInt(1, d_id); 
 			ResultSet rs = p.executeQuery(); 
 			rs.next(); 
-		    String name= rs.getString("name"); 
-		    Vaccine vaccine = new Vaccine(name);
+		    Vaccine vaccine = new Vaccine(rs.getInt("id"), rs.getString("name"));
 		    rs.close();
 		    p.close();
 		    return vaccine; 
@@ -140,5 +129,6 @@ public class JDBCConditionManager implements ConditionManager{
 		}
 		
 	}
+	
 	
 }
