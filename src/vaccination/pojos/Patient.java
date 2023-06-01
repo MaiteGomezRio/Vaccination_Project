@@ -92,11 +92,12 @@ public class Patient implements Serializable{
 	
 	
 	
-	@Override 
-	public String toString() {
-		return "Patient [id document: "+id_document+", name: "+name+" ,surname: "+surname+"]";
-	}
 	
+
+	@Override
+	public String toString() {
+		return "Patient [id=" + id + ", id_document=" + id_document + ", name=" + name + ", surname=" + surname + "]";
+	}
 	public int getId() {
 		return id;
 	}

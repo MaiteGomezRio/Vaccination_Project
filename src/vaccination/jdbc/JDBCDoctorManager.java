@@ -267,5 +267,22 @@ public class JDBCDoctorManager implements DoctorManager {
 		}
 		return 0;
 	}
+	@Override
+	public int getRandomId() {
+		try {
+			String sql = "SELECT id FROM Doctor ORDER BY RANDOM() LIMIT1"; 
+			PreparedStatement p = c.prepareStatement(sql);
+			ResultSet rs = p.executeQuery();
+			rs.next(); 
+			int d_id = rs.getInt("id");
+			rs.close();
+			p.close(); 
+			return d_id; 
+		}catch(SQLException e) {
+			System.out.println("Database error");
+			e.printStackTrace();
+		}
+		return 0; 
+	}
 }
 
