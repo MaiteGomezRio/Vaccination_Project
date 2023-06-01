@@ -31,12 +31,13 @@ public class JDBCAppointmentManager implements AppointmentManager{
 	public void insertAppointment(Appointment appointment) {
 		try {	
 			
-	         String sql = "INSERT INTO Appointment (date, doctor, patient, vaccine)" + "VALUES (?, ?, ?, ? )";
+	         String sql = "INSERT INTO Appointment (id, Date, patient_id, vaccine_id, doctor_id)" + "VALUES (?, ?, ?, ?, ? )";
 	         PreparedStatement p = c.prepareStatement(sql);
-			 p.setDate(1, appointment.getDate());
-			 p.setInt(2, appointment.getDoctor().getId());
+	         p.setInt(1,appointment.getId());
+			 p.setDate(2, appointment.getDate());
 			 p.setInt(3, appointment.getPatient().getId());
 			 p.setInt(4, appointment.getVaccine().getId());
+			 p.setInt(5, appointment.getDoctor().getId());
 			 p.executeUpdate();
 			 p.close();
 		} catch (SQLException e) {

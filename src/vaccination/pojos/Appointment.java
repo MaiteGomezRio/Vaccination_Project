@@ -40,6 +40,16 @@ public class Appointment implements Serializable{
 		this.vaccine = vaccine;
 
 	}
+	
+	public Appointment(int a_id, Date date, Doctor doctor, Patient patient, Vaccine vaccine) {
+		super();
+		this.a_id = a_id;
+		this.date = date;
+		this.doctor = doctor;
+		this.patient = patient;
+		this.vaccine = vaccine;
+	}
+	
 	public int getId() {
 		return a_id;
 	}

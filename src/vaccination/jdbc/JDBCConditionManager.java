@@ -45,14 +45,12 @@ public class JDBCConditionManager implements ConditionManager{
 	@Override
 	public void updateConditionsOfPatient(int p_id, int c_id) {
 		try {
-			Statement s = c.createStatement();
 			String sql = "UPDATE Patient_Condition SET condition_id = ? WHERE patient_id = ? ";
 			PreparedStatement p = c.prepareStatement(sql); 
 			p.setInt(1, c_id);
 			p.setInt(2, p_id);
-			s.execute(sql); 
-			p.close();
-			s.close(); 			
+			p.executeUpdate();
+			p.close();		
 		}catch(SQLException e) {
 			System.out.println("database error");
 			e.printStackTrace();
@@ -96,18 +94,18 @@ public class JDBCConditionManager implements ConditionManager{
 	
 	public Vaccine getVaccineDependingOnCondition(int d_id, int p_id) {
 		try {
-			String sql = "SELECT vaccine_id"
-					+ " FROM Vaccine"
-					+ " JOIN Vaccine_Condition ON Disease_Vaccine.vaccine_id = Vaccine_Condition.vaccine_id"
-					+ " JOIN Patient_Condition ON Patient_Condition.condition_id = Vaccine_Condition.condition_id"
-					+ " WHERE disease_id = ? AND patient_id = ? AND vaccine_id NOT IN (SELECT condition_id FROM Vaccine_Condition)";
+			String sql = "SELECT v.name"
+					+" FROM Vaccine v"
+					+" JOIN Vaccine_Condition vc ON v.id = vc.vaccine_id"
+					+" LEFT JOIN Patient_Condition pc ON vc.condition_id = pc.condition_id"
+					+" WHERE v.disease_id <> ? AND pc.patient_id IS NULL";
+			
 			PreparedStatement p = c.prepareStatement(sql); 
 			p.setInt(1, d_id); 
-			p.setInt(2, p_id);
 			ResultSet rs = p.executeQuery(); 
 			rs.next(); 
-		    int id = rs.getInt("vaccine_id"); 
-		    Vaccine vaccine = new Vaccine(id);
+		    String name= rs.getString("name"); 
+		    Vaccine vaccine = new Vaccine(name);
 		    rs.close();
 		    p.close();
 		    return vaccine; 
