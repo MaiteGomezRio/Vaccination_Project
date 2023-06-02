@@ -775,7 +775,7 @@ public class Menu {
 				System.out.println("3. Check all my patients");
 				System.out.println("4. Check my appointments.");
 				System.out.println("5. Export my patients to XML.");
-				System.out.println("6. Import patients from XML.");
+				System.out.println("6. Import from XML.");
 				System.out.println("0. Return");
 				int choice = Integer.parseInt(r.readLine());
 				switch (choice) {
@@ -810,7 +810,6 @@ public class Menu {
 					
 				}
 				}
-				
 				
 			} catch (IOException e) {
 				System.out.println("I/O exception");
