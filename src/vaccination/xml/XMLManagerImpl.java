@@ -1,8 +1,8 @@
 package vaccination.xml;
 
 import java.io.File;
+
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.Transformer;
@@ -10,8 +10,12 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import vaccination.ifaces.PatientManager;
 import vaccination.ifaces.XMLManager;
+import vaccination.jdbc.ConnectionManager;
+import vaccination.jdbc.JDBCPatientManager;
 import vaccination.pojos.Doctor;
+import vaccination.pojos.Patient;
 
 
 
@@ -27,8 +31,9 @@ public class XMLManagerImpl implements XMLManager {
 			Marshaller marshaller = jaxbContext.createMarshaller();
 			// Pretty formatting
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-			File file = new File("./xmls/Patients.xml");
+			File file = new File("./xmls/Sample-Doctor.xml");
 			marshaller.marshal(d, file);
+			marshaller.marshal(d, System.out);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -38,19 +43,25 @@ public class XMLManagerImpl implements XMLManager {
 	@Override
 	public Doctor xml2Doctor(File xml) {
 		
+		ConnectionManager c = new ConnectionManager();
+		PatientManager patientMan = new JDBCPatientManager(c.getConnection());
+		
+		Doctor doctor=null;
 		try {
-			// Create the JAXBContext
-			JAXBContext jaxbC = JAXBContext.newInstance(Doctor.class);
-			// Create the JAXBMarshaller
-			Unmarshaller jaxbU = jaxbC.createUnmarshaller();
-			// Create the object by reading from a file
-			Doctor doctor = (Doctor) jaxbU.unmarshal(xml);
+			JAXBContext jaxbContext = JAXBContext.newInstance(Doctor.class);
+			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+			doctor = (Doctor) unmarshaller.unmarshal(xml);
+			for (Patient patient : doctor.getPatients()) {
+                patientMan.insertPatient(patient, doctor);
+            }
+			System.out.println("Patients inserted in the database!");
 			
-		} catch (JAXBException e) {
+		}catch(Exception e)
+		{
 			e.printStackTrace();
 		}
 		
-		return null;
+		return doctor;
 	}
 
 	@Override

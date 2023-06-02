@@ -14,6 +14,7 @@ public class Utilities {
 		boolean ok=true;
 		if(doaLocalDate.isAfter(LocalDate.now())) {
 		ok=false;
+		System.out.println("Invalid email, try again");
 		}
 		return ok;
 		}
@@ -79,5 +80,41 @@ public class Utilities {
 
 	        return text;
 	    }
+		
+		
+		
+		 public static boolean validateID(String id) {	
+			 
+			 boolean ok=true;
+			 if (id.length() != 9) {
+				 System.out.println("Invalid id, try again");
+				 ok=false;
+			 
+		            return ok;
+		        }
+
+		        for (int i = 0; i < 8; i++) {
+		            if (!Character.isDigit(id.charAt(i))) {
+		            	ok=false;
+		            	System.out.println("Invalid id, try again");
+		                return ok;
+		            }
+		        }
+		            String num = id.substring(0, 8);
+
+		        String validLeters = "TRWAGMYFPDXBNJZSQVHLCKE";
+		        int indexLeter = Integer.parseInt(num) % 23;
+		        char valid = validLeters.charAt(indexLeter);
+		        
+		        if (id.toUpperCase().charAt(8) != valid ) {
+		        	System.out.println("Invalid id, try again");
+		        	ok=false;
+		            return ok;
+		        }
+		       
+		        
+		        return ok;
+		    }
+		
 
 }

@@ -55,6 +55,7 @@ public class JDBCPatientManager implements PatientManager {
 	}
 	
 	
+	
 	/*@Override
 	public List<Patient> searchPatientsByDoctor(int d_id) {
 		

@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)//we must annotate patient because the xml is of doctor and we want to include the list of patients
 @XmlRootElement(name = "Patient")
-@XmlType(propOrder = { "id_document", "name", "surname", "email", "vaccines", "doctor", "diseases", "conditions", "appointments" })
+@XmlType(propOrder = { "id_document", "name", "surname", "email"})
 
 public class Patient implements Serializable{
     

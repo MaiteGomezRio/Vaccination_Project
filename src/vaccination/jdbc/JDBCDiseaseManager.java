@@ -98,27 +98,7 @@ public class JDBCDiseaseManager implements DiseaseManager{
 	
 
 	
-	//TODO not needed
-	@Override
-	public List<Disease> searchDiseasesByPatient(int p_id) {
-		List<Disease> list = new ArrayList<Disease>();
-		try {
-			String sql = "SELECT disease_id FROM Patient_Disease WHERE patient_id LIKE ?";
-			PreparedStatement p = c.prepareStatement(sql);
-			p.setInt(1, p_id); 
-			ResultSet rs = p.executeQuery();
-			while (rs.next()) {
-				String disease_name = rs.getString("name");
-				Disease disease=new Disease(disease_name);
-				list.add(disease);
-			}
-		} catch (SQLException e) {
-			System.out.println("database error");
-			e.printStackTrace();
-		}
-		return list;
-		
-	}
+
 	
 	@Override
 	public List<Disease> searchDiseaseByName(String d_name) {

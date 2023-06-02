@@ -196,6 +196,8 @@ public class ConnectionManager {
 			e.printStackTrace();
 		}
 	}
+	
+
 
 	public void insertVaccines() {
 		try {
