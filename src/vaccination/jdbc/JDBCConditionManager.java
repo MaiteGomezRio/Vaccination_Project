@@ -77,21 +77,6 @@ public class JDBCConditionManager implements ConditionManager{
 		}
 		return conditions; 
 	}
-
-	/*SELECT v_id FROM Vaccine JOIN Disease ON Vaccine.disease_id = Disease.id 
-	JOIN Condition ON vaccine.condition_id = condition.id
-	JOIN Patient ON Patient.condition_id = */
-	
-	//selects vaccine for this disease that do not have the patient conditions that matches the vaccines conditions. 
-	//1) encontrar las vacunas que match las condiciones que tiene el paciente
-	//2) no seleccionar esas vacunas
-	//3) de las restantes, elegir las que disease_id = ?
-	
-	/*SELECT v_id FROM Vaccine JOIN Disease ON Vaccine.disease_id = Disease.id 
-	JOIN Vaccine_Condition ON Vaccine.id=Vaccine_Condition.vaccine_id
-	JOIN Condition ON Vaccine_Condition.condition_id = Condition.id
-	JOIN Patient_Condition ON Patient_Condition.condition_id=Condition.id
-	WHERE disease_id = ? AND condition_id!=(SELECT condition_id FROM Patient_Condition WHERE )*/
 	
 	public Vaccine getVaccineDependingOnCondition(int d_id, int p_id) {
 		try {

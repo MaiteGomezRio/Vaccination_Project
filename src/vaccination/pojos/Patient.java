@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType; 
 
-@XmlAccessorType(XmlAccessType.FIELD)//we must annotate patient because the xml is of doctor and we want to include the list of patients
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Patient")
 @XmlType(propOrder = { "id_document", "name", "surname", "email"})
 
@@ -34,7 +34,7 @@ public class Patient implements Serializable{
 	@XmlTransient
 	private List<Vaccine> vaccines;
 	@XmlTransient
-	private Doctor doctor; //transient because it would be an infinite loop	
+	private Doctor doctor; 
 	@XmlTransient
     private List<Condition> conditions; 
 	@XmlTransient

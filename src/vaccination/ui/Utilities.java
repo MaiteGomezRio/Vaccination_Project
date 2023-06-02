@@ -36,8 +36,6 @@ public class Utilities {
 			
 			return ok;
 		}
-		
-		//public static exitOption()
 			
 		public static int readInteger() {
 	        int num = 0;

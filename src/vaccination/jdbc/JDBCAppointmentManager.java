@@ -31,7 +31,6 @@ public class JDBCAppointmentManager implements AppointmentManager{
 			
 	         String sql = "INSERT INTO Appointment (Date, patient_id, vaccine_id, doctor_id)" + "VALUES (?, ?, ?, ? )";
 	         PreparedStatement p = c.prepareStatement(sql);
-	         //p.setInt(1,appointment.getId());
 			 p.setDate(1, appointment.getDate());
 			 p.setInt(2, appointment.getPatient().getId());
 			 p.setInt(3, appointment.getVaccine().getId());

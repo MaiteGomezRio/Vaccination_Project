@@ -407,21 +407,6 @@ public class ConnectionManager {
 				p_assign.setInt(2, condition_id);
 				p_assign.executeUpdate();
 				
-				/*v_name="MMR"; 
-				vaccine_id=getVaccineId(v_name);
-				c_name="SpecialMedCon";
-				condition_id=getConditionId(c_name); 
-				p_assign.setInt(1,vaccine_id);//assigns Special Medical Condition to MMR 
-				p_assign.setInt(2, condition_id);
-				p_assign.executeUpdate(); 
-				
-				v_name="MMRV"; 
-				vaccine_id=getVaccineId(v_name);
-				condition_id=getConditionId(c_name);
-				p_assign.setInt(1,vaccine_id);//assigns Special Medical Condition to MMRV 
-				p_assign.setInt(2, condition_id);
-				p_assign.executeUpdate();*/
-				
 				v_name = "DTP";
 				vaccine_id = getVaccineId("DTP");
 				c_name = "Stroke";

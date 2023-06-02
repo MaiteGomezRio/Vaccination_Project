@@ -15,9 +15,9 @@ import javax.xml.bind.annotation.XmlType;
 
 import java.util.List;
 
-@XmlAccessorType(XmlAccessType.FIELD)//indicates that the pojo is goig to be a part of the xml
-@XmlRootElement(name = "Doctor")//rootelement-> the one that has all of the elemnts inside (only one)
-@XmlType(propOrder = { "id_document", "name", "surname", "email", "patients" })//id not here because its only the tasks
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "Doctor")
+@XmlType(propOrder = { "id_document", "name", "surname", "email", "patients" })
 public class Doctor implements Serializable {
 
 	/**
@@ -25,7 +25,7 @@ public class Doctor implements Serializable {
 	 */
 	private static final long serialVersionUID = -4716008704423906822L;
 	@XmlTransient
-	private int id;//transient does not appear in the xml
+	private int id;
 	@XmlAttribute
 	private String id_document;
 	@XmlAttribute
@@ -34,8 +34,8 @@ public class Doctor implements Serializable {
 	private String surname;
 	@XmlAttribute
 	private String email; 
-	@XmlElement(name="Patient")//to specify the name
-	@XmlElementWrapper(name="Patients")//every time we have a list
+	@XmlElement(name="Patient")
+	@XmlElementWrapper(name="Patients")
 	private List<Patient> patients;
 
 	public Doctor() {
@@ -145,20 +145,12 @@ public class Doctor implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) { // Checks if both objects have the same memory reference (the same piece of
-							// paper)
+		if (this == obj) { 
 			return true;
-		} else if (getClass() != obj.getClass()) { // If not, check if both objects are of the same class
+		} else if (getClass() != obj.getClass()) { 
 			return false;
 		}
-		Doctor other = (Doctor) obj; // If they are, cast the other object to this class
-		return Objects.equals(id, other.id); // Compare the appropriate attributes
+		Doctor other = (Doctor) obj;
+		return Objects.equals(id, other.id); 
 	}
-	/* methods hashcode and equals are already implemented in classes such as
-	// Integer, String etc,
-	// but not in the classes we create such as Doctor, this is why we need to add
-	// those methods.
-	// These methods make sure that we are not adding to the list two objects that
-	are the same.*/
-
 }

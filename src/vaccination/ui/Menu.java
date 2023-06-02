@@ -49,7 +49,6 @@ import vaccination.pojos.User;
 
 public class Menu {
 	private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
-	//private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS");
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	private static XMLManager xmlMan = new XMLManagerImpl();
 	private static DoctorManager doctorMan;
@@ -276,16 +275,9 @@ public class Menu {
 		System.out.println("disease: ");
 		String dis_name = Utilities.readString();
 		Disease disease = diseaseMan.getDisease(dis_name);
-		// int d_id = disease.getId();
 		Vaccine vaccine = new Vaccine(name, dose, disease);
 		directorMan.insertVaccine(vaccine);
-		/*
-		 * String c_name; int v_id = vaccine.getId(); do{ System.out.
-		 * println("Tell me the name of the condition, if there are no more conditions press 0"
-		 * ); c_name=r.readLine(); Condition condition = condMan.getCondition(c_name);
-		 * int c_id = condition.getId(); directorMan.assignConditionToVaccine(c_id,
-		 * v_id); }while(Integer.parseInt(c_name)!=0);
-		 */
+
 		System.out.println("Vaccine " + name + " registered");
 	}
 
