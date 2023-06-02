@@ -24,17 +24,19 @@ public class Utilities {
 		Matcher matcher = pattern.matcher(email);
 		return matcher.matches();
 		}
-		
-		//public static boolean notEmpty() {}
+				
 		
 		public static boolean validMenu(int numOps, int num) {
 			boolean ok=true;
 			if (num>numOps || num<0) {
+				System.out.println("Incorrect option, please type a number between 0 and "+numOps);
 				ok=false;
 			}
 			
 			return ok;
 		}
+		
+		//public static exitOption()
 			
 		public static int readInteger() {
 	        int num = 0;

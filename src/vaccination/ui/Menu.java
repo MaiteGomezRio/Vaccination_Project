@@ -101,7 +101,7 @@ public class Menu {
 				System.out.println("I/O Exception.");
 				e.printStackTrace();
 			}
-		} while (!Utilities.validMenu(2, choice));
+		} while (!Utilities.validMenu(2, choice)|| choice!=0);
 	}
 
 	public static void registerMenu() {
@@ -137,16 +137,17 @@ public class Menu {
 				System.out.println("I/O Exception.");
 				e.printStackTrace();
 			}
-		} while (!Utilities.validMenu(2, choice));
+		} while (!Utilities.validMenu(2, choice) || choice!=0);
 
 	}
 
 	public static void login() throws IOException {
-		while (true) {
-			System.out.println("\n Type 0 to go back to menu\n");
+		String username="";
+		do {
+			System.out.println("\n Press ENTER to go back to menu\n");
 
 			System.out.println("Username: ");
-			String username = Utilities.readString();
+			 username = Utilities.readString();
 			if (username.equals("0")) {
 				System.out.println("\n");
 				break;
@@ -165,7 +166,7 @@ public class Menu {
 			} else {
 				System.out.println("Wrong username/password combination");
 			}
-		}
+		}while(username.equals(""));
 	}
 
 	public static void registerDoctor() throws IOException {
@@ -434,7 +435,7 @@ public class Menu {
 			System.out.println("You did not type a valid option. Try am integer number between 1 and 2");
 			option=-1;
 		}
-		}while(Utilities.validMenu(2, option));
+		}while(Utilities.validMenu(2, option) || option!=0);
 	}
 
 	public static void removePatient() {
@@ -656,7 +657,7 @@ public class Menu {
 					default: break;
 					}
 									
-				}while(!Utilities.validMenu(3, choice));
+				}while(!Utilities.validMenu(3, choice) || choice!=0);
 				}
 				case 3: {
 					int choice=-1;
@@ -676,7 +677,7 @@ public class Menu {
 					}
 					
 					
-				}while(!Utilities.validMenu(1, choice));
+				}while(!Utilities.validMenu(1, choice) || choice!=0);
 				}
 				default: break;
 				}
@@ -689,7 +690,7 @@ public class Menu {
 		
 
 			
-	}while (!Utilities.validMenu(3, choice3));
+	}while (!Utilities.validMenu(3, choice3) || choice3!=0);
 	}
 	
 
@@ -744,16 +745,18 @@ public class Menu {
 				System.out.println("You did not type a number");
 				option=-1;
 			}
-		} while (!Utilities.validMenu(6, option));
+		} while (!Utilities.validMenu(6, option) || option!=0);
 	}
 
 	private static void doctorMenu(String email) {
 		int choice = -1;
 		Doctor doctor = doctorMan.getDoctorByEmail(email);
+		System.out.println("\nWelcome doctor: ");
+		
 		do {
 
 			try {
-				System.out.println("\nWelcome doctor: ");
+				
 				System.out.println("Choose an option.");
 				System.out.println("1. Check vaccine supplies (all vaccines in the data)");
 				System.out.println("2. Check vaccines of a patient.");
@@ -763,6 +766,7 @@ public class Menu {
 				System.out.println("6. Import patients from XML.");
 				System.out.println("0. Return");
 				choice =  Utilities.readInteger();
+			
 				switch (choice) {
 				case 1: {
 					selectVaccines();
@@ -790,11 +794,14 @@ public class Menu {
 					break;
 				}
 				case 0: {
-
-					return;
+					System.out.println("GoodBye");
+					System.exit(0);
+					
 
 				}
+				default:break;
 				}
+				
 
 			} catch (IOException e) {
 				System.out.println("I/O exception");
@@ -805,7 +812,7 @@ public class Menu {
 
 			}
 
-		} while (!Utilities.validMenu(6, choice));
+		} while (!Utilities.validMenu(6, choice) || choice!=0);
 	}
 
 }
