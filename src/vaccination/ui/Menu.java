@@ -4,9 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.security.Timestamp;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,7 +45,8 @@ import vaccination.pojos.User;
 
 public class Menu {
 	private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
-	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	//private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS");
+	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	private static XMLManager xmlMan = new XMLManagerImpl();
 	private static DoctorManager doctorMan;
 	private static PatientManager patientMan;
@@ -518,40 +520,38 @@ public class Menu {
 	}
 
 	public static void setAppointment(int p_id) {
-		// selects vaccine for this disease that do not have the patient conditions
-		
-
+		try {
 			Patient patient = patientMan.getPatient(p_id);
 			System.out.println("Please, tell me the disease you want to put a vaccine of.");
 			String d_name = Utilities.readString();
-
+	
 			Disease disease = diseaseMan.getDisease(d_name);
 			int d_id = disease.getId();
 			Vaccine vaccine = condMan.getVaccineDependingOnCondition(d_id, p_id);
+	
+			System.out.println("Please, tell me the date at which you want to set the appointment. (yyyy-MM-dd HH:MM:SS)");
+	        String input = r.readLine();
+	        LocalDateTime dateTime = LocalDateTime.parse(input, formatter);
+	        LocalDate localDate = dateTime.toLocalDate();
+	        Date sqlDate = Date.valueOf(localDate); 
 
-			System.out.println("Please, tell me the date at which you want to set the appointment. (yyyy-MM-dd)");
-			String doa = Utilities.readString();
-			LocalDate doaLocalDate = LocalDate.parse(doa, formatter);
-			Date doaDate = Date.valueOf(doaLocalDate);// we should not show the date as the amount of seconds that... so
-														// that is why we use Localdate.
 			Appointment appointment =null;
 			if (patient.getDoctor() == null) {
 				int doc_id = doctorMan.getRandomId();
 				patient.setDoctor(doctorMan.getDoctorById(doc_id));
 				
-				 appointment = new Appointment(doaDate, patient.getDoctor(), patient, vaccine);
+				 appointment = new Appointment(sqlDate, patient.getDoctor(), patient, vaccine);
 			}else { 
-			 appointment = new Appointment(doaDate, patient.getDoctor(), patient, vaccine);
+			 appointment = new Appointment(sqlDate, patient.getDoctor(), patient, vaccine);
 			}
-			// we need to turn it into a Date in order to store it into the db. When i
-			// create the puts it whould pass the Date.
 			appointmentMan.insertAppointment(appointment);
 			System.out.println(" Great! Remember your appointment details:");
-			System.out.println(" Appointment date: " + doaDate);
+			System.out.println(" Appointment date: " + sqlDate);
 			System.out.println(" Doctor:" + patient.getDoctor());
 			System.out.println(" Vaccine:" + vaccine);
-
-		
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 
