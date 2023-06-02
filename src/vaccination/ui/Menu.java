@@ -182,7 +182,7 @@ public class Menu {
 			do {
 			System.out.println("Email: ");
 			email = Utilities.readString();
-			}while(Utilities.isValidEmail(email));
+			}while(!Utilities.isValidEmail(email));
 			String username = id_document;
 			System.out.println("Password:");
 			String password = Utilities.readString();
@@ -577,7 +577,17 @@ public class Menu {
 	}
 
 	public static void insertpatientsFromXml() {
-
+		
+		File file=new File("./xmls/External-Doctor.xml");//if there were more this should be asked
+		xmlMan.xml2Doctor(file);
+		System.out.println("Patients inserted in the database!");
+		
+	}
+	public static void Xml2Html() {
+		String sourcePath="./xmls/External-Doctor.xml";
+		String xsltPath="./xmls/Doctor-Style.xslt";
+		String resultDir="./xmls/External-Doctor.html";
+		xmlMan.doctor2Html(sourcePath, xsltPath, resultDir);
 	}
 
 	public static void directorMenu(String email) {
@@ -761,6 +771,7 @@ public class Menu {
 				System.out.println("4. Check my appointments.");
 				System.out.println("5. Export my patients to XML.");
 				System.out.println("6. Import from XML.");
+				System.out.println("7. From XML to HTML.");
 				System.out.println("0. Return");
 				choice =  Utilities.readInteger();
 				switch (choice) {
@@ -787,6 +798,10 @@ public class Menu {
 
 				case 6: {
 					insertpatientsFromXml();
+					break;
+				}
+				case 7:{
+					Xml2Html();
 					break;
 				}
 				case 0: {
