@@ -589,7 +589,7 @@ public class Menu {
 			System.out.println("1.Insert data.");
 			System.out.println("2.Remove data.");
 			System.out.println("3.Assign data.");
-			System.out.println("0.Exit");
+			System.out.println("0.Log out");
 
 			try {
 				choice3 = Utilities.readInteger();
@@ -602,7 +602,7 @@ public class Menu {
 					System.out.println("1.Insert condition");
 					System.out.println("2.Insert vaccine");
 					System.out.println("3.Insert disease");
-					System.out.println("0.Exit");
+					System.out.println("0.Return");
 
 					 choice = Utilities.readInteger();
 					switch (choice) {
@@ -620,7 +620,7 @@ public class Menu {
 					}
 					case 0: {
 
-						return;
+						break;
 
 					}
 					}
@@ -707,7 +707,7 @@ public class Menu {
 				System.out.println("4. Set an appointment");
 				System.out.println("5. Cancel an appointment");
 				System.out.println("6. Update my conditions");
-				System.out.println("0. Exit");
+				System.out.println("0. Log out");
 
 				 option = Utilities.readInteger();
 
@@ -764,7 +764,7 @@ public class Menu {
 				System.out.println("4. Check my appointments.");
 				System.out.println("5. Export my patients to XML.");
 				System.out.println("6. Import from XML.");
-				System.out.println("0. Return");
+				System.out.println("0. Log out");
 				choice =  Utilities.readInteger();
 			
 				switch (choice) {
