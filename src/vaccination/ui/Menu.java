@@ -13,6 +13,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
 import java.time.*;
 import vaccination.ifaces.AppointmentManager;
 import vaccination.ifaces.ConditionManager;
@@ -43,6 +47,7 @@ import vaccination.xml.XMLManagerImpl;
 import vaccination.pojos.User;
 
 public class Menu {
+	
 	private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	private static XMLManager xmlMan = new XMLManagerImpl();
@@ -570,19 +575,18 @@ public class Menu {
 	}
 
 	public static void patients2Xml(int id) throws IOException {
+		
 		System.out.println("Your patients in XML are:");
 		List<Patient> listPatient = patientMan.searchPatientsByDoctor(id);
 		Doctor doc = doctorMan.getDoctorById(id);
 		doc.setPatients(listPatient);
 		xmlMan.doctor2Xml(doc);
 	}
-
+	
 	public static void insertpatientsFromXml() {
 		
 		File file=new File("./xmls/External-Doctor.xml");//if there were more this should be asked
 		xmlMan.xml2Doctor(file);
-		System.out.println("Patients inserted in the database!");
-		
 	}
 	public static void Xml2Html() {
 		String sourcePath="./xmls/External-Doctor.xml";
