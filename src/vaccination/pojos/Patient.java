@@ -1,22 +1,45 @@
 package vaccination.pojos; 
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects; 
+import java.util.Objects;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType; 
+
+@XmlAccessorType(XmlAccessType.FIELD)//we must annotate patient because the xml is of doctor and we want to include the list of patients
+@XmlRootElement(name = "Patient")
+@XmlType(propOrder = { "id_document", "name", "surname", "email", "vaccines", "doctor", "diseases", "conditions", "appointments" })
 
 public class Patient implements Serializable{
     
 	private static final long serialVersionUID = 3148378678755598680L;
+	
+	@XmlTransient
 	private int id; 
+	@XmlAttribute
 	private String id_document;
+	@XmlAttribute
 	private String name; 
-	private String surname; 
+	@XmlAttribute
+	private String surname;
+	@XmlAttribute
 	private String email;
+	@XmlTransient
 	private List<Vaccine> vaccines;
-	private Doctor doctor; 
+	@XmlTransient
+	private Doctor doctor; //transient because it would be an infinite loop
+	@XmlTransient
 	private List <Disease> diseases;
+	@XmlTransient
     private List<Condition> conditions; 
+	@XmlTransient
     private List<Appointment> appointments; 
 
 	

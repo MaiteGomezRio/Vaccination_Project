@@ -3,20 +3,39 @@ package vaccination.pojos;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+
 import java.util.List;
 
+@XmlAccessorType(XmlAccessType.FIELD)//indicates that the pojo is goig to be a part of the xml
+@XmlRootElement(name = "Doctor")//rootelement-> the one that has all of the elemnts inside (only one)
+@XmlType(propOrder = { "id_document", "name", "surname", "email", "patients" })//id not here because its only the tasks
 public class Doctor implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4716008704423906822L;
-
-	private int id;
+	@XmlTransient
+	private int id;//transient does not appear in the xml
+	@XmlAttribute
 	private String id_document;
+	@XmlAttribute
 	private String name;
+	@XmlAttribute
 	private String surname;
+	@XmlAttribute
 	private String email; 
+	@XmlElement(name="Patient")//to specify the name
+	@XmlElementWrapper(name="Patients")//every time we have a list
 	private List<Patient> patients;
 
 	public Doctor() {

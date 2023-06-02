@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+
+
+
 import java.time.*;
 import vaccination.ifaces.AppointmentManager;
 import vaccination.ifaces.ConditionManager;
@@ -20,6 +23,7 @@ import vaccination.ifaces.DoctorManager;
 import vaccination.ifaces.PatientManager;
 import vaccination.ifaces.UserManager;
 import vaccination.ifaces.VaccineManager;
+import vaccination.ifaces.XMLManager;
 import vaccination.jdbc.ConnectionManager;
 import vaccination.jdbc.JDBCAppointmentManager;
 import vaccination.jdbc.JDBCConditionManager;
@@ -36,11 +40,13 @@ import vaccination.pojos.Doctor;
 import vaccination.pojos.Patient;
 import vaccination.pojos.Role;
 import vaccination.pojos.Vaccine;
+import vaccination.xml.XMLManagerImpl;
 import vaccination.pojos.User;
 
 public class Menu {
 	private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	private static XMLManager xmlMan = new XMLManagerImpl();
 	private static DoctorManager doctorMan;
 	private static PatientManager patientMan;
 	private static VaccineManager vaccineMan;
@@ -61,7 +67,7 @@ public class Menu {
 	 	 diseaseMan= new JDBCDiseaseManager(conMan.getConnection());
 	 	 condMan = new JDBCConditionManager(conMan.getConnection()); 
 	 	 appointmentMan=new JDBCAppointmentManager(conMan.getConnection());
-	 	
+	 	 
 	 	 userMan = new JPAUserManager();
 	 	 
 	 	 while (true) {
@@ -587,6 +593,17 @@ public class Menu {
 	 	 }
 	}
 
+	public static void patients2Xml(int id) throws IOException {
+		System.out.println("Your patients in XML are:");
+		List<Patient> listPatient = patientMan.searchPatientsByDoctor(id);
+		Doctor doc = doctorMan.getDoctorById(id);
+		doc.setPatients(listPatient);
+		xmlMan.doctor2Xml(doc);
+	}
+	public static void insertpatientsFromXml() {
+		
+	}
+	
 	public static void directorMenu(String email) {
 
 		while (true) {
@@ -630,9 +647,9 @@ public class Menu {
 					break; 
 				}
 				case 2: {
-					System.out.println("1.Remove doctor");   //TODO see the on cascade thing.  
-					System.out.println("2.Remove vaccine");  //works
-					System.out.println("3.Remove patient");  //TODO see if it works.
+					System.out.println("1.Remove doctor"); 
+					System.out.println("2.Remove vaccine"); 
+					System.out.println("3.Remove patient");  
 					System.out.println("0.Exit");
 
 					int choice = Integer.parseInt(r.readLine());
@@ -656,17 +673,12 @@ public class Menu {
 					break;
 				}
 				case 3: {
-					System.out.println("1.Assign condition to vaccine"); //TODO it doesnt work 
-					//System.out.println("2.Assign disease to vaccine");
+					System.out.println("1.Assign condition to vaccine");
 					System.out.println("0.Exit");
 					int choice = Integer.parseInt(r.readLine());
 					switch (choice) {
 					case 1: {
 						assignConditionToVaccine();
-						break;
-					}
-					case 2: {
-						//assignDiseaseToVaccine();
 						break;
 					}
 					case 0: {
@@ -750,7 +762,8 @@ public class Menu {
 				System.out.println("2. Check vaccines of a patient.");
 				System.out.println("3. Check all my patients");
 				System.out.println("4. Check my appointments.");
-
+				System.out.println("5. Export my patients to XML.");
+				System.out.println("6. Import from XML.");
 				System.out.println("0. Return");
 				int choice = Integer.parseInt(r.readLine());
 				switch (choice) {
@@ -769,6 +782,13 @@ public class Menu {
 				case 4: {
 					selectAppointments(doctor.getId());
 					break;
+				}
+				case 5:{
+					patients2Xml(doctor.getId());
+				}
+				
+				case 6:{
+					insertpatientsFromXml();
 				}
 				case 0: {	
 					
