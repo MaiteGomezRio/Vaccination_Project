@@ -5,7 +5,7 @@
    <html>
    <p><b><xsl:value-of select="//id_document" /></b></p>
    <p><b>Info: </b><xsl:value-of select="//name" /></p>
-   <p><b>Doctors:</b></p>
+   <p><b>Patients:</b></p>
    <table border="1">
       <th>Patient</th>
       <th>Id document</th>

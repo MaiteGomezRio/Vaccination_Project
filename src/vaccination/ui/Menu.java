@@ -13,6 +13,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
 import java.time.*;
 import vaccination.ifaces.AppointmentManager;
 import vaccination.ifaces.ConditionManager;
@@ -569,6 +573,7 @@ public class Menu {
 	}
 
 	public static void patients2Xml(int id) throws IOException {
+		
 		System.out.println("Your patients in XML are:");
 		List<Patient> listPatient = patientMan.searchPatientsByDoctor(id);
 		Doctor doc = doctorMan.getDoctorById(id);
@@ -576,18 +581,15 @@ public class Menu {
 		xmlMan.doctor2Xml(doc);
 	}
 
-	public static void insertpatientsFromXml() {
-
-		File file = new File("./xmls/External-Doctor.xml");// if there were more this should be asked
+public static void insertpatientsFromXml() {
+		
+		File file=new File("./xmls/External-Doctor.xml");//if there were more this should be asked
 		xmlMan.xml2Doctor(file);
-		System.out.println("Patients inserted in the database!");
-
 	}
-
 	public static void Xml2Html() {
-		String sourcePath = "./xmls/External-Doctor.xml";
-		String xsltPath = "./xmls/Doctor-Style.xslt";
-		String resultDir = "./xmls/External-Doctor.html";
+		String sourcePath="./xmls/External-Doctor.xml";
+		String xsltPath="./xmls/Doctor-Style.xslt";
+		String resultDir="./xmls/External-Doctor.html";
 		xmlMan.doctor2Html(sourcePath, xsltPath, resultDir);
 	}
 

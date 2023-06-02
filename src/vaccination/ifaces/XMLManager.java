@@ -2,6 +2,7 @@ package vaccination.ifaces;
 
 import java.io.File;
 
+
 import vaccination.pojos.Doctor;
 public interface XMLManager {
 	public void doctor2Xml(Doctor o);

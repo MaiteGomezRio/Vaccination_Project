@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-
-<!--
-The type of the attribute "id" of Employee needs
-to be CDATA instead of ID, since DTD doesn't allow
-IDs that start with a number
--->
 <!DOCTYPE Doctor [
    <!ELEMENT Doctor (id_document, name, surname, email, Patients)>
    <!ELEMENT id_document (#PCDATA)>
