@@ -1,6 +1,7 @@
 package vaccination.ui;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
@@ -759,7 +760,7 @@ public class Menu {
 				System.out.println("3. Check all my patients");
 				System.out.println("4. Check my appointments.");
 				System.out.println("5. Export my patients to XML.");
-				System.out.println("6. Import from XML.");
+				System.out.println("6. Import patients from XML.");
 				System.out.println("0. Return");
 				choice =  Utilities.readInteger();
 				switch (choice) {
@@ -781,10 +782,12 @@ public class Menu {
 				}
 				case 5: {
 					patients2Xml(doctor.getId());
+					break;
 				}
 
 				case 6: {
 					insertpatientsFromXml();
+					break;
 				}
 				case 0: {
 
