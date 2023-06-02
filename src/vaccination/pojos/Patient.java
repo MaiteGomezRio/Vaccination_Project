@@ -34,9 +34,7 @@ public class Patient implements Serializable{
 	@XmlTransient
 	private List<Vaccine> vaccines;
 	@XmlTransient
-	private Doctor doctor; //transient because it would be an infinite loop
-	@XmlTransient
-	private List <Disease> diseases;
+	private Doctor doctor; //transient because it would be an infinite loop	
 	@XmlTransient
     private List<Condition> conditions; 
 	@XmlTransient
@@ -46,14 +44,12 @@ public class Patient implements Serializable{
 	
 	public Patient () {
 		super(); 
-		vaccines = new ArrayList<Vaccine>(); 
-		diseases= new ArrayList<Disease>();
+		vaccines = new ArrayList<Vaccine>(); 	
 		conditions= new ArrayList<Condition>();
 	}
 	public Patient(int id) {
 		this.id = id; 	
 		vaccines = new ArrayList<Vaccine>();   
-		diseases= new ArrayList<Disease>();
 		conditions= new ArrayList<Condition>();
 	}
 	public Patient(int id, String name, String surname) {
@@ -61,7 +57,6 @@ public class Patient implements Serializable{
 		this.name = name; 
 		this.surname = surname;
 		vaccines = new ArrayList<Vaccine>();
-		diseases= new ArrayList<Disease>();
 		conditions= new ArrayList<Condition>();
 
 	}
@@ -74,8 +69,7 @@ public class Patient implements Serializable{
 		this.surname = surname;
 		this.email=email;
 		this.doctor=doctor;
-		vaccines = new ArrayList<Vaccine>();
-		diseases= new ArrayList<Disease>();
+		vaccines = new ArrayList<Vaccine>();	
 		conditions= new ArrayList<Condition>();
 
 	}
@@ -88,8 +82,7 @@ public class Patient implements Serializable{
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
-		vaccines = new ArrayList<Vaccine>(); 
-		diseases= new ArrayList<Disease>();
+		vaccines = new ArrayList<Vaccine>(); 		
 		conditions= new ArrayList<Condition>();
 	}
 	public Patient(int id,String id_document, String name, String surname) {
@@ -97,8 +90,7 @@ public class Patient implements Serializable{
 		this.id_document=id_document;
 		this.name = name; 
 		this.surname = surname;
-		vaccines = new ArrayList<Vaccine>(); 
-		diseases= new ArrayList<Disease>();
+		vaccines = new ArrayList<Vaccine>(); 	
 		conditions= new ArrayList<Condition>();
 	}
 	
@@ -108,7 +100,6 @@ public class Patient implements Serializable{
 		this.name = name; 
 		this.surname = surname;
 		vaccines = new ArrayList<Vaccine>();   
-		diseases= new ArrayList<Disease>();
 		conditions= new ArrayList<Condition>();
 		this.doctor = doctor; 
 	}
@@ -162,12 +153,7 @@ public class Patient implements Serializable{
 		this.conditions = conditions;
 	}
 	
-	public List<Disease> getDiseases(){
-		return diseases;
-	}
-	public void setDiseases(List<Disease> diseases) {
-		this.diseases = diseases;
-	}
+
 	
 	public Doctor getDoctor() {
 		return doctor;
