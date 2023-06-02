@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!--
+The type of the attribute "id" of Employee needs
+to be CDATA instead of ID, since DTD doesn't allow
+IDs that start with a number
+-->
+<!DOCTYPE Doctor [
+   <!ELEMENT Doctor (id_document, name, surname, email, Patients)>
+   <!ELEMENT id_document (#PCDATA)>
+   <!ELEMENT name (#PCDATA)>
+   <!ELEMENT surname (#PCDATA)>
+   <!ELEMENT email (#PCDATA)>
+   <!ELEMENT Patients (Patient+)>
+   <!ELEMENT Patient (piddocument, pname, psurname, pemail)>
+   <!ATTLIST Patient name CDATA #REQUIRED>
+   
+   <!ELEMENT piddocument (#PCDATA)>
+   <!ELEMENT pname (#PCDATA)>
+   <!ELEMENT psurname (#PCDATA)>
+   <!ELEMENT pemail (#PCDATA)>
+]>
+
+<Doctor>
+	<id_document> 05459321W</id_document>
+    <name> Gonzalo </name>
+    <surname> Casimiro </surname>
+    <email>gcasimiro@gmail.com</email>
+    <Patients>
+        <Patient name="Patient-1">
+        	<piddocument>50344565J</piddocument>
+            <pname>Fabio</pname>
+            <psurname>Calvo</psurname>
+            <pemail>fcalvo@gmail.com</pemail>
+        </Patient>
+        <Patient name="Patient-2">
+            <piddocument>033514172G</piddocument>
+            <pname>Cristina</pname>
+            <psurname>Garcia Paredes</psurname>
+            <pemail>crisg@gmail.com</pemail>
+        </Patient>
+    </Patients>
+</Doctor>
+
+
+
