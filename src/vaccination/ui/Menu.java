@@ -43,7 +43,7 @@ import vaccination.xml.XMLManagerImpl;
 import vaccination.pojos.User;
 
 public class Menu {
-	private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	private static XMLManager xmlMan = new XMLManagerImpl();
 	private static DoctorManager doctorMan;
@@ -101,7 +101,7 @@ public class Menu {
 				System.out.println("I/O Exception.");
 				e.printStackTrace();
 			}
-		} while (!Utilities.validMenu(2, choice)|| choice!=0);
+		} while (!Utilities.validMenu(2, choice) || choice != 0);
 	}
 
 	public static void registerMenu() {
@@ -122,6 +122,7 @@ public class Menu {
 				case 2: {
 					if (doctorMan.countNumberOfDoctors() == 0) {
 						System.out.println("There are no doctors available. Come back later!\n");
+						System.exit(0);
 					} else {
 						registerPatient();
 					}
@@ -132,22 +133,22 @@ public class Menu {
 					return;
 				}
 				}
-			
+
 			} catch (IOException e) {
 				System.out.println("I/O Exception.");
 				e.printStackTrace();
 			}
-		} while (!Utilities.validMenu(2, choice) || choice!=0);
+		} while (!Utilities.validMenu(2, choice) || choice != 0);
 
 	}
 
 	public static void login() throws IOException {
-		String username="";
+		String username = "";
 		do {
-			System.out.println("\n Press ENTER to go back to menu\n");
+			System.out.println("\n Press '0' to go back to menu\n");
 
 			System.out.println("Username: ");
-			 username = Utilities.readString();
+			username = Utilities.readString();
 			if (username.equals("0")) {
 				System.out.println("\n");
 				break;
@@ -166,63 +167,69 @@ public class Menu {
 			} else {
 				System.out.println("Wrong username/password combination");
 			}
-		}while(username.equals(""));
+		} while (username.equals(""));
 	}
 
 	public static void registerDoctor() throws IOException {
-		
 
-			System.out.println("Please, input the doctor's data:");
+		System.out.println("Please, input the doctor's data:");
+		String id_document = "";
+		do {
 			System.out.println("Id_document:");
-			String id_document = Utilities.readString();
-			System.out.println("Name:");
-			String name = Utilities.readString();
-			System.out.println("Surname:");
-			String surname = Utilities.readString();
-			String email="";
-			do {
+			id_document = Utilities.readString();
+		} while (!Utilities.validateID(id_document));
+		System.out.println("Name:");
+		String name = Utilities.readString();
+		System.out.println("Surname:");
+		String surname = Utilities.readString();
+		String email = "";
+		do {
 			System.out.println("Email: ");
 			email = Utilities.readString();
-			}while(!Utilities.isValidEmail(email));
-			String username = id_document;
-			System.out.println("Password:");
-			String password = Utilities.readString();
-			System.out.println("Your username is: " + id_document + "\n");
-			Doctor doctor = new Doctor(id_document, name, surname, email);
-			doctorMan.insertDoctor(doctor);
-			User user = new User(username, password, email);
-			userMan.register(user);
-			Role role = userMan.getRole("doctor");
-			userMan.assignRole(user, role);
-
-			System.out.println("You have registered as a doctor!");
-			doctorMenu(user.getEmail());
+		} while (!Utilities.isValidEmail(email));	
+			
 		
+		String username = id_document;
+		System.out.println("Password:");
+		String password = Utilities.readString();
+		System.out.println("Your username is: " + id_document + "\n");
+		Doctor doctor = new Doctor(id_document, name, surname, email);
+		doctorMan.insertDoctor(doctor);
+		User user = new User(username, password, email);
+		userMan.register(user);
+		Role role = userMan.getRole("doctor");
+		userMan.assignRole(user, role);
+
+		System.out.println("You have registered as a doctor!");
+		doctorMenu(user.getEmail());	
+
 	}
 
 	public static void registerCondition() {
-		
-			System.out.println("Please, input the condition's name: ");
-			String type = Utilities.readString();
-			Condition condition = new Condition(type);
-			directorMan.insertCondition(condition);
-		
+
+		System.out.println("Please, input the condition's name: ");
+		String type = Utilities.readString();
+		Condition condition = new Condition(type);
+		directorMan.insertCondition(condition);
+
 	}
 
 	public static void registerDisease() {
-		
-			System.out.println("Please, tell me the name of the disease: ");
-			String name = Utilities.readString();
-			Disease disease = new Disease(name);
-			directorMan.insertDisease(disease);
-		
+
+		System.out.println("Please, tell me the name of the disease: ");
+		String name = Utilities.readString();
+		Disease disease = new Disease(name);
+		directorMan.insertDisease(disease);
+
 	}
 
 	public static void registerPatient() throws IOException {
 		System.out.println("Please, introduce the following information: ");
-
-		System.out.println("ID document: ");
-		String id_document = Utilities.readString();
+		String id_document = "";
+		do {
+			System.out.println("Id_document:");
+			id_document = Utilities.readString();
+		} while (!Utilities.validateID(id_document));
 		System.out.println("Name: ");
 		String name = Utilities.readString();
 		System.out.println("Surname: ");
@@ -240,9 +247,7 @@ public class Menu {
 		int bound = doctorMan.countNumberOfDoctors();
 		System.out.println(bound);
 		int doc_id = generateRandomInt(bound);
-		System.out.println("doc id " + doc_id);
 		Doctor doctor = doctorMan.getDoctorById(doc_id);
-		System.out.println("doctor: " + doctor.toString());
 		Patient patient = new Patient(id_document, name, surname, email, doctor);
 
 		patientMan.insertPatient(patient, doctor);
@@ -339,25 +344,23 @@ public class Menu {
 	public static void checkVaccinesPatientHasToPut(int d_id) {// for doctor
 		List<Patient> list = new ArrayList<>();
 		List<Patient> listPatients = new ArrayList<>();
-		
-			listPatients = patientMan.searchPatientsByDoctor(d_id);
-			if (listPatients.isEmpty()) {
-				System.out.println("You don't have any patients!");
+
+		listPatients = patientMan.searchPatientsByDoctor(d_id);
+		if (listPatients.isEmpty()) {
+			System.out.println("You don't have any patients!");
+		} else {
+			System.out.println("Introduce the name of the patient you want to check: ");
+			String name = Utilities.readString();
+			list = patientMan.searchPatientByName(name);
+			if (list.isEmpty()) {
+				System.out.println("You don't have any patients with that name. Please enter a valid name: ");
+				System.out.println(list);
 			} else {
-				System.out.println("Introduce the name of the patient you want to check: ");
-				String name = Utilities.readString();
-				list = patientMan.searchPatientByName(name);
-				if (list.isEmpty()) {
-					System.out.println("You don't have any patients with that name. Please enter a valid name: ");
-					System.out.println(list);
-				} else {
-					System.out.println("Tell me which one it is, type it's Id");
-					int p_id = Utilities.readInteger();
-					checkVaccinesAPatientHasToPut(p_id);
-				}
+				System.out.println("Tell me which one it is, type it's Id");
+				int p_id = Utilities.readInteger();
+				checkVaccinesAPatientHasToPut(p_id);
 			}
-		
-		
+		}
 
 	}
 
@@ -405,89 +408,88 @@ public class Menu {
 
 		System.out.println("1. Add new conditions");
 		System.out.println("2. Delete existing condition");
-		int option=-1;
+		int option = -1;
 		do {
-		try {
-			option = Utilities.readInteger();
-			switch (option) {
-			case 1: {
-				System.out.println("How many new conditions do you have? Introduce a number ");
-				int number = Utilities.readInteger();
-				for (int i = 0; i < number; i++) {
-					System.out.println("Introduce condition name:");
-					String c_type = Utilities.readString();
-					Condition condition = condMan.getCondition(c_type);
-					int c_id = condition.getId();
-					condMan.updateConditionsOfPatient(p_id, c_id);
+			try {
+				option = Utilities.readInteger();
+				switch (option) {
+				case 1: {
+					System.out.println("How many new conditions do you have? Introduce a number ");
+					int number = Utilities.readInteger();
+					for (int i = 0; i < number; i++) {
+						System.out.println("Introduce condition name:");
+						String c_type = Utilities.readString();
+						Condition condition = condMan.getCondition(c_type);
+						int c_id = condition.getId();
+						condMan.updateConditionsOfPatient(p_id, c_id);
+					}
+					break;
 				}
-				break;
+				case 2: {
+					System.out.println("Which condition do you want to remove, type it's name: ");
+					String type = Utilities.readString();
+					Condition condition = condMan.getCondition(type);
+					condMan.removeConditionOfPatient(p_id, condition.getId());
+					System.out.println("Condition deleted! ");
+					break;
+				}
+				}
+			} catch (NumberFormatException e1) {
+				System.out.println("You did not type a valid option. Try am integer number between 1 and 2");
+				option = -1;
 			}
-			case 2: {
-				System.out.println("Which condition do you want to remove, type it's name: ");
-				String type = Utilities.readString();
-				Condition condition = condMan.getCondition(type);
-				condMan.removeConditionOfPatient(p_id, condition.getId());
-				System.out.println("Condition deleted! ");
-				break;
-			}
-			}
-		} catch (NumberFormatException e1) {
-			System.out.println("You did not type a valid option. Try am integer number between 1 and 2");
-			option=-1;
-		}
-		}while(Utilities.validMenu(2, option) || option!=0);
+		} while (Utilities.validMenu(2, option) || option != 0);
 	}
 
 	public static void removePatient() {
 		System.out.println("Introduce the name of the patient you want to remove from the database: ");
-		String p_name;		
-			p_name = Utilities.readString();
-			List<Patient> patients = patientMan.searchPatientByName(p_name);
-			System.out.println(patients);
-			System.out.println("Please tell me which one it is, type its id:");
-			int p_id = Utilities.readInteger();
-			directorMan.removePatient(p_id);
-		
+		String p_name;
+		p_name = Utilities.readString();
+		List<Patient> patients = patientMan.searchPatientByName(p_name);
+		System.out.println(patients);
+		System.out.println("Please tell me which one it is, type its id:");
+		int p_id = Utilities.readInteger();
+		directorMan.removePatient(p_id);
+
 	}
 
 	public static void removeDoctor() {
-		
-			System.out.println("Introduce the name of the doctor you want to remove from the database: ");
-			String d_name =Utilities.readString();
-			List<Doctor> doctors = doctorMan.searchDoctorByName(d_name);
-			System.out.println(doctors);
-			System.out.println("Please tell me which one it is, type its id:");
-			int d_id = Utilities.readInteger();
-			directorMan.removeDoctor(d_id);
 
-		
+		System.out.println("Introduce the name of the doctor you want to remove from the database: ");
+		String d_name = Utilities.readString();
+		List<Doctor> doctors = doctorMan.searchDoctorByName(d_name);
+		System.out.println(doctors);
+		System.out.println("Please tell me which one it is, type its id:");
+		int d_id = Utilities.readInteger();
+		directorMan.removeDoctor(d_id);
+
 	}
 
 	public static void removeVaccine() {
-		
-			System.out.println("Introduce the name of the vaccine you want to remove from the database: ");
-			String v_name = Utilities.readString();
-			directorMan.removeVaccine(v_name);
-		
+
+		System.out.println("Introduce the name of the vaccine you want to remove from the database: ");
+		String v_name = Utilities.readString();
+		directorMan.removeVaccine(v_name);
+
 	}
 
 	public static void assignConditionToVaccine() {
-		
-			System.out.println("Tell me the name of the condition: ");
-			String c_name = Utilities.readString();
-			Condition condition = condMan.getCondition(c_name);
-			int c_id = condition.getId();
-			System.out.println("Tell me the name of the vaccine: ");
-			String v_name = Utilities.readString();
-			Vaccine vaccine = vaccineMan.getVaccine(v_name);
-			int v_id = vaccine.getId();
-			directorMan.assignConditionToVaccine(c_id, v_id);
-		
+
+		System.out.println("Tell me the name of the condition: ");
+		String c_name = Utilities.readString();
+		Condition condition = condMan.getCondition(c_name);
+		int c_id = condition.getId();
+		System.out.println("Tell me the name of the vaccine: ");
+		String v_name = Utilities.readString();
+		Vaccine vaccine = vaccineMan.getVaccine(v_name);
+		int v_id = vaccine.getId();
+		directorMan.assignConditionToVaccine(c_id, v_id);
+
 	}
 
 	public static void assignVaccineToPatient() throws IOException {
 		System.out.println("Tell me the name of the patient.");
-		String name =Utilities.readString();
+		String name = Utilities.readString();
 		List<Patient> patients = patientMan.searchPatientByName(name);
 		System.out.println(patients);
 		System.out.println("Select the id of the patient: ");
@@ -519,54 +521,51 @@ public class Menu {
 
 	public static void setAppointment(int p_id) {
 		// selects vaccine for this disease that do not have the patient conditions
-		
 
-			Patient patient = patientMan.getPatient(p_id);
-			System.out.println("Please, tell me the disease you want to put a vaccine of.");
-			String d_name = Utilities.readString();
+		Patient patient = patientMan.getPatient(p_id);
+		System.out.println("Please, tell me the disease you want to put a vaccine of.");
+		String d_name = Utilities.readString();
 
-			Disease disease = diseaseMan.getDisease(d_name);
-			int d_id = disease.getId();
-			Vaccine vaccine = condMan.getVaccineDependingOnCondition(d_id, p_id);
+		Disease disease = diseaseMan.getDisease(d_name);
+		int d_id = disease.getId();
+		Vaccine vaccine = condMan.getVaccineDependingOnCondition(d_id, p_id);
 
-			System.out.println("Please, tell me the date at which you want to set the appointment. (yyyy-MM-dd)");
-			String doa = Utilities.readString();
-			LocalDate doaLocalDate = LocalDate.parse(doa, formatter);
-			Date doaDate = Date.valueOf(doaLocalDate);// we should not show the date as the amount of seconds that... so
-														// that is why we use Localdate.
-			Appointment appointment =null;
-			if (patient.getDoctor() == null) {
-				int doc_id = doctorMan.getRandomId();
-				patient.setDoctor(doctorMan.getDoctorById(doc_id));
-				
-				 appointment = new Appointment(doaDate, patient.getDoctor(), patient, vaccine);
-			}else { 
-			 appointment = new Appointment(doaDate, patient.getDoctor(), patient, vaccine);
-			}
-			// we need to turn it into a Date in order to store it into the db. When i
-			// create the puts it whould pass the Date.
-			appointmentMan.insertAppointment(appointment);
-			System.out.println(" Great! Remember your appointment details:");
-			System.out.println(" Appointment date: " + doaDate);
-			System.out.println(" Doctor:" + patient.getDoctor());
-			System.out.println(" Vaccine:" + vaccine);
+		System.out.println("Please, tell me the date at which you want to set the appointment. (yyyy-MM-dd)");
+		String doa = Utilities.readString();
+		LocalDate doaLocalDate = LocalDate.parse(doa, formatter);
+		Date doaDate = Date.valueOf(doaLocalDate);// we should not show the date as the amount of seconds that... so
+													// that is why we use Localdate.
+		Appointment appointment = null;
+		if (patient.getDoctor() == null) {
+			int doc_id = doctorMan.getRandomId();
+			patient.setDoctor(doctorMan.getDoctorById(doc_id));
 
-		
+			appointment = new Appointment(doaDate, patient.getDoctor(), patient, vaccine);
+		} else {
+			appointment = new Appointment(doaDate, patient.getDoctor(), patient, vaccine);
+		}
+		// we need to turn it into a Date in order to store it into the db. When i
+		// create the puts it whould pass the Date.
+		appointmentMan.insertAppointment(appointment);
+		System.out.println(" Great! Remember your appointment details:");
+		System.out.println(" Appointment date: " + doaDate);
+		System.out.println(" Doctor:" + patient.getDoctor());
+		System.out.println(" Vaccine:" + vaccine);
+
 	}
 
-
 	public static void cancelAppointment(int p_id) {
-		
-			System.out.println("These are the list of your appointments: ");
-			List<Appointment> appointments = appointmentMan.searchAppointmentsByPatient(p_id);
-			for (Appointment ap : appointments) {
-				System.out.println(ap);
-			}
 
-			System.out.println("Please, tell me the id of the appointment you want to remove: ");
-			int id = Utilities.readInteger();
-			appointmentMan.removeAppointment(id);
-		
+		System.out.println("These are the list of your appointments: ");
+		List<Appointment> appointments = appointmentMan.searchAppointmentsByPatient(p_id);
+		for (Appointment ap : appointments) {
+			System.out.println(ap);
+		}
+
+		System.out.println("Please, tell me the id of the appointment you want to remove: ");
+		int id = Utilities.readInteger();
+		appointmentMan.removeAppointment(id);
+
 	}
 
 	public static void patients2Xml(int id) throws IOException {
@@ -578,16 +577,17 @@ public class Menu {
 	}
 
 	public static void insertpatientsFromXml() {
-		
-		File file=new File("./xmls/External-Doctor.xml");//if there were more this should be asked
+
+		File file = new File("./xmls/External-Doctor.xml");// if there were more this should be asked
 		xmlMan.xml2Doctor(file);
 		System.out.println("Patients inserted in the database!");
-		
+
 	}
+
 	public static void Xml2Html() {
-		String sourcePath="./xmls/External-Doctor.xml";
-		String xsltPath="./xmls/Doctor-Style.xslt";
-		String resultDir="./xmls/External-Doctor.html";
+		String sourcePath = "./xmls/External-Doctor.xml";
+		String xsltPath = "./xmls/Doctor-Style.xslt";
+		String resultDir = "./xmls/External-Doctor.html";
 		xmlMan.doctor2Html(sourcePath, xsltPath, resultDir);
 	}
 
@@ -606,110 +606,113 @@ public class Menu {
 				switch (choice3) {
 
 				case 1: {
-					int choice=-1;
-				
-					do {										
-					System.out.println("1.Insert condition");
-					System.out.println("2.Insert vaccine");
-					System.out.println("3.Insert disease");
-					System.out.println("0.Return");
+					int choice = -1;
 
-					 choice = Utilities.readInteger();
-					switch (choice) {
-					case 1: {
-						registerCondition();
-						break;
-					}
-					case 2: {
-						registerVaccine();
-						break;
-					}
-					case 3: {
-						registerDisease();
-						break;
-					}
-					case 0: {
+					do {
+						System.out.println("1.Insert condition");
+						System.out.println("2.Insert vaccine");
+						System.out.println("3.Insert disease");
+						System.out.println("0.Return menu");
 
-						break;
+						choice = Utilities.readInteger();
+						switch (choice) {
+						case 1: {
+							registerCondition();
+							break;
+						}
+						case 2: {
+							registerVaccine();
+							break;
+						}
+						case 3: {
+							registerDisease();
+							break;
+						}
+						case 0: {
 
-					}
-					}
+							break;
+
+						}
+						default:
+							break;
+						}
+
+					} while (!Utilities.validMenu(3, choice));
 					break;
-					}
-					while(!Utilities.validMenu(3, choice));
 				}
 				case 2: {
-					
-					int choice=-1;
-					do {
-					System.out.println("1.Remove doctor");
-					System.out.println("2.Remove vaccine");
-					System.out.println("3.Remove patient");
-					System.out.println("0.Exit");
 
-					choice = Utilities.readInteger();
-					switch (choice) {
-					case 1: {
-						removeDoctor();
-						break;
-					}
-					case 2: {
-						removeVaccine();
-						break;
-					}
-					case 3: {
-						removePatient();
-						break;
-					}
-					case 0: {
-						return;
-					}
-					default: break;
-					}
-									
-				}while(!Utilities.validMenu(3, choice) || choice!=0);
-				}
-				case 3: {
-					int choice=-1;
+					int choice = -1;
 					do {
-					System.out.println("1.Assign condition to vaccine");
-					System.out.println("0.Exit");
-					 choice = Utilities.readInteger();
-					switch (choice) {
-					case 1: {
-						assignConditionToVaccine();
-						break;
-					}
-					case 0: {
-						return;
-					}					
-					default:break;				
-					}
-					
-					
-				}while(!Utilities.validMenu(1, choice) || choice!=0);
+						System.out.println("1.Remove doctor");
+						System.out.println("2.Remove vaccine");
+						System.out.println("3.Remove patient");
+						System.out.println("0.Return menu");
+
+						choice = Utilities.readInteger();
+						switch (choice) {
+						case 1: {
+							removeDoctor();
+							break;
+						}
+						case 2: {
+							removeVaccine();
+							break;
+						}
+						case 3: {
+							removePatient();
+							break;
+						}
+						case 0: {
+							break;
+						}
+						default:
+							break;
+						}
+
+					} while (!Utilities.validMenu(3, choice) || choice != 0);
+					break;
 				}
-				default: break;
+
+				case 3: {
+					int choice = -1;
+					do {
+						System.out.println("1.Assign condition to vaccine");
+						System.out.println("0.Return menu");
+						choice = Utilities.readInteger();
+						switch (choice) {
+						case 1: {
+							assignConditionToVaccine();
+							break;
+						}
+						case 0: {
+							break;
+						}
+						default:
+							break;
+						}
+
+					} while (!Utilities.validMenu(1, choice) || choice != 0);
+					break;
 				}
-				
-				
+				default:
+					break;
+				}
+
 			} catch (IOException e) {
 				System.out.println("You did not type a valid option, try an integer number between 0 and 3");
-				choice3=-1;
+				choice3 = -1;
 			}
-		
 
-			
-	}while (!Utilities.validMenu(3, choice3) || choice3!=0);
+		} while (!Utilities.validMenu(3, choice3) || choice3 != 0);
 	}
-	
 
 	public static void patientMenu(String email) {
 		Patient patient = patientMan.getPatientByEmail(email);
+		System.out.println("Welcome patient!");
 		int option = -1;
 		do {
-			try {
-				System.out.println("Welcome patient!");
+			try {				
 				System.out.println("What do you want to do? Choose an option: ");
 				System.out.println("1. Check vaccines I have already put on");
 				System.out.println("2. Check vaccines I still have to put");
@@ -719,7 +722,7 @@ public class Menu {
 				System.out.println("6. Update my conditions");
 				System.out.println("0. Log out");
 
-				 option = Utilities.readInteger();
+				option = Utilities.readInteger();
 
 				switch (option) {
 				case 1: {
@@ -748,25 +751,26 @@ public class Menu {
 				}
 				case 0: {
 					return;
+
 				}
 				}
-			
+
 			} catch (NumberFormatException e) {
 				System.out.println("You did not type a number");
-				option=-1;
+				option = -1;
 			}
-		} while (!Utilities.validMenu(6, option) || option!=0);
+		} while (!Utilities.validMenu(6, option) || option != 0);
 	}
 
 	private static void doctorMenu(String email) {
 		int choice = -1;
 		Doctor doctor = doctorMan.getDoctorByEmail(email);
 		System.out.println("\nWelcome doctor: ");
-		
+
 		do {
 
 			try {
-				
+
 				System.out.println("Choose an option.");
 				System.out.println("1. Check vaccine supplies (all vaccines in the data)");
 				System.out.println("2. Check vaccines of a patient.");
@@ -776,8 +780,8 @@ public class Menu {
 				System.out.println("6. Import from XML.");
 				System.out.println("7. From XML to HTML.");
 				System.out.println("0. Log out");
-				choice =  Utilities.readInteger();
-			
+				choice = Utilities.readInteger();
+
 				switch (choice) {
 				case 1: {
 					selectVaccines();
@@ -804,30 +808,28 @@ public class Menu {
 					insertpatientsFromXml();
 					break;
 				}
-				case 7:{
+				case 7: {
 					Xml2Html();
 					break;
 				}
 				case 0: {
-					System.out.println("GoodBye");
-					System.exit(0);
-					
+					return;
 
 				}
-				default:break;
+				default:
+					break;
 				}
-				
 
 			} catch (IOException e) {
 				System.out.println("I/O exception");
 				e.printStackTrace();
 			} catch (NumberFormatException e) {
-				System.out.println("You did not type a valid option. Try an integer number between 0 and 6");
-				choice=-1;
+				System.out.println("You did not type a valid option. Try an integer number between 0 and 7");
+				choice = -1;
 
 			}
 
-		} while (!Utilities.validMenu(6, choice) || choice!=0);
+		} while (!Utilities.validMenu(6, choice) || choice != 0);
 	}
 
 }

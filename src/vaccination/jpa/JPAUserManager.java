@@ -42,9 +42,11 @@ public class JPAUserManager implements UserManager{
 	
 	@Override
 	public void register(User user) {
+		
 		em.getTransaction().begin();
 		em.persist(user);
 		em.getTransaction().commit(); 
+		
 		
 	}
 	@Override 
