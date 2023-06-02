@@ -1,6 +1,7 @@
 package vaccination.ui;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
@@ -538,7 +539,7 @@ public class Menu {
 		}
 	}
 
-	public static void setAppointment(int p_id) {
+	public static void setAppointment(int p_id) {//TODO finish	
 	 	 //selects vaccine for this disease that do not have the patient conditions
 	 	 try {
 	 	 	 
@@ -600,7 +601,18 @@ public class Menu {
 		doc.setPatients(listPatient);
 		xmlMan.doctor2Xml(doc);
 	}
-	public static void insertpatientsFromXml() {
+	public static void insertDoctorFromXml() {
+		System.out.println("Introduce the xml file's name: ");
+		String name;
+		try {
+			name = r.readLine();
+			File xml= new File("./xmls/"+name+".xml");
+			System.out.println("Your patients in java are:");
+			xmlMan.xml2Doctor(xml);
+		} catch (IOException e) {
+			System.out.println("IO Exception");
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -763,7 +775,7 @@ public class Menu {
 				System.out.println("3. Check all my patients");
 				System.out.println("4. Check my appointments.");
 				System.out.println("5. Export my patients to XML.");
-				System.out.println("6. Import from XML.");
+				System.out.println("6. Import patients from XML.");
 				System.out.println("0. Return");
 				int choice = Integer.parseInt(r.readLine());
 				switch (choice) {
@@ -785,10 +797,12 @@ public class Menu {
 				}
 				case 5:{
 					patients2Xml(doctor.getId());
+					break;
 				}
 				
 				case 6:{
-					insertpatientsFromXml();
+					insertDoctorFromXml();
+					break;
 				}
 				case 0: {	
 					
