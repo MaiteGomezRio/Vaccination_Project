@@ -795,11 +795,7 @@ public class Menu {
 
 				}
 				}
-<<<<<<< HEAD
-				
-=======
 
->>>>>>> branch 'master' of https://github.com/MaiteGomezRio/Vaccination_Project
 			} catch (IOException e) {
 				System.out.println("I/O exception");
 				e.printStackTrace();
